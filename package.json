@@ -1,0 +1,29 @@
+{
+  "name": "@aserto/type-definitions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth",
+    "generate:specs:tenant": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/tenant/openapi.json?token=AC6QFKKCBLONRMDV6DRWVUTBIFAXC --output ./generated/tenant.ts",
+    "generate:specs:auth": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/authorizer/openapi.json?token=AC6QFKJOL7J2NOXWXHDONCLBIFAUY --output ./generated/authorizer.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aserto-dev/type-definitions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aserto-dev/type-definitions/issues"
+  },
+  "homepage": "https://github.com/aserto-dev/type-definitions#readme",
+  "dependencies": {
+    "typescript": "^4.4.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.5",
+    "openapi-typescript": "^4.0.2",
+    "tslib": "^2.3.1"
+  }
+}
