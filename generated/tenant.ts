@@ -413,6 +413,7 @@ export interface components {
     };
     v1Metadata: {
       created_at?: string;
+      deleted_at?: string;
       updated_at?: string;
     };
     v1PolicyRef: {

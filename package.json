@@ -1,12 +1,12 @@
 {
   "name": "@aserto/console-type-definitions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth",
-    "generate:specs:tenant": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/tenant/openapi.json?token=AC6QFKKCBLONRMDV6DRWVUTBIFAXC --output ./generated/tenant.ts",
-    "generate:specs:auth": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/authorizer/openapi.json?token=AC6QFKJOL7J2NOXWXHDONCLBIFAUY --output ./generated/authorizer.ts"
+    "generate:specs:tenant": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/tenant/openapi.json --auth \"token $GITHUB_PAT\" --output ./generated/tenant.ts",
+    "generate:specs:auth": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/authorizer/openapi.json --auth \"token $GITHUB_PAT\" --output ./generated/authorizer.ts"
   },
   "repository": {
     "type": "git",
