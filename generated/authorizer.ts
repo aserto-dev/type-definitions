@@ -310,6 +310,7 @@ export interface components {
     };
     v1Metadata: {
       created_at?: string;
+      deleted_at?: string;
       updated_at?: string;
     };
     v1Module: {
@@ -418,6 +419,7 @@ export interface components {
     v1User: {
       applications?: { [key: string]: components["schemas"]["v1AttrSet"] };
       attributes?: components["schemas"]["v1AttrSet"];
+      deleted?: boolean;
       display_name?: string;
       email?: string;
       enabled?: boolean;
