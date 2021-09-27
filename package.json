@@ -1,19 +1,24 @@
 {
   "name": "@aserto/console-type-definitions",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
-  "main": "index.js",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "index.d.ts",
+    "generated/"
+  ],
   "scripts": {
     "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth",
-    "generate:specs:tenant": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/tenant/openapi.json --auth \"token $GITHUB_PAT\" --output ./generated/tenant.ts",
-    "generate:specs:auth": "openapi-typescript https://raw.githubusercontent.com/aserto-dev/openapi-grpc/main/publish/authorizer/openapi.json --auth \"token $GITHUB_PAT\" --output ./generated/authorizer.ts"
+    "generate:specs:tenant": "openapi-typescript https://tenant.prod.aserto.com/openapi.json --output ./generated/tenant.ts",
+    "generate:specs:auth": "openapi-typescript https://authorizer.prod.aserto.com/openapi.json --output ./generated/authorizer.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aserto-dev/type-definitions.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Aserto",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/aserto-dev/type-definitions/issues"
   },
