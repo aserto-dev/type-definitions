@@ -62,6 +62,10 @@ export interface paths {
     /** Verifiy the configuration settings for the given connection id. */
     post: operations["connection.verify_connection"];
   };
+  "/api/v1/tenant/connections/{id}/{secret_key}/rotate": {
+    /** Rotate a generated secret value. */
+    put: operations["connection.rotate_secret"];
+  };
   "/api/v1/tenant/policies": {
     /** List policy references. */
     get: operations["policy.list_policy_references"];
@@ -71,6 +75,10 @@ export interface paths {
   "/api/v1/tenant/policies/{id}": {
     /** Remove policy reference. */
     delete: operations["policy.delete_policy_reference"];
+  };
+  "/api/v1/tenant/policies/{policy_ref.id}": {
+    /** Update a policy reference. */
+    patch: operations["policy.update_policy_reference"];
   };
   "/api/v1/tenant/profile": {
     /** Returns the tenant profile. */
@@ -288,6 +296,7 @@ export interface components {
     };
     v1ConfigElement: {
       description?: string;
+      generated?: boolean;
       id?: number;
       kind?: components["schemas"]["v1ConfigElementKind"];
       mode?: components["schemas"]["v1DisplayMode"];
@@ -339,6 +348,9 @@ export interface components {
       | "DISPLAY_MODE_UNKNOWN"
       | "DISPLAY_MODE_NORMAL"
       | "DISPLAY_MODE_MASKED";
+    v1Fields: {
+      mask?: string;
+    };
     v1GetAccountResponse: {
       result?: components["schemas"]["v1Account"];
     };
@@ -418,8 +430,12 @@ export interface components {
     };
     v1PolicyRef: {
       connection_id?: string;
+      decision_logging?: boolean;
       id?: string;
       name?: string;
+      registry_connection_id?: string;
+      registry_image?: string;
+      registry_tag?: string;
       source_name?: string;
       source_url?: string;
     };
@@ -444,6 +460,9 @@ export interface components {
       url?: string;
     };
     v1RespondToInviteResponse: { [key: string]: unknown };
+    v1RotateSecretResponse: {
+      result?: components["schemas"]["v1Connection"];
+    };
     v1SystemInfo: {
       created_at?: string;
       instance_id?: string;
@@ -475,6 +494,9 @@ export interface components {
     v1UpdateAccountResponse: { [key: string]: unknown };
     v1UpdateConnectionResponse: {
       id?: string;
+    };
+    v1UpdatePolicyRefResponse: {
+      results?: { [key: string]: unknown };
     };
     v1VerifyConnectionResponse: {
       status?: components["schemas"]["rpcStatus"];
@@ -845,6 +867,29 @@ export interface operations {
       };
     };
   };
+  /** Rotate a generated secret value. */
+  "connection.rotate_secret": {
+    parameters: {
+      path: {
+        id: string;
+        secret_key: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1RotateSecretResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
   /** List policy references. */
   "policy.list_policy_references": {
     responses: {
@@ -908,6 +953,36 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["rpcStatus"];
         };
+      };
+    };
+  };
+  /** Update a policy reference. */
+  "policy.update_policy_reference": {
+    parameters: {
+      path: {
+        "policy_ref.id": string;
+      };
+      query: {
+        "update_mask.mask"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1UpdatePolicyRefResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["v1PolicyRef"];
       };
     };
   };
