@@ -1,6 +1,6 @@
 {
   "name": "@aserto/console-type-definitions",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "",
   "types": "index.d.ts",
   "sideEffects": false,
@@ -9,7 +9,7 @@
     "generated/"
   ],
   "scripts": {
-    "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth",
+    "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth && npm run generate:specs:opcr",
     "generate:specs:tenant": "openapi-typescript https://tenant.prod.aserto.com/openapi.json --output ./generated/tenant.ts",
     "generate:specs:auth": "openapi-typescript https://authorizer.prod.aserto.com/openapi.json --output ./generated/authorizer.ts",
     "generate:specs:opcr": "openapi-typescript https://api.opcr.io/openapi.json  --output ./generated/opcr.ts"
