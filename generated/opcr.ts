@@ -5,12 +5,16 @@
 
 export interface paths {
   "/api/v1/registry/images": {
-    /** Lists the policy images available for the tenant. */
+    /** Lists all policy images available for the account. */
     get: operations["registry.list_images"];
   };
   "/api/v1/registry/images/{organization}": {
     /** Creates an empty policy image. */
     post: operations["registry.create_repository"];
+  };
+  "/api/v1/registry/images/{organization}/public": {
+    /** Lists all policy images available for the organization. */
+    get: operations["registry.list_public_images"];
   };
   "/api/v1/registry/images/{organization}/{image}": {
     /** Removes a policy image. */
@@ -19,6 +23,22 @@ export interface paths {
   "/api/v1/registry/images/{organization}/{image}/visibility": {
     /** If an image is public, it means it's world-readable. Anyone can read it. */
     post: operations["registry.set_image_visibility"];
+  };
+  "/api/v1/registry/organizations": {
+    /** Lists all organizations that the caller is a member of. */
+    get: operations["registry.list_organizations"];
+  };
+  "/api/v1/registry/organizations/public": {
+    /** Lists all organizations that have public repos. */
+    get: operations["registry.list_public_organizations"];
+  };
+  "/api/v1/registry/{organization}/read-access-token": {
+    /** This token can be used to read images. */
+    get: operations["registry.get_read_access_token"];
+  };
+  "/api/v1/registry/{organization}/write-access-token": {
+    /** Gets an access token for reading and writing to the registry. */
+    get: operations["registry.get_write_access_token"];
   };
 }
 
@@ -36,12 +56,42 @@ export interface components {
     v1CreateImageResponse: {
       result?: { [key: string]: unknown };
     };
+    v1GetReadAccessTokenResponse: {
+      token?: string;
+    };
+    v1GetWriteAccessTokenResponse: {
+      token?: string;
+    };
     v1ListImagesResponse: {
       images?: components["schemas"]["v1PolicyImage"][];
+    };
+    v1ListOrgsResponse: {
+      orgs?: components["schemas"]["v1RegistryOrg"][];
+      page?: components["schemas"]["v1PaginationResponse"];
+    };
+    v1ListPublicImagesResponse: {
+      images?: components["schemas"]["v1PolicyImage"][];
+      page?: components["schemas"]["v1PaginationResponse"];
+    };
+    v1ListPublicOrgsResponse: {
+      orgs?: components["schemas"]["v1RegistryOrg"][];
+      page?: components["schemas"]["v1PaginationResponse"];
+    };
+    v1PaginationRequest: {
+      size?: number;
+      token?: string;
+    };
+    v1PaginationResponse: {
+      next_token?: string;
+      result_size?: number;
+      total_size?: number;
     };
     v1PolicyImage: {
       name?: string;
       public?: boolean;
+    };
+    v1RegistryOrg: {
+      name?: string;
     };
     v1RemoveImageResponse: {
       result?: { [key: string]: unknown };
@@ -53,7 +103,7 @@ export interface components {
 }
 
 export interface operations {
-  /** Lists the policy images available for the tenant. */
+  /** Lists all policy images available for the account. */
   "registry.list_images": {
     responses: {
       /** A successful response. */
@@ -95,6 +145,32 @@ export interface operations {
       content: {
         "application/json": {
           image?: components["schemas"]["v1PolicyImage"];
+        };
+      };
+    };
+  };
+  /** Lists all policy images available for the organization. */
+  "registry.list_public_images": {
+    parameters: {
+      path: {
+        organization: string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListPublicImagesResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
         };
       };
     };
@@ -151,6 +227,96 @@ export interface operations {
       content: {
         "application/json": {
           public?: boolean;
+        };
+      };
+    };
+  };
+  /** Lists all organizations that the caller is a member of. */
+  "registry.list_organizations": {
+    parameters: {
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListOrgsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Lists all organizations that have public repos. */
+  "registry.list_public_organizations": {
+    parameters: {
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListPublicOrgsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** This token can be used to read images. */
+  "registry.get_read_access_token": {
+    parameters: {
+      path: {
+        organization: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1GetReadAccessTokenResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Gets an access token for reading and writing to the registry. */
+  "registry.get_write_access_token": {
+    parameters: {
+      path: {
+        organization: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1GetWriteAccessTokenResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
         };
       };
     };
