@@ -1,0 +1,64 @@
+name: ci
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      grpc_openapi_commit_hash:
+        description: 'Commit hash for which to generate type definitions'
+        required: true
+      proto_version:
+        description: 'The proto version that is being represented. This will become the version for this repo.'
+        required: true
+
+env:
+  VAULT_ADDR: https://vault.eng.aserto.com/
+  VAULT_TOKEN:  ${{ secrets.VAULT_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read Configuration
+        uses: hashicorp/vault-action@v2.1.0
+        id: vault
+        with:
+          url: ${{ env.VAULT_ADDR }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: |
+            kv/data/github    "USERNAME"          | USERNAME;
+            kv/data/github    "READ_WRITE_TOKEN"  | READ_WRITE_TOKEN;
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Environment
+        run: |
+            git config --global url."git@github.com:".insteadOf https://github.com/
+            git config --global user.email "github-bot@aserto.com"
+            git config --global user.name "Aserto Bot"
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: yarn install --frozen-lockfile
+
+      - name: Generate commit_hash.sh
+        run: echo "COMMIT_HASH=${COMMIT_HASH}\n" >> downloaded/commit_hash.sh
+        shell: bash
+        env:
+          COMMIT_HASH: ${{ github.event.inputs.grpc_openapi_commit_hash }}
+
+      - name: Generate
+        run: generate.sh
+
+      - name: Commit changes
+        if: github.event_name == 'workflow_dispatch'
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          add: '.'
+          tag: '${{ github.event.inputs.proto_version }} --force'

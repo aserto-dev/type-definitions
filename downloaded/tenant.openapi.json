@@ -1,0 +1,2501 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }",
+        "properties": {
+          "type_url": {
+            "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Must be a valid serialized protocol buffer of the above specified type.",
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "protobufNullValue": {
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "type": "string"
+      },
+      "rpcStatus": {
+        "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). Each `Status` message contains\nthree pieces of data: error code, error message, and error details.\n\nYou can find out more about this error model and how to work with it in the\n[API Design Guide](https://cloud.google.com/apis/design/errors).",
+        "properties": {
+          "code": {
+            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].",
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\n[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1Account": {
+        "properties": {
+          "default_tenant": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "registration_date": {
+            "format": "int64",
+            "type": "string"
+          },
+          "tenants": {
+            "items": {
+              "$ref": "#/components/schemas/v1Tenant"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1BuildInfo": {
+        "properties": {
+          "arch": {
+            "type": "string"
+          },
+          "commit": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "os": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ClaimTenantRequest": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ClaimTenantResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ConfigElement": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "generated": {
+            "type": "boolean"
+          },
+          "id": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/v1ConfigElementKind"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/v1DisplayMode"
+          },
+          "name": {
+            "type": "string"
+          },
+          "read_only": {
+            "type": "boolean"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v1ConfigElementType"
+          },
+          "usage": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ConfigElementKind": {
+        "default": "CONFIG_ELEMENT_KIND_UNKNOWN",
+        "enum": [
+          "CONFIG_ELEMENT_KIND_UNKNOWN",
+          "CONFIG_ELEMENT_KIND_ATTRIBUTE",
+          "CONFIG_ELEMENT_KIND_SECRET",
+          "CONFIG_ELEMENT_KIND_CERTIFICATE"
+        ],
+        "type": "string"
+      },
+      "v1ConfigElementType": {
+        "default": "CONFIG_ELEMENT_TYPE_UNKNOWN",
+        "enum": [
+          "CONFIG_ELEMENT_TYPE_UNKNOWN",
+          "CONFIG_ELEMENT_TYPE_STRING",
+          "CONFIG_ELEMENT_TYPE_INTEGER",
+          "CONFIG_ELEMENT_TYPE_BOOLEAN"
+        ],
+        "type": "string"
+      },
+      "v1Connection": {
+        "properties": {
+          "config": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/v1ProviderKind"
+          },
+          "last_verification_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/v1Metadata"
+          },
+          "name": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "system": {
+            "type": "boolean"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1ConnectionType": {
+        "default": "CONNECTION_TYPE_UNKNOWN",
+        "enum": [
+          "CONNECTION_TYPE_UNKNOWN",
+          "CONNECTION_TYPE_SIMPLE",
+          "CONNECTION_TYPE_OAUTH"
+        ],
+        "type": "string"
+      },
+      "v1CreateConnectionResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1CreatePolicyRefResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1CreateRepoResponse": {
+        "type": "object"
+      },
+      "v1DeleteConnectionResponse": {
+        "properties": {
+          "results": {}
+        },
+        "type": "object"
+      },
+      "v1DeletePolicyRefResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DisplayMode": {
+        "default": "DISPLAY_MODE_UNKNOWN",
+        "enum": [
+          "DISPLAY_MODE_UNKNOWN",
+          "DISPLAY_MODE_NORMAL",
+          "DISPLAY_MODE_MASKED",
+          "DISPLAY_MODE_HIDDEN"
+        ],
+        "type": "string"
+      },
+      "v1Fields": {
+        "properties": {
+          "mask": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetAccountResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1Account"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetConnectionResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1Connection"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetInvitesResponse": {
+        "properties": {
+          "invites": {
+            "items": {
+              "$ref": "#/components/schemas/v1Invite"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetProfileResponse": {
+        "properties": {
+          "repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
+            },
+            "type": "array"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/v1Tenant"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetProviderResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1Provider"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1InfoResponse": {
+        "properties": {
+          "build": {
+            "$ref": "#/components/schemas/v1BuildInfo"
+          },
+          "system": {
+            "$ref": "#/components/schemas/v1SystemInfo"
+          },
+          "version": {
+            "$ref": "#/components/schemas/v1VersionInfo"
+          }
+        },
+        "type": "object"
+      },
+      "v1Invite": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "invited_by": {
+            "type": "string"
+          },
+          "responded_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/v1InviteStatus"
+          }
+        },
+        "type": "object"
+      },
+      "v1InviteStatus": {
+        "default": "INVITE_STATUS_UNKNOWN",
+        "enum": [
+          "INVITE_STATUS_UNKNOWN",
+          "INVITE_STATUS_ACCEPTED",
+          "INVITE_STATUS_DECLINED",
+          "INVITE_STATUS_EXPIRED",
+          "INVITE_STATUS_CANCELED"
+        ],
+        "type": "string"
+      },
+      "v1InviteUserRequest": {
+        "properties": {
+          "account_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1InviteUserResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1IsRepoConnectedResponse": {
+        "properties": {
+          "connected": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListConnectionsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1Connection"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListInvitesResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1TenantInvite"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListOrgResponse": {
+        "properties": {
+          "orgs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListPolicyRefsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyRef"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListProviderKindsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListProvidersResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1Provider"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRepoResponse": {
+        "properties": {
+          "repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListTemplatesResponse": {
+        "properties": {
+          "repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1Metadata": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "deleted_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1OPAConfig": {
+        "properties": {
+          "discovery": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1OPADiscoveryResponse": {
+        "properties": {
+          "opa": {
+            "$ref": "#/components/schemas/v1OPAConfig"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyRef": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "decision_logging": {
+            "title": "Configuration for enabling/disabling decision logging",
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "registry_connection_id": {
+            "title": "Configuration for linking a policy image from an OCI registry to a policy ref",
+            "type": "string"
+          },
+          "registry_image": {
+            "type": "string"
+          },
+          "registry_org": {
+            "type": "string"
+          },
+          "registry_tag": {
+            "type": "string"
+          },
+          "source_name": {
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Configuration for policy source code",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1Provider": {
+        "properties": {
+          "config": {
+            "items": {
+              "$ref": "#/components/schemas/v1ConfigElement"
+            },
+            "type": "array"
+          },
+          "connection_type": {
+            "$ref": "#/components/schemas/v1ConnectionType"
+          },
+          "description": {
+            "type": "string"
+          },
+          "display_attributes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/v1ProviderKind"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ProviderKind": {
+        "default": "PROVIDER_KIND_UNKNOWN",
+        "enum": [
+          "PROVIDER_KIND_UNKNOWN",
+          "PROVIDER_KIND_IDP",
+          "PROVIDER_KIND_SCC",
+          "PROVIDER_KIND_POLICY_REGISTRY",
+          "PROVIDER_KIND_AUTHORIZER",
+          "PROVIDER_KIND_DECISION_LOGS",
+          "PROVIDER_KIND_DIRECTORY",
+          "PROVIDER_KIND_DISCOVERY"
+        ],
+        "type": "string"
+      },
+      "v1RemoveMemberResponse": {
+        "type": "object"
+      },
+      "v1Repo": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RespondToInviteResponse": {
+        "type": "object"
+      },
+      "v1RotateSecretResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1Connection"
+          }
+        },
+        "type": "object"
+      },
+      "v1SignupAccountRequest": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "recaptcha": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1SignupAccountResponse": {
+        "type": "object"
+      },
+      "v1SystemInfo": {
+        "properties": {
+          "created_at": {
+            "type": "string"
+          },
+          "instance_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1Tenant": {
+        "properties": {
+          "connections": {
+            "items": {
+              "$ref": "#/components/schemas/v1Connection"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/v1TenantMember"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1TenantAvailability": {
+        "default": "TENANT_AVAILABILITY_UNKNOWN",
+        "enum": [
+          "TENANT_AVAILABILITY_UNKNOWN",
+          "TENANT_AVAILABILITY_AVAILABLE",
+          "TENANT_AVAILABILITY_UNAVAILABLE",
+          "TENANT_AVAILABILITY_INVALID",
+          "TENANT_AVAILABILITY_PROFANE",
+          "TENANT_AVAILABILITY_RESERVED"
+        ],
+        "type": "string"
+      },
+      "v1TenantAvailableResponse": {
+        "properties": {
+          "availability": {
+            "$ref": "#/components/schemas/v1TenantAvailability"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1TenantInvite": {
+        "properties": {
+          "invite": {
+            "$ref": "#/components/schemas/v1Invite"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/v1Tenant"
+          }
+        },
+        "type": "object"
+      },
+      "v1TenantMember": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1UpdateAccountResponse": {
+        "type": "object"
+      },
+      "v1UpdateConnectionResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1UpdatePolicyRefResponse": {
+        "properties": {
+          "results": {}
+        },
+        "type": "object"
+      },
+      "v1VerifyConnectionResponse": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/rpcStatus"
+          }
+        },
+        "type": "object"
+      },
+      "v1VersionInfo": {
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "system": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "bearerFormat": "JWT",
+        "description": "Aserto JWT token",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Tenant service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Tenant",
+    "version": "v0.1.33"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/account": {
+      "get": {
+        "description": "Returns account information of given user identity: account id, tenant membership and default tenant id.",
+        "operationId": "account.get_account",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetAccountResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Get account info",
+        "tags": [
+          "account"
+        ]
+      },
+      "post": {
+        "description": "Update account information of given user identity.",
+        "operationId": "account.update_account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1Account"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1UpdateAccountResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Update account",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/api/v1/account/invites": {
+      "get": {
+        "description": "Returns tenant invitations collection for given user identity.",
+        "operationId": "account.list_invites",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListInvitesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "List invites",
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/api/v1/account/signup": {
+      "post": {
+        "description": "Sign up for an Aserto account with the given email address.",
+        "operationId": "account.signup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1SignupAccountRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SignupAccountResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [],
+        "summary": "Signup account request",
+        "tags": [
+          "signup"
+        ]
+      }
+    },
+    "/api/v1/info": {
+      "get": {
+        "description": "Return endpoint versio information.",
+        "operationId": "info.info",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1InfoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [],
+        "summary": "Info endpoint",
+        "tags": [
+          "info"
+        ]
+      }
+    },
+    "/api/v1/onboarding/available/{name}": {
+      "get": {
+        "description": "Verifies if given tenant name is available.",
+        "operationId": "onboarding.tenant_available",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1TenantAvailableResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Tenant availability check",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/v1/onboarding/claim": {
+      "post": {
+        "description": "Claim tenant name.",
+        "operationId": "onboarding.claim_tenant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1ClaimTenantRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ClaimTenantResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Claim tenant",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/v1/onboarding/invites": {
+      "post": {
+        "description": "Invite user to join aserto.",
+        "operationId": "onboarding.invite_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1InviteUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1InviteUserResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Invite user",
+        "tags": [
+          "onboarding"
+        ]
+      }
+    },
+    "/api/v1/providers": {
+      "get": {
+        "description": "Returns the collection of providers.",
+        "operationId": "provider.list_providers",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "schema": {
+              "default": "PROVIDER_KIND_UNKNOWN",
+              "enum": [
+                "PROVIDER_KIND_UNKNOWN",
+                "PROVIDER_KIND_IDP",
+                "PROVIDER_KIND_SCC",
+                "PROVIDER_KIND_POLICY_REGISTRY",
+                "PROVIDER_KIND_AUTHORIZER",
+                "PROVIDER_KIND_DECISION_LOGS",
+                "PROVIDER_KIND_DIRECTORY",
+                "PROVIDER_KIND_DISCOVERY"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListProvidersResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "List providers",
+        "tags": [
+          "provider"
+        ]
+      }
+    },
+    "/api/v1/providers/kinds": {
+      "get": {
+        "description": "Returns the collection of provider kinds (types).",
+        "operationId": "provider.list_provider_kinds",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListProviderKindsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "List provider kinds",
+        "tags": [
+          "provider"
+        ]
+      }
+    },
+    "/api/v1/providers/{id}": {
+      "get": {
+        "description": "Returns the meta describing of a provider.",
+        "operationId": "provider.get_provider",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "schema": {
+              "default": "PROVIDER_KIND_UNKNOWN",
+              "enum": [
+                "PROVIDER_KIND_UNKNOWN",
+                "PROVIDER_KIND_IDP",
+                "PROVIDER_KIND_SCC",
+                "PROVIDER_KIND_POLICY_REGISTRY",
+                "PROVIDER_KIND_AUTHORIZER",
+                "PROVIDER_KIND_DECISION_LOGS",
+                "PROVIDER_KIND_DIRECTORY",
+                "PROVIDER_KIND_DISCOVERY"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetProviderResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Get provider",
+        "tags": [
+          "provider"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections": {
+      "get": {
+        "description": "Returns the collection of connections for given tenant.",
+        "operationId": "connection.list_connections",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "schema": {
+              "default": "PROVIDER_KIND_UNKNOWN",
+              "enum": [
+                "PROVIDER_KIND_UNKNOWN",
+                "PROVIDER_KIND_IDP",
+                "PROVIDER_KIND_SCC",
+                "PROVIDER_KIND_POLICY_REGISTRY",
+                "PROVIDER_KIND_AUTHORIZER",
+                "PROVIDER_KIND_DECISION_LOGS",
+                "PROVIDER_KIND_DIRECTORY",
+                "PROVIDER_KIND_DISCOVERY"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListConnectionsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List connections",
+        "tags": [
+          "connection"
+        ]
+      },
+      "post": {
+        "description": "Creates a new connection instance of a given connection kind.",
+        "operationId": "connection.create_connection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1Connection"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreateConnectionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/{connection.id}": {
+      "put": {
+        "description": "Update existing connection definition for the given connection id.",
+        "operationId": "connection.update_connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection.id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "force",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1Connection"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1UpdateConnectionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/{id}": {
+      "delete": {
+        "description": "Removes the connection definition for the given connection id.",
+        "operationId": "connection.delete_connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteConnectionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete connection",
+        "tags": [
+          "connection"
+        ]
+      },
+      "get": {
+        "description": "Returns the connection definition for the given connection id.",
+        "operationId": "connection.get_connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetConnectionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/{id}/verify": {
+      "post": {
+        "description": "Verifiy the configuration settings for the given connection id.",
+        "operationId": "connection.verify_connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1VerifyConnectionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Verify connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/{id}/{secret_key}/rotate": {
+      "put": {
+        "description": "Rotate a generated secret value.",
+        "operationId": "connection.rotate_secret",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "secret_key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RotateSecretResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Rotate connection secret",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/policies": {
+      "get": {
+        "description": "List policy references.",
+        "operationId": "policy.list_policy_references",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListPolicyRefsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List policy references",
+        "tags": [
+          "policy"
+        ]
+      },
+      "post": {
+        "description": "Create policy reference.",
+        "operationId": "policy.create_policy_reference",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "force_reconnect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1PolicyRef"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreatePolicyRefResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create policy reference",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/tenant/policies/{id}": {
+      "delete": {
+        "description": "Remove policy reference.",
+        "operationId": "policy.delete_policy_reference",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeletePolicyRefResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove policy reference",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/tenant/policies/{policy_id}/opa/discovery": {
+      "get": {
+        "description": "Calculates a json configuration file to be used by OPA's discovery plugin.",
+        "operationId": "policy.opa_discovery",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1OPADiscoveryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "OPA discovery configuration for the policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/tenant/policies/{policy_ref.id}": {
+      "patch": {
+        "description": "Update a policy reference.",
+        "operationId": "policy.update_policy_reference",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_ref.id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "update_mask.mask",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1PolicyRef"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1UpdatePolicyRefResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update a policy reference",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/tenant/profile": {
+      "get": {
+        "description": "Returns the tenant profile.",
+        "operationId": "profile.get_profile",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetProfileResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get tenant profile",
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/api/v1/tenant/profile/invites": {
+      "get": {
+        "description": "Returns collection of invitation for given tenant.",
+        "operationId": "profile.get_invites",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetInvitesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get invites",
+        "tags": [
+          "profile"
+        ]
+      },
+      "post": {
+        "description": "Invite user to tenant.",
+        "operationId": "profile.invite_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1InviteUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1InviteUserResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Invite user to tenant",
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/api/v1/tenant/profile/invites/{id}": {
+      "post": {
+        "description": "Respond to tenant invitation.",
+        "operationId": "profile.respond_to_invite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "status": {
+                    "$ref": "#/components/schemas/v1InviteStatus"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RespondToInviteResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Respond to tenant invite",
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/api/v1/tenant/profile/members/{account_id}": {
+      "delete": {
+        "description": "Remove member from tenant.",
+        "operationId": "profile.remove_member",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RemoveMemberResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove member",
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/orgs": {
+      "get": {
+        "description": "Returns the collection organizations for a given SCC connection.",
+        "operationId": "scc.list_orgs",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListOrgResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List organizations",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/profile": {
+      "get": {
+        "description": "Returns profile information for a given SCC connection instance.",
+        "operationId": "scc.get_profile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetProfileResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get profile",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/repos/{owner}": {
+      "get": {
+        "description": "Returns the collection repostories for a given SCC connection instance.",
+        "operationId": "scc.list_repos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListRepoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List repositories",
+        "tags": [
+          "scc"
+        ]
+      },
+      "post": {
+        "description": "Create a new source repository instance for a given connection instance.",
+        "operationId": "scc.create_repo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "repo": {
+                    "type": "string"
+                  },
+                  "template": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreateRepoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create repository",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/repos/{owner}/{repo}/connected": {
+      "get": {
+        "description": "Verify if the given repository is connected.",
+        "operationId": "scc.is_repo_connected",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1IsRepoConnectedResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Is repository connected check",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/templates": {
+      "get": {
+        "description": "Returns the collection template repostories for a given SCC connection instance.",
+        "operationId": "scc.list_templates",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListTemplatesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List templates",
+        "tags": [
+          "scc"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Tenant service",
+      "url": "https://tenant.prod.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Info"
+    }
+  ]
+}

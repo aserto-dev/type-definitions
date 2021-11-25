@@ -14,6 +14,10 @@ export interface paths {
     /** Returns tenant invitations collection for given user identity. */
     get: operations["account.list_invites"];
   };
+  "/api/v1/account/signup": {
+    /** Sign up for an Aserto account with the given email address. */
+    post: operations["account.signup"];
+  };
   "/api/v1/info": {
     /** Return endpoint versio information. */
     get: operations["info.info"];
@@ -75,6 +79,10 @@ export interface paths {
   "/api/v1/tenant/policies/{id}": {
     /** Remove policy reference. */
     delete: operations["policy.delete_policy_reference"];
+  };
+  "/api/v1/tenant/policies/{policy_id}/opa/discovery": {
+    /** Calculates a json configuration file to be used by OPA's discovery plugin. */
+    get: operations["policy.opa_discovery"];
   };
   "/api/v1/tenant/policies/{policy_ref.id}": {
     /** Update a policy reference. */
@@ -339,15 +347,16 @@ export interface components {
     };
     v1CreateRepoResponse: { [key: string]: unknown };
     v1DeleteConnectionResponse: {
-      results?: { [key: string]: unknown };
+      results?: unknown;
     };
     v1DeletePolicyRefResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DisplayMode:
       | "DISPLAY_MODE_UNKNOWN"
       | "DISPLAY_MODE_NORMAL"
-      | "DISPLAY_MODE_MASKED";
+      | "DISPLAY_MODE_MASKED"
+      | "DISPLAY_MODE_HIDDEN";
     v1Fields: {
       mask?: string;
     };
@@ -424,9 +433,16 @@ export interface components {
       repos?: components["schemas"]["v1Repo"][];
     };
     v1Metadata: {
+      connection_id?: string;
       created_at?: string;
       deleted_at?: string;
       updated_at?: string;
+    };
+    v1OPAConfig: {
+      discovery?: { [key: string]: unknown };
+    };
+    v1OPADiscoveryResponse: {
+      opa?: components["schemas"]["v1OPAConfig"];
     };
     v1PolicyRef: {
       connection_id?: string;
@@ -435,6 +451,7 @@ export interface components {
       name?: string;
       registry_connection_id?: string;
       registry_image?: string;
+      registry_org?: string;
       registry_tag?: string;
       source_name?: string;
       source_url?: string;
@@ -453,7 +470,10 @@ export interface components {
       | "PROVIDER_KIND_IDP"
       | "PROVIDER_KIND_SCC"
       | "PROVIDER_KIND_POLICY_REGISTRY"
-      | "PROVIDER_KIND_AUTHORIZER";
+      | "PROVIDER_KIND_AUTHORIZER"
+      | "PROVIDER_KIND_DECISION_LOGS"
+      | "PROVIDER_KIND_DIRECTORY"
+      | "PROVIDER_KIND_DISCOVERY";
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
       name?: string;
@@ -463,6 +483,11 @@ export interface components {
     v1RotateSecretResponse: {
       result?: components["schemas"]["v1Connection"];
     };
+    v1SignupAccountRequest: {
+      email?: string;
+      recaptcha?: string;
+    };
+    v1SignupAccountResponse: { [key: string]: unknown };
     v1SystemInfo: {
       created_at?: string;
       instance_id?: string;
@@ -496,7 +521,7 @@ export interface components {
       id?: string;
     };
     v1UpdatePolicyRefResponse: {
-      results?: { [key: string]: unknown };
+      results?: unknown;
     };
     v1VerifyConnectionResponse: {
       status?: components["schemas"]["rpcStatus"];
@@ -562,6 +587,28 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["rpcStatus"];
         };
+      };
+    };
+  };
+  /** Sign up for an Aserto account with the given email address. */
+  "account.signup": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1SignupAccountResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["v1SignupAccountRequest"];
       };
     };
   };
@@ -657,7 +704,10 @@ export interface operations {
           | "PROVIDER_KIND_IDP"
           | "PROVIDER_KIND_SCC"
           | "PROVIDER_KIND_POLICY_REGISTRY"
-          | "PROVIDER_KIND_AUTHORIZER";
+          | "PROVIDER_KIND_AUTHORIZER"
+          | "PROVIDER_KIND_DECISION_LOGS"
+          | "PROVIDER_KIND_DIRECTORY"
+          | "PROVIDER_KIND_DISCOVERY";
       };
     };
     responses: {
@@ -704,7 +754,10 @@ export interface operations {
           | "PROVIDER_KIND_IDP"
           | "PROVIDER_KIND_SCC"
           | "PROVIDER_KIND_POLICY_REGISTRY"
-          | "PROVIDER_KIND_AUTHORIZER";
+          | "PROVIDER_KIND_AUTHORIZER"
+          | "PROVIDER_KIND_DECISION_LOGS"
+          | "PROVIDER_KIND_DIRECTORY"
+          | "PROVIDER_KIND_DISCOVERY";
       };
     };
     responses: {
@@ -731,7 +784,10 @@ export interface operations {
           | "PROVIDER_KIND_IDP"
           | "PROVIDER_KIND_SCC"
           | "PROVIDER_KIND_POLICY_REGISTRY"
-          | "PROVIDER_KIND_AUTHORIZER";
+          | "PROVIDER_KIND_AUTHORIZER"
+          | "PROVIDER_KIND_DECISION_LOGS"
+          | "PROVIDER_KIND_DIRECTORY"
+          | "PROVIDER_KIND_DISCOVERY";
       };
     };
     responses: {
@@ -946,6 +1002,28 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1DeletePolicyRefResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Calculates a json configuration file to be used by OPA's discovery plugin. */
+  "policy.opa_discovery": {
+    parameters: {
+      path: {
+        policy_id: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1OPADiscoveryResponse"];
         };
       };
       /** An unexpected error response. */
