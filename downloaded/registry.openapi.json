@@ -1,0 +1,714 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1CreateImageResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1GetReadAccessTokenResponse": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetWriteAccessTokenResponse": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListImagesResponse": {
+        "properties": {
+          "images": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyImage"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListOrgsResponse": {
+        "properties": {
+          "orgs": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryOrg"
+            },
+            "type": "array"
+          },
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListPublicImagesResponse": {
+        "properties": {
+          "images": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyImage"
+            },
+            "type": "array"
+          },
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListPublicOrgsResponse": {
+        "properties": {
+          "orgs": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryOrg"
+            },
+            "type": "array"
+          },
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationRequest": {
+        "properties": {
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationResponse": {
+        "properties": {
+          "next_token": {
+            "type": "string"
+          },
+          "result_size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "total_size": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyImage": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "public": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryOrg": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RemoveImageResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1SetImageVisibilityResponse": {
+        "properties": {
+          "public": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "APIKey": {
+        "in": "header",
+        "name": "authorization",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://www.openpolicyregistry.io/docs/intro"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://www.openpolicyregistry.io/"
+    },
+    "description": "Open Policy Registry Extensions",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://www.openpolicyregistry.io/",
+    "title": "Registry",
+    "version": "v0.1.33"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/registry/images": {
+      "get": {
+        "description": "Lists all policy images available for the account.",
+        "operationId": "registry.list_images",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListImagesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "List Images",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/images/{organization}": {
+      "post": {
+        "description": "Creates an empty policy image.",
+        "operationId": "registry.create_repository",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "image": {
+                    "$ref": "#/components/schemas/v1PolicyImage"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreateImageResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "Create Image",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/images/{organization}/public": {
+      "get": {
+        "description": "Lists all policy images available for the organization.",
+        "operationId": "registry.list_public_images",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListPublicImagesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "List public images for an org",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/images/{organization}/{image}": {
+      "delete": {
+        "description": "Removes a policy image.",
+        "operationId": "registry.remove_image",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "image",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RemoveImageResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "Remove Image",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/images/{organization}/{image}/visibility": {
+      "post": {
+        "description": "If an image is public, it means it's world-readable. Anyone can read it.",
+        "operationId": "registry.set_image_visibility",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "image",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "public": {
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetImageVisibilityResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "Makes an image public or private.",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/organizations": {
+      "get": {
+        "description": "Lists all organizations that the caller is a member of.",
+        "operationId": "registry.list_organizations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListOrgsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "List organizations.",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/organizations/public": {
+      "get": {
+        "description": "Lists all organizations that have public repos.",
+        "operationId": "registry.list_public_organizations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListPublicOrgsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "List organizations that have public repos",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{organization}/read-access-token": {
+      "get": {
+        "description": "This token can be used to read images.",
+        "operationId": "registry.get_read_access_token",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetReadAccessTokenResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "Gets a read access token for interacting with the registry in a read-only manner.",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{organization}/write-access-token": {
+      "get": {
+        "description": "Gets an access token for reading and writing to the registry.",
+        "operationId": "registry.get_write_access_token",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetWriteAccessTokenResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "Gets an access token for interacting with the registry.",
+        "tags": [
+          "registry"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "APIKey": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Open Policy Registry API Extensions",
+      "url": "https://api.opcr.io"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Registry"
+    }
+  ]
+}
