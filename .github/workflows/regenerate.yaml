@@ -56,7 +56,7 @@ jobs:
           COMMIT_HASH: ${{ github.event.inputs.openapi_grpc_sha }}
 
       - name: Generate
-        run: generate.sh
+        run: ./generate.sh
 
       - name: Commit changes
         if: github.event_name == 'workflow_dispatch'
