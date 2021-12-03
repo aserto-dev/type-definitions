@@ -69,12 +69,12 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ steps.vault.outputs.READ_WRITE_TOKEN }}
-          commit-message: Regenerate Type Definitions for Proto ${{ github.events.inputs.proto_ref }}
+          commit-message: Regenerate Type Definitions for Proto ${{ github.event.inputs.proto_ref }}
           signoff: false
-          branch: proto/${{ github.events.inputs.proto_ref }}
+          branch: proto/${{ github.event.inputs.proto_ref }}
           delete-branch: true
-          title: 'Auto-Regenerate: ${{ github.events.inputs.proto_ref }}'
+          title: 'Auto-Regenerate: ${{ github.event.inputs.proto_ref }}'
           body: |
-            Auto-generated PR to create Console Type Definitions for ${{ github.events.inputs.proto_ref }}
+            Auto-generated PR to create Console Type Definitions for ${{ github.event.inputs.proto_ref }}
             - Upon approval, tag the resulting commit with the version from this ref
           draft: false
