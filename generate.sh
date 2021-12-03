@@ -13,12 +13,12 @@ if [[ -n "${FAIL}" ]]; then
     exit $FAIL
 fi
 
-rm downloaded/*.openapi.json
+rm ./downloaded/*.openapi.json
 
 for SERVICE in "tenant" "authorizer" "registry"
 do
     TARGET=https://api.github.com/repos/aserto-dev/openapi-grpc/contents/publish/${SERVICE}/openapi.json?ref=${COMMIT_HASH}
-    OUTPUT_PATH=downloaded/${SERVICE}.openapi.json
+    OUTPUT_PATH=./downloaded/${SERVICE}.openapi.json
 
     echo "CURLing $TARGET to $OUTPUT_PATH"
     curl \
