@@ -26,5 +26,9 @@ do
         -H "Accept: application/vnd.github.v3.raw" \
         "${TARGET}"
 
+    echo "DOWNLOADED CONTENT----------------"
+    more ${OUTPUT_PATH}
+    echo "DOWNLOADED CONTENT----------------"
+    
     yarn openapi-typescript ${OUTPUT_PATH} --output ./generated/${SERVICE}.ts
 done
