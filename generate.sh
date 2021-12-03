@@ -17,11 +17,14 @@ rm downloaded/*.openapi.json
 
 for SERVICE in "tenant" "authorizer" "registry"
 do
+    TARGET=https://api.github.com/repos/aserto-dev/openapi-grpc/contents/publish/${SERVICE}/openapi.json?ref=${COMMIT_HASH}
     OUTPUT_PATH=downloaded/${SERVICE}.openapi.json
+
+    echo "CURLing $TARGET to $OUTPUT_PATH"
     curl \
-        -o ${OUTPUT_PATH} -u "${USERNAME}:${READ_WRITE_TOKEN}" \
+        -o "${OUTPUT_PATH}" -u "${USERNAME}:${READ_WRITE_TOKEN}" \
         -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/aserto-dev/openapi-grpc/contents/publish/${SERVICE}/openapi.json?ref=${COMMIT_HASH}
+        "${TARGET}"
 
     yarn openapi-typescript ${OUTPUT_PATH} --output ./generated/${SERVICE}.ts
 done
