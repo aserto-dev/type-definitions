@@ -55,10 +55,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - name: Generate commit_hash.sh
-        run: echo $'COMMIT_HASH=${COMMIT_HASH}\n' >> downloaded/commit_hash.sh
-        shell: bash
-        env:
-          COMMIT_HASH: ${{ github.event.inputs.openapi_grpc_sha }}
+        run: echo $'COMMIT_HASH=${{ github.event.inputs.openapi_grpc_sha }}\n' > ./downloaded/commit_hash.sh
 
       - name: Generate
         run: ./generate.sh
