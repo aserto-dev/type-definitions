@@ -8,9 +8,6 @@
     "index.d.ts",
     "generated/"
   ],
-  "scripts": {
-    "generate": "./scripts/generate.sh"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aserto-dev/type-definitions.git"

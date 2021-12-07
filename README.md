@@ -18,7 +18,7 @@ Generation is driven by `generate.sh`. This script depends on several environmen
  * COMMIT_HASH: the `aserto-dev/grpc-openapi` commit for which to generate type definitions. This value is stored in `downloaded/commit_hash.sh` to enable build reproducability. That file is re-generated each time this repo's workflow is invoked by the GitHub Workflow Dispatch API.
 
 ### generate.sh
-Generate.sh uses the Environment Variables to download the appropriate openapi.json files into the `downloaded` directory. It then runs `typescript-openapi` to generate the type definitions. 
+Generate.sh uses the Environment Variables to download the appropriate openapi.json files into the `downloaded/specs` directory. It then runs `typescript-openapi` to generate the type definitions. 
 
 ### Local Dev Experience
 To run the script locally, set the USERNAME and READ_WRITE_TOKEN as described above and run `./generate.sh` from the workspace root directory. Because the commit_hash is checked in, the build will be identical to how it occured in the GitHub Workflow to generate this commit. To debug an older build, simply check out that commit and follow these same steps.
