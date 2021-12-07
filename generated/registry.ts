@@ -54,7 +54,7 @@ export interface components {
       message?: string;
     };
     v1CreateImageResponse: {
-      result?: unknown;
+      result?: { [key: string]: unknown };
     };
     v1GetReadAccessTokenResponse: {
       token?: string;
@@ -94,7 +94,7 @@ export interface components {
       name?: string;
     };
     v1RemoveImageResponse: {
-      result?: unknown;
+      result?: { [key: string]: unknown };
     };
     v1SetImageVisibilityResponse: {
       public?: boolean;

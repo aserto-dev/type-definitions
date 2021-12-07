@@ -1,5 +1,5 @@
 #!/bin/bash
-source downloaded/commit_hash.sh
+source scripts/commit_hash.sh
 
 for REQUIRED_ENV in "USERNAME" "READ_WRITE_TOKEN" "COMMIT_HASH"
 do
@@ -15,7 +15,7 @@ fi
 
 rm ./downloaded/*.openapi.json
 
-for SERVICE in "tenant" "authorizer" "registry"
+for SERVICE in "tenant" "authorizer" "registry" "decision_logs"
 do
     TARGET=https://api.github.com/repos/aserto-dev/openapi-grpc/contents/publish/${SERVICE}/openapi.json?ref=${COMMIT_HASH}
     OUTPUT_PATH=./downloaded/${SERVICE}.openapi.json

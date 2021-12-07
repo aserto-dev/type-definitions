@@ -9,10 +9,7 @@
     "generated/"
   ],
   "scripts": {
-    "generate:specs": "npm run generate:specs:tenant && npm run generate:specs:auth && npm run generate:specs:opcr",
-    "generate:specs:tenant": "openapi-typescript https://tenant.prod.aserto.com/openapi.json --output ./generated/tenant.ts",
-    "generate:specs:auth": "openapi-typescript https://authorizer.prod.aserto.com/openapi.json --output ./generated/authorizer.ts",
-    "generate:specs:opcr": "openapi-typescript https://api.opcr.io/openapi.json  --output ./generated/opcr.ts"
+    "generate": "./scripts/generate.sh"
   },
   "repository": {
     "type": "git",
