@@ -1,0 +1,488 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1DecisionLog": {
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1DecisionLogItem": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ExecuteQueryRequest": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationRequest"
+          },
+          "policy_id": {
+            "type": "string"
+          },
+          "top_n": {
+            "format": "int64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1ExecuteQueryResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1Result"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetDecisionLogResponse": {
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/v1DecisionLog"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetUserResponse": {
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/v1User"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListDecisionLogsResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1DecisionLogItem"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListUsersResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1UserItem"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationRequest": {
+        "properties": {
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationResponse": {
+        "properties": {
+          "next_token": {
+            "type": "string"
+          },
+          "result_size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "total_size": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v1Result": {
+        "properties": {
+          "log": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1User": {
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1UserItem": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "DecisionLogsAPIKey": {
+        "in": "header",
+        "name": "authorization",
+        "type": "apiKey"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Authorizer decision logs",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Decision Logs",
+    "version": "v0.1.39"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/decision_logs/decision_logs": {
+      "get": {
+        "description": "Returns a collection of decision logs.",
+        "operationId": "decision_logs.list_decision_logs",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListDecisionLogsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List available decision logs",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    },
+    "/api/v1/decision_logs/decision_logs/{name}": {
+      "get": {
+        "description": "Returns the location of a single decison log instance.",
+        "operationId": "decision_logs.get_decision_log",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetDecisionLogResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get a decision log",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    },
+    "/api/v1/decision_logs/query": {
+      "post": {
+        "description": "Returns a collection of raw decision logs strings matching the query specification.",
+        "operationId": "decision_logs.query",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1ExecuteQueryRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ExecuteQueryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "query decision logs",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    },
+    "/api/v1/decision_logs/users": {
+      "get": {
+        "description": "Returns a collection of users that may be referenced by decision logs.",
+        "operationId": "decision_logs.list_users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListUsersResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List users referenced by decision logs",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    },
+    "/api/v1/decision_logs/users/{id}": {
+      "get": {
+        "description": "Returns the location of a single user that may be referenced by decision logs.",
+        "operationId": "decision_logs.get_user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetUserResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get a user referenced by decision logs",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "DecisionLogsAPIKey": [],
+      "TenantID": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Decision logs service",
+      "url": "https://decision-logs.prod.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "DecisionLogs"
+    }
+  ]
+}
