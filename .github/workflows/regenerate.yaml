@@ -61,7 +61,7 @@ jobs:
           COMMIT_HASH: ${{ github.event.inputs.openapi_grpc_sha }}
 
       - name: Generate
-        run: ./scripts/generate.sh
+        run: ./scripts/generate.sh --fetch-specs
 
       - name: Create Pull Request
         if: github.event_name == 'workflow_dispatch'
