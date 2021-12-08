@@ -1,0 +1,2645 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "protobufNullValue": {
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "type": "string"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1AttrSet": {
+        "properties": {
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "properties": {
+            "type": "object"
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1BuildInfo": {
+        "properties": {
+          "arch": {
+            "type": "string"
+          },
+          "commit": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "os": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1CreateTenantResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1CreateUserResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1User"
+          }
+        },
+        "type": "object"
+      },
+      "v1Decision": {
+        "properties": {
+          "decision": {
+            "type": "string"
+          },
+          "is": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1DecisionTreeOptions": {
+        "properties": {
+          "path_separator": {
+            "$ref": "#/components/schemas/v1PathSeparator"
+          }
+        },
+        "type": "object"
+      },
+      "v1DecisionTreeRequest": {
+        "properties": {
+          "identity_context": {
+            "$ref": "#/components/schemas/v1IdentityContext"
+          },
+          "options": {
+            "$ref": "#/components/schemas/v1DecisionTreeOptions"
+          },
+          "policy_context": {
+            "$ref": "#/components/schemas/v1PolicyContext"
+          },
+          "resource_context": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1DecisionTreeResponse": {
+        "properties": {
+          "path": {
+            "type": "object"
+          },
+          "path_root": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1DeleteApplPermissionResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteApplPropertyResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteApplRoleResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteResourceResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteTenantResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUserApplicationResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUserPermissionResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUserPropertyResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUserResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUserRoleResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v1Fields": {
+        "properties": {
+          "mask": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetApplPermissionsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetApplPropertiesResponse": {
+        "properties": {
+          "results": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetApplRolesResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetIdentityRequest": {
+        "properties": {
+          "identity": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetIdentityResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetModuleResponse": {
+        "properties": {
+          "module": {
+            "$ref": "#/components/schemas/v1Module"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetPoliciesResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "policies": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyItem"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetResourceResponse": {
+        "properties": {
+          "value": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetUserPermissionsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetUserPropertiesResponse": {
+        "properties": {
+          "results": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetUserResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1User"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetUserRolesResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetValueResponse": {
+        "properties": {
+          "value": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1IdentityContext": {
+        "properties": {
+          "identity": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v1IdentityType"
+          }
+        },
+        "type": "object"
+      },
+      "v1IdentityKind": {
+        "default": "IDENTITY_KIND_UNKNOWN",
+        "enum": [
+          "IDENTITY_KIND_UNKNOWN",
+          "IDENTITY_KIND_PID",
+          "IDENTITY_KIND_EMAIL",
+          "IDENTITY_KIND_USERNAME",
+          "IDENTITY_KIND_DN",
+          "IDENTITY_KIND_PHONE"
+        ],
+        "type": "string"
+      },
+      "v1IdentitySource": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/v1IdentityKind"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1IdentityType": {
+        "default": "IDENTITY_TYPE_UNKNOWN",
+        "description": "Identity types, describes the payload type of the identity field inside the IdentityContext message.\n\n - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.\n - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.\n - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.\n - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.",
+        "enum": [
+          "IDENTITY_TYPE_UNKNOWN",
+          "IDENTITY_TYPE_NONE",
+          "IDENTITY_TYPE_SUB",
+          "IDENTITY_TYPE_JWT"
+        ],
+        "type": "string"
+      },
+      "v1InfoResponse": {
+        "properties": {
+          "build": {
+            "$ref": "#/components/schemas/v1BuildInfo"
+          },
+          "system": {
+            "$ref": "#/components/schemas/v1SystemInfo"
+          },
+          "version": {
+            "$ref": "#/components/schemas/v1VersionInfo"
+          }
+        },
+        "type": "object"
+      },
+      "v1IsRequest": {
+        "properties": {
+          "identity_context": {
+            "$ref": "#/components/schemas/v1IdentityContext"
+          },
+          "policy_context": {
+            "$ref": "#/components/schemas/v1PolicyContext"
+          },
+          "resource_context": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1IsResponse": {
+        "properties": {
+          "decisions": {
+            "items": {
+              "$ref": "#/components/schemas/v1Decision"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListPoliciesResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyItem"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListResourcesResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListTenantsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListUserApplicationsResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListUsersResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1User"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1LoadUsersResponse": {
+        "properties": {
+          "created": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "deleted": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "errors": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "received": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "updated": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v1Metadata": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "deleted_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1Module": {
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationRequest": {
+        "properties": {
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationResponse": {
+        "properties": {
+          "next_token": {
+            "type": "string"
+          },
+          "result_size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "total_size": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v1PathSeparator": {
+        "default": "PATH_SEPARATOR_UNKNOWN",
+        "enum": [
+          "PATH_SEPARATOR_UNKNOWN",
+          "PATH_SEPARATOR_DOT",
+          "PATH_SEPARATOR_SLASH"
+        ],
+        "type": "string"
+      },
+      "v1PolicyContext": {
+        "properties": {
+          "decisions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyItem": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1QueryOptions": {
+        "properties": {
+          "instrument": {
+            "type": "boolean"
+          },
+          "metrics": {
+            "type": "boolean"
+          },
+          "trace": {
+            "$ref": "#/components/schemas/v1TraceLevel"
+          },
+          "trace_summary": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "v1QueryRequest": {
+        "properties": {
+          "identity_context": {
+            "$ref": "#/components/schemas/v1IdentityContext"
+          },
+          "input": {
+            "type": "string"
+          },
+          "options": {
+            "$ref": "#/components/schemas/v1QueryOptions"
+          },
+          "policy_context": {
+            "$ref": "#/components/schemas/v1PolicyContext"
+          },
+          "query": {
+            "type": "string"
+          },
+          "resource_context": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1QueryResponse": {
+        "properties": {
+          "metrics": {
+            "type": "object"
+          },
+          "results": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "trace": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "trace_summary": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplPermissionResponse": {
+        "properties": {
+          "permission": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplPermissionsResponse": {
+        "properties": {
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplPropertiesResponse": {
+        "properties": {
+          "properties": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplPropertyResponse": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplRoleResponse": {
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetApplRolesResponse": {
+        "properties": {
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetResourceResponse": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserPermissionResponse": {
+        "properties": {
+          "permission": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserPermissionsResponse": {
+        "properties": {
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserPropertiesResponse": {
+        "properties": {
+          "properties": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserPropertyResponse": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserRoleResponse": {
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1SetUserRolesResponse": {
+        "properties": {
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1SystemInfo": {
+        "properties": {
+          "created_at": {
+            "type": "string"
+          },
+          "instance_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1TraceLevel": {
+        "default": "TRACE_LEVEL_UNKNOWN",
+        "enum": [
+          "TRACE_LEVEL_UNKNOWN",
+          "TRACE_LEVEL_OFF",
+          "TRACE_LEVEL_FULL",
+          "TRACE_LEVEL_NOTES",
+          "TRACE_LEVEL_FAILS"
+        ],
+        "type": "string"
+      },
+      "v1UpdateUserResponse": {
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/v1User"
+          }
+        },
+        "type": "object"
+      },
+      "v1User": {
+        "properties": {
+          "applications": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/v1AttrSet"
+            },
+            "type": "object"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/v1AttrSet"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "identities": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/v1IdentitySource"
+            },
+            "type": "object"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/v1Metadata"
+          },
+          "picture": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1UserExt": {
+        "properties": {
+          "applications": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/v1AttrSet"
+            },
+            "type": "object"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/v1AttrSet"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1VersionInfo": {
+        "properties": {
+          "schema": {
+            "type": "string"
+          },
+          "system": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "AuthorizerAPIKey": {
+        "in": "header",
+        "name": "authorization",
+        "type": "apiKey"
+      },
+      "JWT": {
+        "bearerFormat": "JWT",
+        "description": "Aserto JWT token",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Authorizer service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Authorizer",
+    "version": "v0.1.37"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/authz/decisiontree": {
+      "post": {
+        "description": "Returns decision tree for given identity context.",
+        "operationId": "authorizer.decision_tree",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1DecisionTreeRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DecisionTreeResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "AuthorizerAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Decision tree",
+        "tags": [
+          "authorizer"
+        ]
+      }
+    },
+    "/api/v1/authz/is": {
+      "post": {
+        "description": "Determines if identity context is authorized to access the resource guarded by the given policy.",
+        "operationId": "authorizer.is",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1IsRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1IsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "AuthorizerAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Is (authorized)",
+        "tags": [
+          "authorizer"
+        ]
+      }
+    },
+    "/api/v1/authz/query": {
+      "post": {
+        "description": "Execute query.",
+        "operationId": "authorizer.query",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1QueryRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1QueryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "AuthorizerAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Query",
+        "tags": [
+          "authorizer"
+        ]
+      }
+    },
+    "/api/v1/dir/identities": {
+      "post": {
+        "description": "Return user id for given user identity.",
+        "operationId": "directory.get_identity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1GetIdentityRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetIdentityResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get identity",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users": {
+      "get": {
+        "description": "Returns the collection of users.",
+        "operationId": "directory.list_users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields.mask",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "base",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListUsersResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List users",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}": {
+      "get": {
+        "description": "Returns single user instance.",
+        "operationId": "directory.get_user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "base",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetUserResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get user",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications": {
+      "get": {
+        "description": "Returns the applications collection of given user.",
+        "operationId": "directory.list_user_applications",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListUserApplicationsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List user applications",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}": {
+      "delete": {
+        "description": "Remove application (name) from applications collection of given user.",
+        "operationId": "directory.delete_user_application",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteUserApplicationResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete user application",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/permissions": {
+      "get": {
+        "description": "Returns the application permissions collection of given user.",
+        "operationId": "directory.get_appl_permissions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetApplPermissionsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get application permissions",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set the application permission (name) for given user.",
+        "operationId": "directory.set_appl_permission",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "permission": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetApplPermissionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set application permission",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/permissions/{permission}": {
+      "delete": {
+        "description": "Remove application permission (name) from given user their permissions collection.",
+        "operationId": "directory.delete_appl_permission",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "permission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteApplPermissionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete application permission",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/properties": {
+      "get": {
+        "description": "Returns the application properties collection of given user.",
+        "operationId": "directory.get_appl_properties",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetApplPropertiesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get application properties of user",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set application property (key=value) for given user.",
+        "operationId": "directory.set_appl_property",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetApplPropertyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set application property",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/properties/{key}": {
+      "delete": {
+        "description": "Remove application property (key) from the given user their property collection.",
+        "operationId": "directory.delete_appl_property",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteApplPropertyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete application property",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/roles": {
+      "get": {
+        "description": "Returns the application roles collection of given user.",
+        "operationId": "directory.get_appl_roles",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetApplRolesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get application roles",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set application role (name) for given user.",
+        "operationId": "directory.set_appl_role",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetApplRoleResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set application role",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/applications/{name}/roles/{role}": {
+      "delete": {
+        "description": "Remove application role (name) from given user their roles collection.",
+        "operationId": "directory.delete_appl_role",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "role",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteApplRoleResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete application role",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/permissions": {
+      "get": {
+        "description": "Returns the permissions collection of given user.",
+        "operationId": "directory.get_user_permissions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetUserPermissionsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get user permissions",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set the permission (name) for given user.",
+        "operationId": "directory.set_user_permission",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "permission": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetUserPermissionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set user permission",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/permissions/{permission}": {
+      "delete": {
+        "description": "Remove permission (name) from given user their permissions collection.",
+        "operationId": "directory.delete_user_permission",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "permission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteUserPermissionResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete user permissiomn",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/properties": {
+      "get": {
+        "description": "Returns the properties collection of given user.",
+        "operationId": "directory.get_user_properties",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetUserPropertiesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get user properties",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set property (key=value) for given user.",
+        "operationId": "directory.set_user_property",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetUserPropertyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set user property",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/properties/{key}": {
+      "delete": {
+        "description": "Remove property (key) from the given user their property collection.",
+        "operationId": "directory.delete_user_property",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteUserPropertyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete user property",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/roles": {
+      "get": {
+        "description": "Returns the roles collection of given user.",
+        "operationId": "directory.get_user_roles",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetUserRolesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get user roles",
+        "tags": [
+          "directory"
+        ]
+      },
+      "post": {
+        "description": "Set role (name) for given user.",
+        "operationId": "directory.set_user_role",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1SetUserRoleResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set user role",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/dir/users/{id}/attributes/roles/{role}": {
+      "delete": {
+        "description": "Remove role (name) from given user their roles collection.",
+        "operationId": "directory.delete_user_role",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "role",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteUserRoleResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete user role",
+        "tags": [
+          "directory"
+        ]
+      }
+    },
+    "/api/v1/info": {
+      "get": {
+        "description": "Return endpoint versio information.",
+        "operationId": "info.info",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1InfoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [],
+        "summary": "Info endpoint",
+        "tags": [
+          "info"
+        ]
+      }
+    },
+    "/api/v1/policy/modules/{id}": {
+      "get": {
+        "description": "Returns the module for a given policy.",
+        "operationId": "policy.get_module",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetModuleResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get module",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/policy/policies": {
+      "get": {
+        "description": "Returns the list of policy bundle identifiers currently loaded within the authorizer instance.",
+        "operationId": "policy.list_policies",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListPoliciesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List policies",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v1/policy/policies/{id}": {
+      "get": {
+        "description": "Returns the policies present within a given policy bundle.",
+        "operationId": "policy.get_policies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetPoliciesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get policies",
+        "tags": [
+          "policy"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "AuthorizerAPIKey": [],
+      "TenantID": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Hosted authorizer service",
+      "url": "https://authorizer.prod.aserto.com"
+    },
+    {
+      "description": "Local onebox authorizer service",
+      "url": "https://localhost:{port}",
+      "variables": {
+        "port": {
+          "default": "8383",
+          "enum": [
+            "8383"
+          ]
+        }
+      }
+    },
+    {
+      "description": "Demo onebox authorizer service",
+      "url": "https://onebox.demo.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authorizer"
+    }
+  ]
+}
