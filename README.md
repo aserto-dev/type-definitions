@@ -12,13 +12,13 @@ Replace `v1.2.0` with the tag you would like to use.
 
 ## Generation Process
 ### Environment Variables
-Generation is driven by `generate.sh`. This script depends on several environment variables that must be set:
- * USERNAME: github username to use when authenticating with the GitHub REST API. Typically this is the value of `<vault>/kv/github/USERNAME`.
- * READ_WRITE_TOKEN: github token enabling at minimum READ access to the GitHub REST API for the `aserto-dev/grpc-openapi` repo. Typically this is the value of `<vault>/kv/github/READ_WRITE_TOKEN`.
+Generation is driven by `generate.sh`. To work with the latest specs available in `aserto-dev/openapi-grpc`, invoke `generate.sh --fetch-specs` with the following environment variables set:
+ * USERNAME: GitHub username to use when authenticating with the GitHub REST API. Typically this is the value of `<vault>/kv/github/USERNAME`.
+ * READ_WRITE_TOKEN: GitHub token enabling at minimum READ access to the GitHub REST API for the `aserto-dev/grpc-openapi` repo. Typically this is the value of `<vault>/kv/github/READ_WRITE_TOKEN`.
  * COMMIT_HASH: the `aserto-dev/grpc-openapi` commit for which to generate type definitions. This value is stored in `downloaded/commit_hash.sh` to enable build reproducability. That file is re-generated each time this repo's workflow is invoked by the GitHub Workflow Dispatch API.
 
 ### generate.sh
-Generate.sh uses the Environment Variables to download the appropriate openapi.json files into the `downloaded/specs` directory. It then runs `typescript-openapi` to generate the type definitions. 
+When invoked with the `--fetch-specs` flag, `generate.sh` uses the Environment Variables to download the appropriate openapi.json files into the `downloaded/specs` directory. It then runs `typescript-openapi` to generate the type definitions. If no flag is provided, then it will run `typescript-openapi` with any existing openapi.json files in `downloaded/specs`.
 
 ### Local Dev Experience
 To run the script locally, set the USERNAME and READ_WRITE_TOKEN as described above and run `./generate.sh` from the workspace root directory. Because the commit_hash is checked in, the build will be identical to how it occured in the GitHub Workflow to generate this commit. To debug an older build, simply check out that commit and follow these same steps.

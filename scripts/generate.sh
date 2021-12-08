@@ -1,21 +1,21 @@
 #!/bin/bash
 source downloaded/commit_hash.sh
 
-for REQUIRED_ENV in "USERNAME" "READ_WRITE_TOKEN" "COMMIT_HASH"
-do
-    if [[ -z "${!REQUIRED_ENV}" ]]; then
-    echo "$REQUIRED_ENV must be set"
-    FAIL=1
-    fi
-done
-
 if [[ -n "${FAIL}" ]]; then
     exit $FAIL
 fi
 
 if [[ $1 == "--fetch-specs" ]]; then
-  echo "Removing existing specs in downloaded/specs/\n"
-  rm ./downloaded/specs/*
+    for REQUIRED_ENV in "USERNAME" "READ_WRITE_TOKEN" "COMMIT_HASH"
+    do
+        if [[ -z "${!REQUIRED_ENV}" ]]; then
+        echo "$REQUIRED_ENV must be set"
+        FAIL=1
+        fi
+    done
+
+    echo "Removing existing specs in downloaded/specs/\n"
+    rm ./downloaded/specs/*
 fi
 
 for SERVICE in "tenant" "authorizer" "registry" "decision_logs"
