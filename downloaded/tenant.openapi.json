@@ -781,7 +781,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.33"
+    "version": "v0.1.37"
   },
   "openapi": "3.0.3",
   "paths": {
