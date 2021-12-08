@@ -347,10 +347,10 @@ export interface components {
     };
     v1CreateRepoResponse: { [key: string]: unknown };
     v1DeleteConnectionResponse: {
-      results?: { [key: string]: unknown };
+      results?: unknown;
     };
     v1DeletePolicyRefResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DisplayMode:
       | "DISPLAY_MODE_UNKNOWN"
@@ -521,7 +521,7 @@ export interface components {
       id?: string;
     };
     v1UpdatePolicyRefResponse: {
-      results?: { [key: string]: unknown };
+      results?: unknown;
     };
     v1VerifyConnectionResponse: {
       status?: components["schemas"]["rpcStatus"];

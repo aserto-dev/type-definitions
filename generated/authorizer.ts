@@ -170,34 +170,34 @@ export interface components {
       path_root?: string;
     };
     v1DeleteApplPermissionResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteApplPropertyResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteApplRoleResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteResourceResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteTenantResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteUserApplicationResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteUserPermissionResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteUserPropertyResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteUserResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1DeleteUserRoleResponse: {
-      result?: { [key: string]: unknown };
+      result?: unknown;
     };
     v1Fields: {
       mask?: string;
