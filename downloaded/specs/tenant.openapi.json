@@ -54,6 +54,9 @@
           "id": {
             "type": "string"
           },
+          "personal_tenant": {
+            "$ref": "#/components/schemas/v1Tenant"
+          },
           "registration_date": {
             "format": "int64",
             "type": "string"
@@ -91,6 +94,9 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "personal": {
+            "type": "boolean"
           }
         },
         "type": "object"
@@ -665,6 +671,9 @@
           },
           "name": {
             "type": "string"
+          },
+          "personal": {
+            "type": "boolean"
           }
         },
         "type": "object"
@@ -781,7 +790,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.37"
+    "version": "v0.1.42"
   },
   "openapi": "3.0.3",
   "paths": {

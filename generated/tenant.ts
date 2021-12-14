@@ -286,6 +286,7 @@ export interface components {
     v1Account: {
       default_tenant?: string;
       id?: string;
+      personal_tenant?: components["schemas"]["v1Tenant"];
       registration_date?: string;
       tenants?: components["schemas"]["v1Tenant"][];
     };
@@ -298,6 +299,7 @@ export interface components {
     };
     v1ClaimTenantRequest: {
       name?: string;
+      personal?: boolean;
     };
     v1ClaimTenantResponse: {
       id?: string;
@@ -497,6 +499,7 @@ export interface components {
       id?: string;
       members?: components["schemas"]["v1TenantMember"][];
       name?: string;
+      personal?: boolean;
     };
     v1TenantAvailability:
       | "TENANT_AVAILABILITY_UNKNOWN"

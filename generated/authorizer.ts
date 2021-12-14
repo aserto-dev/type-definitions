@@ -1103,6 +1103,9 @@ export interface operations {
       path: {
         id: string;
       };
+      query: {
+        policy_id?: string;
+      };
     };
     responses: {
       /** A successful response. */
