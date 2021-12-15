@@ -312,6 +312,7 @@ export interface components {
       connection_id?: string;
       created_at?: string;
       deleted_at?: string;
+      hash?: string;
       updated_at?: string;
     };
     v1Module: {
