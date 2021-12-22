@@ -518,6 +518,9 @@
             "format": "date-time",
             "type": "string"
           },
+          "hash": {
+            "type": "string"
+          },
           "updated_at": {
             "format": "date-time",
             "type": "string"
@@ -939,7 +942,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.1.42"
+    "version": "v0.1.47"
   },
   "openapi": "3.0.3",
   "paths": {
