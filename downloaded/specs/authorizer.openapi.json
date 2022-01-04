@@ -160,6 +160,14 @@
         },
         "type": "object"
       },
+      "v1DeleteConnection": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1DeleteResourceResponse": {
         "properties": {
           "result": {}
@@ -169,6 +177,17 @@
       "v1DeleteTenantResponse": {
         "properties": {
           "result": {}
+        },
+        "type": "object"
+      },
+      "v1DeleteUser": {
+        "properties": {
+          "pid": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
@@ -516,6 +535,9 @@
           },
           "deleted_at": {
             "format": "date-time",
+            "type": "string"
+          },
+          "hash": {
             "type": "string"
           },
           "updated_at": {
@@ -939,7 +961,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.1.42"
+    "version": "v0.1.48"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1172,6 +1194,13 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "in": "query",
+            "name": "deleted",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -1224,6 +1253,13 @@
           {
             "in": "query",
             "name": "base",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "deleted",
             "schema": {
               "type": "boolean"
             }
