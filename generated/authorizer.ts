@@ -178,11 +178,17 @@ export interface components {
     v1DeleteApplRoleResponse: {
       result?: unknown;
     };
+    v1DeleteConnection: {
+      connection_id?: string;
+    };
     v1DeleteResourceResponse: {
       result?: unknown;
     };
     v1DeleteTenantResponse: {
       result?: unknown;
+    };
+    v1DeleteUser: {
+      id?: string;
     };
     v1DeleteUserApplicationResponse: {
       result?: unknown;
@@ -312,6 +318,7 @@ export interface components {
       connection_id?: string;
       created_at?: string;
       deleted_at?: string;
+      hash?: string;
       updated_at?: string;
     };
     v1Module: {
@@ -538,6 +545,7 @@ export interface operations {
         "page.token"?: string;
         "fields.mask"?: string;
         base?: boolean;
+        deleted?: boolean;
       };
     };
     responses: {
