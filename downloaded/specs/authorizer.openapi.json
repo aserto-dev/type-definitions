@@ -958,7 +958,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.1.52"
+    "version": "v0.1.55"
   },
   "openapi": "3.0.3",
   "paths": {

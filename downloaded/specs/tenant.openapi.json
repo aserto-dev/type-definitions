@@ -226,6 +226,9 @@
       "v1CreateRepoResponse": {
         "type": "object"
       },
+      "v1CreateRepositoryResponse": {
+        "type": "object"
+      },
       "v1DeleteConnectionResponse": {
         "properties": {
           "results": {}
@@ -236,6 +239,9 @@
         "properties": {
           "result": {}
         },
+        "type": "object"
+      },
+      "v1DeleteRepositoryResponse": {
         "type": "object"
       },
       "v1DisplayMode": {
@@ -427,6 +433,17 @@
         },
         "type": "object"
       },
+      "v1ListOrgsResponse": {
+        "properties": {
+          "organizations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
       "v1ListPolicyRefsResponse": {
         "properties": {
           "results": {
@@ -465,6 +482,28 @@
           "repos": {
             "items": {
               "$ref": "#/components/schemas/v1Repo"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRepositoriesResponse": {
+        "properties": {
+          "repositories": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repository"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListTagsResponse": {
+        "properties": {
+          "tags": {
+            "items": {
+              "type": "string"
             },
             "type": "array"
           }
@@ -614,6 +653,17 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1Repository": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "org": {
             "type": "string"
           }
         },
@@ -793,7 +843,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.52"
+    "version": "v0.1.55"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1293,6 +1343,310 @@
         "summary": "Get provider",
         "tags": [
           "provider"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}": {
+      "delete": {
+        "description": "Lists all organizations available for a connection.",
+        "operationId": "Registry_ListOrgs",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListOrgsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List all organizations",
+        "tags": [
+          "organization"
+        ]
+      },
+      "post": {
+        "description": "Create a registry image for a given registry connection instance using a given source code repository.",
+        "operationId": "registry.create_image",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "public": {
+                    "type": "boolean"
+                  },
+                  "repository": {
+                    "$ref": "#/components/schemas/v1Repository"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreateRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create image",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/{org}": {
+      "get": {
+        "description": "Returns the repositories for a given registry connection.",
+        "operationId": "registry.list_repositories",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListRepositoriesResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List registry repositories",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}": {
+      "delete": {
+        "description": "Deletes a repository, including all its tags and images.",
+        "operationId": "Registry_DeleteRepository",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repository.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repository.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeleteRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete a repository",
+        "tags": [
+          "repository"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}/tags": {
+      "get": {
+        "description": "Returns the tags for a registry image.",
+        "operationId": "registry.list_tags",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repository.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repository.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListTagsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List registry image tags",
+        "tags": [
+          "registry"
         ]
       }
     },
