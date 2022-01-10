@@ -95,6 +95,7 @@ export interface operations {
       query: {
         "page.size"?: number;
         "page.token"?: string;
+        policies?: string[];
       };
     };
     responses: {
