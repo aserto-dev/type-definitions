@@ -208,7 +208,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Decision Logs",
-    "version": "v0.1.52"
+    "version": "v0.1.54"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -230,6 +230,16 @@
             "name": "page.token",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "policies",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
             }
           }
         ],
