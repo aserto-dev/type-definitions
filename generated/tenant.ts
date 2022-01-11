@@ -47,21 +47,21 @@ export interface paths {
     get: operations["provider.get_provider"];
   };
   "/api/v1/registry/{connection_id}": {
-    /** Create a registry image for a given registry connection instance using a given source code repository. */
-    post: operations["registry.create_image"];
     /** Lists all organizations available for a connection. */
-    delete: operations["Registry_ListOrgs"];
+    get: operations["registry.list_orgs"];
+    /** Create an empty policy repository for a given registry connection instance. */
+    post: operations["registry.create_policy_repo"];
   };
   "/api/v1/registry/{connection_id}/{org}": {
-    /** Returns the repositories for a given registry connection. */
-    get: operations["registry.list_repositories"];
+    /** Returns a list of PolicyRepo for a given registry connection and organization name. */
+    get: operations["registry.list_policy_repos"];
   };
-  "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}": {
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}": {
     /** Deletes a repository, including all its tags and images. */
-    delete: operations["Registry_DeleteRepository"];
+    delete: operations["registry.delete_policy_repo"];
   };
-  "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}/tags": {
-    /** Returns the tags for a registry image. */
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
+    /** Returns an array of tags for a policy repository. */
     get: operations["registry.list_tags"];
   };
   "/api/v1/tenant/connections": {
@@ -365,15 +365,15 @@ export interface components {
     v1CreatePolicyRefResponse: {
       id?: string;
     };
+    v1CreatePolicyRepoResponse: { [key: string]: unknown };
     v1CreateRepoResponse: { [key: string]: unknown };
-    v1CreateRepositoryResponse: { [key: string]: unknown };
     v1DeleteConnectionResponse: {
       results?: unknown;
     };
     v1DeletePolicyRefResponse: {
       result?: unknown;
     };
-    v1DeleteRepositoryResponse: { [key: string]: unknown };
+    v1DeletePolicyRepoResponse: { [key: string]: unknown };
     v1DisplayMode:
       | "DISPLAY_MODE_UNKNOWN"
       | "DISPLAY_MODE_NORMAL"
@@ -440,10 +440,13 @@ export interface components {
       orgs?: string[];
     };
     v1ListOrgsResponse: {
-      organizations?: string[];
+      orgs?: string[];
     };
     v1ListPolicyRefsResponse: {
       results?: components["schemas"]["v1PolicyRef"][];
+    };
+    v1ListPolicyReposResponse: {
+      policy_repos?: components["schemas"]["v1Repo"][];
     };
     v1ListProviderKindsResponse: {
       results?: string[];
@@ -453,9 +456,6 @@ export interface components {
     };
     v1ListRepoResponse: {
       repos?: components["schemas"]["v1Repo"][];
-    };
-    v1ListRepositoriesResponse: {
-      repositories?: components["schemas"]["v1Repository"][];
     };
     v1ListTagsResponse: {
       tags?: string[];
@@ -509,11 +509,8 @@ export interface components {
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
       name?: string;
-      url?: string;
-    };
-    v1Repository: {
-      name?: string;
       org?: string;
+      url?: string;
     };
     v1RespondToInviteResponse: { [key: string]: unknown };
     v1RotateSecretResponse: {
@@ -812,38 +809,8 @@ export interface operations {
       };
     };
   };
-  /** Create a registry image for a given registry connection instance using a given source code repository. */
-  "registry.create_image": {
-    parameters: {
-      path: {
-        connection_id: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v1CreateRepositoryResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": {
-          public?: boolean;
-          repository?: components["schemas"]["v1Repository"];
-        };
-      };
-    };
-  };
   /** Lists all organizations available for a connection. */
-  Registry_ListOrgs: {
+  "registry.list_orgs": {
     parameters: {
       path: {
         connection_id: string;
@@ -864,8 +831,37 @@ export interface operations {
       };
     };
   };
-  /** Returns the repositories for a given registry connection. */
-  "registry.list_repositories": {
+  /** Create an empty policy repository for a given registry connection instance. */
+  "registry.create_policy_repo": {
+    parameters: {
+      path: {
+        connection_id: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1CreatePolicyRepoResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          repo?: components["schemas"]["v1Repo"];
+        };
+      };
+    };
+  };
+  /** Returns a list of PolicyRepo for a given registry connection and organization name. */
+  "registry.list_policy_repos": {
     parameters: {
       path: {
         connection_id: string;
@@ -876,7 +872,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ListRepositoriesResponse"];
+          "application/json": components["schemas"]["v1ListPolicyReposResponse"];
         };
       };
       /** An unexpected error response. */
@@ -888,12 +884,12 @@ export interface operations {
     };
   };
   /** Deletes a repository, including all its tags and images. */
-  Registry_DeleteRepository: {
+  "registry.delete_policy_repo": {
     parameters: {
       path: {
         connection_id: string;
-        "repository.org": string;
-        "repository.name": string;
+        "repo.org": string;
+        "repo.name": string;
       };
       query: {
         tag?: string;
@@ -903,7 +899,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1DeleteRepositoryResponse"];
+          "application/json": components["schemas"]["v1DeletePolicyRepoResponse"];
         };
       };
       /** An unexpected error response. */
@@ -914,13 +910,13 @@ export interface operations {
       };
     };
   };
-  /** Returns the tags for a registry image. */
+  /** Returns an array of tags for a policy repository. */
   "registry.list_tags": {
     parameters: {
       path: {
         connection_id: string;
-        "repository.org": string;
-        "repository.name": string;
+        "repo.org": string;
+        "repo.name": string;
       };
     };
     responses: {

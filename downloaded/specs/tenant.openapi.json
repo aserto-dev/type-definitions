@@ -223,10 +223,10 @@
         },
         "type": "object"
       },
-      "v1CreateRepoResponse": {
+      "v1CreatePolicyRepoResponse": {
         "type": "object"
       },
-      "v1CreateRepositoryResponse": {
+      "v1CreateRepoResponse": {
         "type": "object"
       },
       "v1DeleteConnectionResponse": {
@@ -241,7 +241,7 @@
         },
         "type": "object"
       },
-      "v1DeleteRepositoryResponse": {
+      "v1DeletePolicyRepoResponse": {
         "type": "object"
       },
       "v1DisplayMode": {
@@ -435,7 +435,7 @@
       },
       "v1ListOrgsResponse": {
         "properties": {
-          "organizations": {
+          "orgs": {
             "items": {
               "type": "string"
             },
@@ -449,6 +449,17 @@
           "results": {
             "items": {
               "$ref": "#/components/schemas/v1PolicyRef"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListPolicyReposResponse": {
+        "properties": {
+          "policy_repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
             },
             "type": "array"
           }
@@ -482,17 +493,6 @@
           "repos": {
             "items": {
               "$ref": "#/components/schemas/v1Repo"
-            },
-            "type": "array"
-          }
-        },
-        "type": "object"
-      },
-      "v1ListRepositoriesResponse": {
-        "properties": {
-          "repositories": {
-            "items": {
-              "$ref": "#/components/schemas/v1Repository"
             },
             "type": "array"
           }
@@ -652,18 +652,10 @@
           "name": {
             "type": "string"
           },
-          "url": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1Repository": {
-        "properties": {
-          "name": {
+          "org": {
             "type": "string"
           },
-          "org": {
+          "url": {
             "type": "string"
           }
         },
@@ -843,7 +835,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.55"
+    "version": "v0.1.57"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1347,9 +1339,9 @@
       }
     },
     "/api/v1/registry/{connection_id}": {
-      "delete": {
+      "get": {
         "description": "Lists all organizations available for a connection.",
-        "operationId": "Registry_ListOrgs",
+        "operationId": "registry.list_orgs",
         "parameters": [
           {
             "in": "path",
@@ -1390,12 +1382,15 @@
         ],
         "summary": "List all organizations",
         "tags": [
-          "organization"
+          "registry",
+          "organization",
+          "org",
+          "list"
         ]
       },
       "post": {
-        "description": "Create a registry image for a given registry connection instance using a given source code repository.",
-        "operationId": "registry.create_image",
+        "description": "Create an empty policy repository for a given registry connection instance.",
+        "operationId": "registry.create_policy_repo",
         "parameters": [
           {
             "in": "path",
@@ -1411,11 +1406,8 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "public": {
-                    "type": "boolean"
-                  },
-                  "repository": {
-                    "$ref": "#/components/schemas/v1Repository"
+                  "repo": {
+                    "$ref": "#/components/schemas/v1Repo"
                   }
                 },
                 "type": "object"
@@ -1430,7 +1422,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1CreateRepositoryResponse"
+                  "$ref": "#/components/schemas/v1CreatePolicyRepoResponse"
                 }
               }
             },
@@ -1453,16 +1445,19 @@
             "TenantID": []
           }
         ],
-        "summary": "Create image",
+        "summary": "Create a policy repo.",
         "tags": [
-          "registry"
+          "registry",
+          "repo",
+          "repository",
+          "create"
         ]
       }
     },
     "/api/v1/registry/{connection_id}/{org}": {
       "get": {
-        "description": "Returns the repositories for a given registry connection.",
-        "operationId": "registry.list_repositories",
+        "description": "Returns a list of PolicyRepo for a given registry connection and organization name.",
+        "operationId": "registry.list_policy_repos",
         "parameters": [
           {
             "in": "path",
@@ -1486,7 +1481,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ListRepositoriesResponse"
+                  "$ref": "#/components/schemas/v1ListPolicyReposResponse"
                 }
               }
             },
@@ -1509,16 +1504,19 @@
             "TenantID": []
           }
         ],
-        "summary": "List registry repositories",
+        "summary": "List repos for an org.",
         "tags": [
-          "registry"
+          "registry",
+          "repo",
+          "repository",
+          "list"
         ]
       }
     },
-    "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}": {
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}": {
       "delete": {
         "description": "Deletes a repository, including all its tags and images.",
-        "operationId": "Registry_DeleteRepository",
+        "operationId": "registry.delete_policy_repo",
         "parameters": [
           {
             "in": "path",
@@ -1530,7 +1528,7 @@
           },
           {
             "in": "path",
-            "name": "repository.org",
+            "name": "repo.org",
             "required": true,
             "schema": {
               "type": "string"
@@ -1538,7 +1536,7 @@
           },
           {
             "in": "path",
-            "name": "repository.name",
+            "name": "repo.name",
             "required": true,
             "schema": {
               "type": "string"
@@ -1557,7 +1555,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1DeleteRepositoryResponse"
+                  "$ref": "#/components/schemas/v1DeletePolicyRepoResponse"
                 }
               }
             },
@@ -1580,15 +1578,18 @@
             "TenantID": []
           }
         ],
-        "summary": "Delete a repository",
+        "summary": "Delete a repository.",
         "tags": [
-          "repository"
+          "registry",
+          "repo",
+          "repository",
+          "delete"
         ]
       }
     },
-    "/api/v1/registry/{connection_id}/{repository.org}/{repository.name}/tags": {
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
       "get": {
-        "description": "Returns the tags for a registry image.",
+        "description": "Returns an array of tags for a policy repository.",
         "operationId": "registry.list_tags",
         "parameters": [
           {
@@ -1601,7 +1602,7 @@
           },
           {
             "in": "path",
-            "name": "repository.org",
+            "name": "repo.org",
             "required": true,
             "schema": {
               "type": "string"
@@ -1609,7 +1610,7 @@
           },
           {
             "in": "path",
-            "name": "repository.name",
+            "name": "repo.name",
             "required": true,
             "schema": {
               "type": "string"
@@ -1644,9 +1645,11 @@
             "TenantID": []
           }
         ],
-        "summary": "List registry image tags",
+        "summary": "List repository tags.",
         "tags": [
-          "registry"
+          "registry",
+          "tag",
+          "list"
         ]
       }
     },
