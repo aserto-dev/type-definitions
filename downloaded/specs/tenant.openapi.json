@@ -440,6 +440,9 @@
               "type": "string"
             },
             "type": "array"
+          },
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
           }
         },
         "type": "object"
@@ -457,9 +460,12 @@
       },
       "v1ListPolicyReposResponse": {
         "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
           "policy_repos": {
             "items": {
-              "$ref": "#/components/schemas/v1Repo"
+              "$ref": "#/components/schemas/v1PolicyRepo"
             },
             "type": "array"
           }
@@ -501,9 +507,12 @@
       },
       "v1ListTagsResponse": {
         "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
           "tags": {
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/v1PolicyRepoTag"
             },
             "type": "array"
           }
@@ -560,6 +569,34 @@
         },
         "type": "object"
       },
+      "v1PaginationRequest": {
+        "properties": {
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PaginationResponse": {
+        "properties": {
+          "next_token": {
+            "type": "string"
+          },
+          "result_size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "total_size": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "v1PolicyRef": {
         "properties": {
           "connection_id": {
@@ -593,6 +630,53 @@
           },
           "source_url": {
             "title": "Configuration for policy source code",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyRepo": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "org": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyRepoAnnotation": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyRepoTag": {
+        "properties": {
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyRepoAnnotation"
+            },
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "format": "int64",
             "type": "string"
           }
         },
@@ -650,9 +734,6 @@
       "v1Repo": {
         "properties": {
           "name": {
-            "type": "string"
-          },
-          "org": {
             "type": "string"
           },
           "url": {
@@ -835,7 +916,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.57"
+    "version": "v0.1.58"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1350,6 +1431,21 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1407,7 +1503,7 @@
               "schema": {
                 "properties": {
                   "repo": {
-                    "$ref": "#/components/schemas/v1Repo"
+                    "$ref": "#/components/schemas/v1PolicyRepo"
                   }
                 },
                 "type": "object"
@@ -1471,6 +1567,21 @@
             "in": "path",
             "name": "org",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
             "schema": {
               "type": "string"
             }
@@ -1612,6 +1723,21 @@
             "in": "path",
             "name": "repo.name",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
             "schema": {
               "type": "string"
             }

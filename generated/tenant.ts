@@ -441,12 +441,14 @@ export interface components {
     };
     v1ListOrgsResponse: {
       orgs?: string[];
+      page?: components["schemas"]["v1PaginationResponse"];
     };
     v1ListPolicyRefsResponse: {
       results?: components["schemas"]["v1PolicyRef"][];
     };
     v1ListPolicyReposResponse: {
-      policy_repos?: components["schemas"]["v1Repo"][];
+      page?: components["schemas"]["v1PaginationResponse"];
+      policy_repos?: components["schemas"]["v1PolicyRepo"][];
     };
     v1ListProviderKindsResponse: {
       results?: string[];
@@ -458,7 +460,8 @@ export interface components {
       repos?: components["schemas"]["v1Repo"][];
     };
     v1ListTagsResponse: {
-      tags?: string[];
+      page?: components["schemas"]["v1PaginationResponse"];
+      tags?: components["schemas"]["v1PolicyRepoTag"][];
     };
     v1ListTemplatesResponse: {
       repos?: components["schemas"]["v1Repo"][];
@@ -476,6 +479,15 @@ export interface components {
     v1OPADiscoveryResponse: {
       opa?: components["schemas"]["v1OPAConfig"];
     };
+    v1PaginationRequest: {
+      size?: number;
+      token?: string;
+    };
+    v1PaginationResponse: {
+      next_token?: string;
+      result_size?: number;
+      total_size?: number;
+    };
     v1PolicyRef: {
       connection_id?: string;
       decision_logging?: boolean;
@@ -487,6 +499,21 @@ export interface components {
       registry_tag?: string;
       source_name?: string;
       source_url?: string;
+    };
+    v1PolicyRepo: {
+      name?: string;
+      org?: string;
+    };
+    v1PolicyRepoAnnotation: {
+      key?: string;
+      value?: string;
+    };
+    v1PolicyRepoTag: {
+      annotations?: components["schemas"]["v1PolicyRepoAnnotation"][];
+      created_at?: string;
+      digest?: string;
+      name?: string;
+      size?: string;
     };
     v1Provider: {
       config?: components["schemas"]["v1ConfigElement"][];
@@ -509,7 +536,6 @@ export interface components {
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
       name?: string;
-      org?: string;
       url?: string;
     };
     v1RespondToInviteResponse: { [key: string]: unknown };
@@ -815,6 +841,10 @@ export interface operations {
       path: {
         connection_id: string;
       };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
     };
     responses: {
       /** A successful response. */
@@ -855,7 +885,7 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          repo?: components["schemas"]["v1Repo"];
+          repo?: components["schemas"]["v1PolicyRepo"];
         };
       };
     };
@@ -866,6 +896,10 @@ export interface operations {
       path: {
         connection_id: string;
         org: string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
       };
     };
     responses: {
@@ -917,6 +951,10 @@ export interface operations {
         connection_id: string;
         "repo.org": string;
         "repo.name": string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
       };
     };
     responses: {
