@@ -1,2 +1,2 @@
-COMMIT_HASH=refs/tags/v0.1.29
+COMMIT_HASH=3914b4d
 
