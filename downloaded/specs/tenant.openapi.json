@@ -215,6 +215,14 @@
         },
         "type": "object"
       },
+      "v1CreatePolicyBuilderResponse": {
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1CreatePolicyRefResponse": {
         "properties": {
           "id": {
@@ -232,6 +240,12 @@
       "v1DeleteConnectionResponse": {
         "properties": {
           "results": {}
+        },
+        "type": "object"
+      },
+      "v1DeletePolicyBuilderResponse": {
+        "properties": {
+          "result": {}
         },
         "type": "object"
       },
@@ -447,6 +461,17 @@
         },
         "type": "object"
       },
+      "v1ListPolicyBuildersResponse": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v1PolicyBuilder"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
       "v1ListPolicyRefsResponse": {
         "properties": {
           "results": {
@@ -593,6 +618,33 @@
           "total_size": {
             "format": "int32",
             "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "v1PolicyBuilder": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "registry_connection_id": {
+            "type": "string"
+          },
+          "registry_org": {
+            "type": "string"
+          },
+          "registry_repo": {
+            "type": "string"
+          },
+          "scc_connection_id": {
+            "title": "Configuration for source code",
+            "type": "string"
+          },
+          "scc_owner": {
+            "type": "string"
+          },
+          "scc_repo": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -2401,6 +2453,148 @@
         "summary": "Update a policy reference",
         "tags": [
           "policy"
+        ]
+      }
+    },
+    "/api/v1/tenant/policybuilder": {
+      "get": {
+        "description": "List policy builders",
+        "operationId": "policy.list_policy_builders",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListPolicyBuildersResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List policy builders",
+        "tags": [
+          "policy builder"
+        ]
+      },
+      "post": {
+        "description": "Create policy builder.",
+        "operationId": "policy.create_policy_builder",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "force_reconnect",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1PolicyBuilder"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CreatePolicyBuilderResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create policy builder",
+        "tags": [
+          "policy builder"
+        ]
+      }
+    },
+    "/api/v1/tenant/policybuilder/{id}": {
+      "delete": {
+        "description": "Remove policy builder.",
+        "operationId": "policy.delete_policy_builder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1DeletePolicyBuilderResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove policy builder",
+        "tags": [
+          "policy builder"
         ]
       }
     },

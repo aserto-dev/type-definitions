@@ -106,6 +106,16 @@ export interface paths {
     /** Update a policy reference. */
     patch: operations["policy.update_policy_reference"];
   };
+  "/api/v1/tenant/policybuilder": {
+    /** List policy builders */
+    get: operations["policy.list_policy_builders"];
+    /** Create policy builder. */
+    post: operations["policy.create_policy_builder"];
+  };
+  "/api/v1/tenant/policybuilder/{id}": {
+    /** Remove policy builder. */
+    delete: operations["policy.delete_policy_builder"];
+  };
   "/api/v1/tenant/profile": {
     /** Returns the tenant profile. */
     get: operations["profile.get_profile"];
@@ -362,6 +372,9 @@ export interface components {
     v1CreateConnectionResponse: {
       id?: string;
     };
+    v1CreatePolicyBuilderResponse: {
+      id?: string;
+    };
     v1CreatePolicyRefResponse: {
       id?: string;
     };
@@ -369,6 +382,9 @@ export interface components {
     v1CreateRepoResponse: { [key: string]: unknown };
     v1DeleteConnectionResponse: {
       results?: unknown;
+    };
+    v1DeletePolicyBuilderResponse: {
+      result?: unknown;
     };
     v1DeletePolicyRefResponse: {
       result?: unknown;
@@ -443,6 +459,9 @@ export interface components {
       orgs?: string[];
       page?: components["schemas"]["v1PaginationResponse"];
     };
+    v1ListPolicyBuildersResponse: {
+      results?: components["schemas"]["v1PolicyBuilder"][];
+    };
     v1ListPolicyRefsResponse: {
       results?: components["schemas"]["v1PolicyRef"][];
     };
@@ -487,6 +506,15 @@ export interface components {
       next_token?: string;
       result_size?: number;
       total_size?: number;
+    };
+    v1PolicyBuilder: {
+      id?: string;
+      registry_connection_id?: string;
+      registry_org?: string;
+      registry_repo?: string;
+      scc_connection_id?: string;
+      scc_owner?: string;
+      scc_repo?: string;
     };
     v1PolicyRef: {
       connection_id?: string;
@@ -1258,6 +1286,72 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v1PolicyRef"];
+      };
+    };
+  };
+  /** List policy builders */
+  "policy.list_policy_builders": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListPolicyBuildersResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Create policy builder. */
+  "policy.create_policy_builder": {
+    parameters: {
+      query: {
+        force_reconnect?: boolean;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1CreatePolicyBuilderResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["v1PolicyBuilder"];
+      };
+    };
+  };
+  /** Remove policy builder. */
+  "policy.delete_policy_builder": {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1DeletePolicyBuilderResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
