@@ -64,6 +64,10 @@ export interface paths {
     /** Returns an array of tags for a policy repository. */
     get: operations["registry.list_tags"];
   };
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}": {
+    /** Returns a tag object with information about the tag. */
+    get: operations["registry.get_tag"];
+  };
   "/api/v1/tenant/connections": {
     /** Returns the collection of connections for given tenant. */
     get: operations["connection.list_connections"];
@@ -414,6 +418,9 @@ export interface components {
     };
     v1GetProviderResponse: {
       results?: components["schemas"]["v1Provider"][];
+    };
+    v1GetTagResponse: {
+      tag?: components["schemas"]["v1PolicyRepoTag"];
     };
     v1InfoResponse: {
       build?: components["schemas"]["v1BuildInfo"];
@@ -983,6 +990,7 @@ export interface operations {
       query: {
         "page.size"?: number;
         "page.token"?: string;
+        deep?: boolean;
       };
     };
     responses: {
@@ -990,6 +998,31 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1ListTagsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Returns a tag object with information about the tag. */
+  "registry.get_tag": {
+    parameters: {
+      path: {
+        connection_id: string;
+        "repo.org": string;
+        "repo.name": string;
+        tag: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1GetTagResponse"];
         };
       };
       /** An unexpected error response. */
