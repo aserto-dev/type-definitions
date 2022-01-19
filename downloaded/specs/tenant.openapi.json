@@ -331,6 +331,14 @@
         },
         "type": "object"
       },
+      "v1GetTagResponse": {
+        "properties": {
+          "tag": {
+            "$ref": "#/components/schemas/v1PolicyRepoTag"
+          }
+        },
+        "type": "object"
+      },
       "v1InfoResponse": {
         "properties": {
           "build": {
@@ -968,7 +976,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.61"
+    "version": "v0.1.62"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1793,6 +1801,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "deep",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -1828,6 +1843,80 @@
           "registry",
           "tag",
           "list"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}": {
+      "get": {
+        "description": "Returns a tag object with information about the tag.",
+        "operationId": "registry.get_tag",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetTagResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get repository tag details.",
+        "tags": [
+          "registry",
+          "tag",
+          "details"
         ]
       }
     },
