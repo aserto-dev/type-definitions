@@ -331,6 +331,14 @@
         },
         "type": "object"
       },
+      "v1GetRepoResponse": {
+        "properties": {
+          "repo": {
+            "$ref": "#/components/schemas/v1Repo"
+          }
+        },
+        "type": "object"
+      },
       "v1GetTagResponse": {
         "properties": {
           "tag": {
@@ -648,7 +656,7 @@
             "title": "Configuration for source code",
             "type": "string"
           },
-          "scc_owner": {
+          "scc_org": {
             "type": "string"
           },
           "scc_repo": {
@@ -794,6 +802,9 @@
       "v1Repo": {
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "org": {
             "type": "string"
           },
           "url": {
@@ -976,7 +987,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.62"
+    "version": "v0.1.30-dirty"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -2549,6 +2560,22 @@
       "get": {
         "description": "List policy builders",
         "operationId": "policy.list_policy_builders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "registry_repo",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "registry_org",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3018,7 +3045,7 @@
         ]
       }
     },
-    "/api/v1/tenant/scc/{connection_id}/repos/{owner}": {
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}": {
       "get": {
         "description": "Returns the collection repostories for a given SCC connection instance.",
         "operationId": "scc.list_repos",
@@ -3033,7 +3060,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"
@@ -3087,7 +3114,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"
@@ -3099,7 +3126,7 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "repo": {
+                  "name": {
                     "type": "string"
                   },
                   "template": {
@@ -3147,7 +3174,71 @@
         ]
       }
     },
-    "/api/v1/tenant/scc/{connection_id}/repos/{owner}/{repo}/connected": {
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}/{name}": {
+      "get": {
+        "description": "Gets details for a source code repository.",
+        "operationId": "scc.get_repo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetRepoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get repository",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}/{repo}/connected": {
       "get": {
         "description": "Verify if the given repository is connected.",
         "operationId": "scc.is_repo_connected",
@@ -3162,7 +3253,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"

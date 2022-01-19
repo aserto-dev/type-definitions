@@ -146,13 +146,17 @@ export interface paths {
     /** Returns profile information for a given SCC connection instance. */
     get: operations["scc.get_profile"];
   };
-  "/api/v1/tenant/scc/{connection_id}/repos/{owner}": {
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}": {
     /** Returns the collection repostories for a given SCC connection instance. */
     get: operations["scc.list_repos"];
     /** Create a new source repository instance for a given connection instance. */
     post: operations["scc.create_repo"];
   };
-  "/api/v1/tenant/scc/{connection_id}/repos/{owner}/{repo}/connected": {
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}/{name}": {
+    /** Gets details for a source code repository. */
+    get: operations["scc.get_repo"];
+  };
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}/{repo}/connected": {
     /** Verify if the given repository is connected. */
     get: operations["scc.is_repo_connected"];
   };
@@ -419,6 +423,9 @@ export interface components {
     v1GetProviderResponse: {
       results?: components["schemas"]["v1Provider"][];
     };
+    v1GetRepoResponse: {
+      repo?: components["schemas"]["v1Repo"];
+    };
     v1GetTagResponse: {
       tag?: components["schemas"]["v1PolicyRepoTag"];
     };
@@ -520,7 +527,7 @@ export interface components {
       registry_org?: string;
       registry_repo?: string;
       scc_connection_id?: string;
-      scc_owner?: string;
+      scc_org?: string;
       scc_repo?: string;
     };
     v1PolicyRef: {
@@ -571,6 +578,7 @@ export interface components {
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
       name?: string;
+      org?: string;
       url?: string;
     };
     v1RespondToInviteResponse: { [key: string]: unknown };
@@ -1324,6 +1332,12 @@ export interface operations {
   };
   /** List policy builders */
   "policy.list_policy_builders": {
+    parameters: {
+      query: {
+        registry_repo?: string;
+        registry_org?: string;
+      };
+    };
     responses: {
       /** A successful response. */
       200: {
@@ -1544,7 +1558,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
       };
     };
     responses: {
@@ -1567,7 +1581,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
       };
     };
     responses: {
@@ -1587,8 +1601,32 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          repo?: string;
+          name?: string;
           template?: string;
+        };
+      };
+    };
+  };
+  /** Gets details for a source code repository. */
+  "scc.get_repo": {
+    parameters: {
+      path: {
+        connection_id: string;
+        org: string;
+        name: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1GetRepoResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
         };
       };
     };
@@ -1598,7 +1636,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
         repo: string;
       };
     };

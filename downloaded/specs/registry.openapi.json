@@ -193,7 +193,7 @@
     },
     "termsOfService": "https://www.openpolicyregistry.io/",
     "title": "Registry",
-    "version": "v0.1.62"
+    "version": "v0.1.30-dirty"
   },
   "openapi": "3.0.3",
   "paths": {
