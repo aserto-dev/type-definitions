@@ -231,7 +231,7 @@
         },
         "type": "object"
       },
-      "v1CreatePolicyRepoResponse": {
+      "v1CreateRegistryRepoResponse": {
         "type": "object"
       },
       "v1CreateRepoResponse": {
@@ -255,7 +255,7 @@
         },
         "type": "object"
       },
-      "v1DeletePolicyRepoResponse": {
+      "v1DeleteRegistryRepoResponse": {
         "type": "object"
       },
       "v1DisplayMode": {
@@ -331,10 +331,18 @@
         },
         "type": "object"
       },
-      "v1GetTagResponse": {
+      "v1GetRegistryRepoTagResponse": {
         "properties": {
           "tag": {
-            "$ref": "#/components/schemas/v1PolicyRepoTag"
+            "$ref": "#/components/schemas/v1RegistryRepoTag"
+          }
+        },
+        "type": "object"
+      },
+      "v1GetRepoResponse": {
+        "properties": {
+          "repo": {
+            "$ref": "#/components/schemas/v1Repo"
           }
         },
         "type": "object"
@@ -491,20 +499,6 @@
         },
         "type": "object"
       },
-      "v1ListPolicyReposResponse": {
-        "properties": {
-          "page": {
-            "$ref": "#/components/schemas/v1PaginationResponse"
-          },
-          "policy_repos": {
-            "items": {
-              "$ref": "#/components/schemas/v1PolicyRepo"
-            },
-            "type": "array"
-          }
-        },
-        "type": "object"
-      },
       "v1ListProviderKindsResponse": {
         "properties": {
           "results": {
@@ -527,25 +521,39 @@
         },
         "type": "object"
       },
-      "v1ListRepoResponse": {
-        "properties": {
-          "repos": {
-            "items": {
-              "$ref": "#/components/schemas/v1Repo"
-            },
-            "type": "array"
-          }
-        },
-        "type": "object"
-      },
-      "v1ListTagsResponse": {
+      "v1ListRegistryRepoTagsResponse": {
         "properties": {
           "page": {
             "$ref": "#/components/schemas/v1PaginationResponse"
           },
           "tags": {
             "items": {
-              "$ref": "#/components/schemas/v1PolicyRepoTag"
+              "$ref": "#/components/schemas/v1RegistryRepoTag"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRegistryReposResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "registry_repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepo"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRepoResponse": {
+        "properties": {
+          "repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
             },
             "type": "array"
           }
@@ -648,7 +656,7 @@
             "title": "Configuration for source code",
             "type": "string"
           },
-          "scc_owner": {
+          "scc_org": {
             "type": "string"
           },
           "scc_repo": {
@@ -690,53 +698,6 @@
           },
           "source_url": {
             "title": "Configuration for policy source code",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1PolicyRepo": {
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "org": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1PolicyRepoAnnotation": {
-        "properties": {
-          "key": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1PolicyRepoTag": {
-        "properties": {
-          "annotations": {
-            "items": {
-              "$ref": "#/components/schemas/v1PolicyRepoAnnotation"
-            },
-            "type": "array"
-          },
-          "created_at": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "digest": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "size": {
-            "format": "int64",
             "type": "string"
           }
         },
@@ -788,12 +749,62 @@
         ],
         "type": "string"
       },
+      "v1RegistryRepo": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "org": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryRepoAnnotation": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryRepoTag": {
+        "properties": {
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepoAnnotation"
+            },
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "format": "int64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1RemoveMemberResponse": {
         "type": "object"
       },
       "v1Repo": {
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "org": {
             "type": "string"
           },
           "url": {
@@ -976,7 +987,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.62"
+    "version": "v0.1.30-20220119153515.1.g2e09c104"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1545,8 +1556,8 @@
         ]
       },
       "post": {
-        "description": "Create an empty policy repository for a given registry connection instance.",
-        "operationId": "registry.create_policy_repo",
+        "description": "Create an empty registry repository for a given registry connection instance.",
+        "operationId": "registry.create_registry_repo",
         "parameters": [
           {
             "in": "path",
@@ -1563,7 +1574,7 @@
               "schema": {
                 "properties": {
                   "repo": {
-                    "$ref": "#/components/schemas/v1PolicyRepo"
+                    "$ref": "#/components/schemas/v1RegistryRepo"
                   }
                 },
                 "type": "object"
@@ -1578,7 +1589,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1CreatePolicyRepoResponse"
+                  "$ref": "#/components/schemas/v1CreateRegistryRepoResponse"
                 }
               }
             },
@@ -1601,7 +1612,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Create a policy repo.",
+        "summary": "Create a registry repo.",
         "tags": [
           "registry",
           "repo",
@@ -1612,8 +1623,8 @@
     },
     "/api/v1/registry/{connection_id}/{org}": {
       "get": {
-        "description": "Returns a list of PolicyRepo for a given registry connection and organization name.",
-        "operationId": "registry.list_policy_repos",
+        "description": "Returns a list of RegistryRepo for a given registry connection and organization name.",
+        "operationId": "registry.list_registry_repos",
         "parameters": [
           {
             "in": "path",
@@ -1652,7 +1663,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ListPolicyReposResponse"
+                  "$ref": "#/components/schemas/v1ListRegistryReposResponse"
                 }
               }
             },
@@ -1687,7 +1698,7 @@
     "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}": {
       "delete": {
         "description": "Deletes a repository, including all its tags and images.",
-        "operationId": "registry.delete_policy_repo",
+        "operationId": "registry.delete_registry_repo",
         "parameters": [
           {
             "in": "path",
@@ -1726,7 +1737,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1DeletePolicyRepoResponse"
+                  "$ref": "#/components/schemas/v1DeleteRegistryRepoResponse"
                 }
               }
             },
@@ -1760,7 +1771,7 @@
     },
     "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
       "get": {
-        "description": "Returns an array of tags for a policy repository.",
+        "description": "Returns an array of tags for a registry repository.",
         "operationId": "registry.list_tags",
         "parameters": [
           {
@@ -1815,7 +1826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ListTagsResponse"
+                  "$ref": "#/components/schemas/v1ListRegistryRepoTagsResponse"
                 }
               }
             },
@@ -1889,7 +1900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1GetTagResponse"
+                  "$ref": "#/components/schemas/v1GetRegistryRepoTagResponse"
                 }
               }
             },
@@ -2549,6 +2560,22 @@
       "get": {
         "description": "List policy builders",
         "operationId": "policy.list_policy_builders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "registry_repo",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "registry_org",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3018,7 +3045,7 @@
         ]
       }
     },
-    "/api/v1/tenant/scc/{connection_id}/repos/{owner}": {
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}": {
       "get": {
         "description": "Returns the collection repostories for a given SCC connection instance.",
         "operationId": "scc.list_repos",
@@ -3033,7 +3060,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"
@@ -3087,7 +3114,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"
@@ -3099,7 +3126,7 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "repo": {
+                  "name": {
                     "type": "string"
                   },
                   "template": {
@@ -3147,7 +3174,71 @@
         ]
       }
     },
-    "/api/v1/tenant/scc/{connection_id}/repos/{owner}/{repo}/connected": {
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}/{name}": {
+      "get": {
+        "description": "Gets details for a source code repository.",
+        "operationId": "scc.get_repo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1GetRepoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get repository",
+        "tags": [
+          "scc"
+        ]
+      }
+    },
+    "/api/v1/tenant/scc/{connection_id}/repos/{org}/{repo}/connected": {
       "get": {
         "description": "Verify if the given repository is connected.",
         "operationId": "scc.is_repo_connected",
@@ -3162,7 +3253,7 @@
           },
           {
             "in": "path",
-            "name": "owner",
+            "name": "org",
             "required": true,
             "schema": {
               "type": "string"
