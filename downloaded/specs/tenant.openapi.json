@@ -231,7 +231,7 @@
         },
         "type": "object"
       },
-      "v1CreatePolicyRepoResponse": {
+      "v1CreateRegistryRepoResponse": {
         "type": "object"
       },
       "v1CreateRepoResponse": {
@@ -255,7 +255,7 @@
         },
         "type": "object"
       },
-      "v1DeletePolicyRepoResponse": {
+      "v1DeleteRegistryRepoResponse": {
         "type": "object"
       },
       "v1DisplayMode": {
@@ -331,18 +331,18 @@
         },
         "type": "object"
       },
-      "v1GetRepoResponse": {
+      "v1GetRegistryRepoTagResponse": {
         "properties": {
-          "repo": {
-            "$ref": "#/components/schemas/v1Repo"
+          "tag": {
+            "$ref": "#/components/schemas/v1RegistryRepoTag"
           }
         },
         "type": "object"
       },
-      "v1GetTagResponse": {
+      "v1GetRepoResponse": {
         "properties": {
-          "tag": {
-            "$ref": "#/components/schemas/v1PolicyRepoTag"
+          "repo": {
+            "$ref": "#/components/schemas/v1Repo"
           }
         },
         "type": "object"
@@ -499,20 +499,6 @@
         },
         "type": "object"
       },
-      "v1ListPolicyReposResponse": {
-        "properties": {
-          "page": {
-            "$ref": "#/components/schemas/v1PaginationResponse"
-          },
-          "policy_repos": {
-            "items": {
-              "$ref": "#/components/schemas/v1PolicyRepo"
-            },
-            "type": "array"
-          }
-        },
-        "type": "object"
-      },
       "v1ListProviderKindsResponse": {
         "properties": {
           "results": {
@@ -535,25 +521,39 @@
         },
         "type": "object"
       },
-      "v1ListRepoResponse": {
-        "properties": {
-          "repos": {
-            "items": {
-              "$ref": "#/components/schemas/v1Repo"
-            },
-            "type": "array"
-          }
-        },
-        "type": "object"
-      },
-      "v1ListTagsResponse": {
+      "v1ListRegistryRepoTagsResponse": {
         "properties": {
           "page": {
             "$ref": "#/components/schemas/v1PaginationResponse"
           },
           "tags": {
             "items": {
-              "$ref": "#/components/schemas/v1PolicyRepoTag"
+              "$ref": "#/components/schemas/v1RegistryRepoTag"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRegistryReposResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "registry_repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepo"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v1ListRepoResponse": {
+        "properties": {
+          "repos": {
+            "items": {
+              "$ref": "#/components/schemas/v1Repo"
             },
             "type": "array"
           }
@@ -703,53 +703,6 @@
         },
         "type": "object"
       },
-      "v1PolicyRepo": {
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "org": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1PolicyRepoAnnotation": {
-        "properties": {
-          "key": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "v1PolicyRepoTag": {
-        "properties": {
-          "annotations": {
-            "items": {
-              "$ref": "#/components/schemas/v1PolicyRepoAnnotation"
-            },
-            "type": "array"
-          },
-          "created_at": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "digest": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "size": {
-            "format": "int64",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
       "v1Provider": {
         "properties": {
           "config": {
@@ -795,6 +748,53 @@
           "PROVIDER_KIND_DISCOVERY"
         ],
         "type": "string"
+      },
+      "v1RegistryRepo": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "org": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryRepoAnnotation": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryRepoTag": {
+        "properties": {
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepoAnnotation"
+            },
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "format": "int64",
+            "type": "string"
+          }
+        },
+        "type": "object"
       },
       "v1RemoveMemberResponse": {
         "type": "object"
@@ -987,7 +987,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.1.30-dirty"
+    "version": "v0.1.30-20220131095101.2.gd9defc06"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1556,8 +1556,8 @@
         ]
       },
       "post": {
-        "description": "Create an empty policy repository for a given registry connection instance.",
-        "operationId": "registry.create_policy_repo",
+        "description": "Create an empty registry repository for a given registry connection instance.",
+        "operationId": "registry.create_registry_repo",
         "parameters": [
           {
             "in": "path",
@@ -1574,7 +1574,7 @@
               "schema": {
                 "properties": {
                   "repo": {
-                    "$ref": "#/components/schemas/v1PolicyRepo"
+                    "$ref": "#/components/schemas/v1RegistryRepo"
                   }
                 },
                 "type": "object"
@@ -1589,7 +1589,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1CreatePolicyRepoResponse"
+                  "$ref": "#/components/schemas/v1CreateRegistryRepoResponse"
                 }
               }
             },
@@ -1612,7 +1612,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Create a policy repo.",
+        "summary": "Create a registry repo.",
         "tags": [
           "registry",
           "repo",
@@ -1623,8 +1623,8 @@
     },
     "/api/v1/registry/{connection_id}/{org}": {
       "get": {
-        "description": "Returns a list of PolicyRepo for a given registry connection and organization name.",
-        "operationId": "registry.list_policy_repos",
+        "description": "Returns a list of RegistryRepo for a given registry connection and organization name.",
+        "operationId": "registry.list_registry_repos",
         "parameters": [
           {
             "in": "path",
@@ -1663,7 +1663,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ListPolicyReposResponse"
+                  "$ref": "#/components/schemas/v1ListRegistryReposResponse"
                 }
               }
             },
@@ -1698,7 +1698,7 @@
     "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}": {
       "delete": {
         "description": "Deletes a repository, including all its tags and images.",
-        "operationId": "registry.delete_policy_repo",
+        "operationId": "registry.delete_registry_repo",
         "parameters": [
           {
             "in": "path",
@@ -1737,7 +1737,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1DeletePolicyRepoResponse"
+                  "$ref": "#/components/schemas/v1DeleteRegistryRepoResponse"
                 }
               }
             },
@@ -1771,7 +1771,7 @@
     },
     "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
       "get": {
-        "description": "Returns an array of tags for a policy repository.",
+        "description": "Returns an array of tags for a registry repository.",
         "operationId": "registry.list_tags",
         "parameters": [
           {
@@ -1826,7 +1826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ListTagsResponse"
+                  "$ref": "#/components/schemas/v1ListRegistryRepoTagsResponse"
                 }
               }
             },
@@ -1900,7 +1900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1GetTagResponse"
+                  "$ref": "#/components/schemas/v1GetRegistryRepoTagResponse"
                 }
               }
             },

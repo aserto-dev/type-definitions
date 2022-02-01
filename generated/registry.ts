@@ -32,6 +32,10 @@ export interface paths {
     /** Lists all organizations that have public repos. */
     get: operations["registry.list_public_organizations"];
   };
+  "/api/v1/registry/repos/{organization}/{repo}/tags": {
+    /** Lists all tags for a repo, including digests, dates and annotations. */
+    get: operations["registry.list_tags_with_details"];
+  };
   "/api/v1/registry/{organization}/read-access-token": {
     /** This token can be used to read images. */
     get: operations["registry.get_read_access_token"];
@@ -77,6 +81,10 @@ export interface components {
       orgs?: components["schemas"]["v1RegistryOrg"][];
       page?: components["schemas"]["v1PaginationResponse"];
     };
+    v1ListTagsWithDetailsResponse: {
+      page?: components["schemas"]["v1PaginationResponse"];
+      tag?: components["schemas"]["v1RegistryRepoTag"][];
+    };
     v1PaginationRequest: {
       size?: number;
       token?: string;
@@ -92,6 +100,17 @@ export interface components {
     };
     v1RegistryOrg: {
       name?: string;
+    };
+    v1RegistryRepoAnnotation: {
+      key?: string;
+      value?: string;
+    };
+    v1RegistryRepoTag: {
+      annotations?: components["schemas"]["v1RegistryRepoAnnotation"][];
+      created_at?: string;
+      digest?: string;
+      name?: string;
+      size?: string;
     };
     v1RemoveImageResponse: {
       result?: unknown;
@@ -267,6 +286,33 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1ListPublicOrgsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Lists all tags for a repo, including digests, dates and annotations. */
+  "registry.list_tags_with_details": {
+    parameters: {
+      path: {
+        organization: string;
+        repo: string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListTagsWithDetailsResponse"];
         };
       };
       /** An unexpected error response. */
