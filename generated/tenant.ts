@@ -49,19 +49,19 @@ export interface paths {
   "/api/v1/registry/{connection_id}": {
     /** Lists all organizations available for a connection. */
     get: operations["registry.list_orgs"];
-    /** Create an empty policy repository for a given registry connection instance. */
-    post: operations["registry.create_policy_repo"];
+    /** Create an empty registry repository for a given registry connection instance. */
+    post: operations["registry.create_registry_repo"];
   };
   "/api/v1/registry/{connection_id}/{org}": {
-    /** Returns a list of PolicyRepo for a given registry connection and organization name. */
-    get: operations["registry.list_policy_repos"];
+    /** Returns a list of RegistryRepo for a given registry connection and organization name. */
+    get: operations["registry.list_registry_repos"];
   };
   "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}": {
     /** Deletes a repository, including all its tags and images. */
-    delete: operations["registry.delete_policy_repo"];
+    delete: operations["registry.delete_registry_repo"];
   };
   "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
-    /** Returns an array of tags for a policy repository. */
+    /** Returns an array of tags for a registry repository. */
     get: operations["registry.list_tags"];
   };
   "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}": {
@@ -146,13 +146,17 @@ export interface paths {
     /** Returns profile information for a given SCC connection instance. */
     get: operations["scc.get_profile"];
   };
-  "/api/v1/tenant/scc/{connection_id}/repos/{owner}": {
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}": {
     /** Returns the collection repostories for a given SCC connection instance. */
     get: operations["scc.list_repos"];
     /** Create a new source repository instance for a given connection instance. */
     post: operations["scc.create_repo"];
   };
-  "/api/v1/tenant/scc/{connection_id}/repos/{owner}/{repo}/connected": {
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}/{name}": {
+    /** Gets details for a source code repository. */
+    get: operations["scc.get_repo"];
+  };
+  "/api/v1/tenant/scc/{connection_id}/repos/{org}/{repo}/connected": {
     /** Verify if the given repository is connected. */
     get: operations["scc.is_repo_connected"];
   };
@@ -382,7 +386,7 @@ export interface components {
     v1CreatePolicyRefResponse: {
       id?: string;
     };
-    v1CreatePolicyRepoResponse: { [key: string]: unknown };
+    v1CreateRegistryRepoResponse: { [key: string]: unknown };
     v1CreateRepoResponse: { [key: string]: unknown };
     v1DeleteConnectionResponse: {
       results?: unknown;
@@ -393,7 +397,7 @@ export interface components {
     v1DeletePolicyRefResponse: {
       result?: unknown;
     };
-    v1DeletePolicyRepoResponse: { [key: string]: unknown };
+    v1DeleteRegistryRepoResponse: { [key: string]: unknown };
     v1DisplayMode:
       | "DISPLAY_MODE_UNKNOWN"
       | "DISPLAY_MODE_NORMAL"
@@ -419,8 +423,11 @@ export interface components {
     v1GetProviderResponse: {
       results?: components["schemas"]["v1Provider"][];
     };
-    v1GetTagResponse: {
-      tag?: components["schemas"]["v1PolicyRepoTag"];
+    v1GetRegistryRepoTagResponse: {
+      tag?: components["schemas"]["v1RegistryRepoTag"];
+    };
+    v1GetRepoResponse: {
+      repo?: components["schemas"]["v1Repo"];
     };
     v1InfoResponse: {
       build?: components["schemas"]["v1BuildInfo"];
@@ -472,22 +479,22 @@ export interface components {
     v1ListPolicyRefsResponse: {
       results?: components["schemas"]["v1PolicyRef"][];
     };
-    v1ListPolicyReposResponse: {
-      page?: components["schemas"]["v1PaginationResponse"];
-      policy_repos?: components["schemas"]["v1PolicyRepo"][];
-    };
     v1ListProviderKindsResponse: {
       results?: string[];
     };
     v1ListProvidersResponse: {
       results?: components["schemas"]["v1Provider"][];
     };
+    v1ListRegistryRepoTagsResponse: {
+      page?: components["schemas"]["v1PaginationResponse"];
+      tags?: components["schemas"]["v1RegistryRepoTag"][];
+    };
+    v1ListRegistryReposResponse: {
+      page?: components["schemas"]["v1PaginationResponse"];
+      registry_repos?: components["schemas"]["v1RegistryRepo"][];
+    };
     v1ListRepoResponse: {
       repos?: components["schemas"]["v1Repo"][];
-    };
-    v1ListTagsResponse: {
-      page?: components["schemas"]["v1PaginationResponse"];
-      tags?: components["schemas"]["v1PolicyRepoTag"][];
     };
     v1ListTemplatesResponse: {
       repos?: components["schemas"]["v1Repo"][];
@@ -520,7 +527,7 @@ export interface components {
       registry_org?: string;
       registry_repo?: string;
       scc_connection_id?: string;
-      scc_owner?: string;
+      scc_org?: string;
       scc_repo?: string;
     };
     v1PolicyRef: {
@@ -534,21 +541,6 @@ export interface components {
       registry_tag?: string;
       source_name?: string;
       source_url?: string;
-    };
-    v1PolicyRepo: {
-      name?: string;
-      org?: string;
-    };
-    v1PolicyRepoAnnotation: {
-      key?: string;
-      value?: string;
-    };
-    v1PolicyRepoTag: {
-      annotations?: components["schemas"]["v1PolicyRepoAnnotation"][];
-      created_at?: string;
-      digest?: string;
-      name?: string;
-      size?: string;
     };
     v1Provider: {
       config?: components["schemas"]["v1ConfigElement"][];
@@ -568,9 +560,25 @@ export interface components {
       | "PROVIDER_KIND_DECISION_LOGS"
       | "PROVIDER_KIND_DIRECTORY"
       | "PROVIDER_KIND_DISCOVERY";
+    v1RegistryRepo: {
+      name?: string;
+      org?: string;
+    };
+    v1RegistryRepoAnnotation: {
+      key?: string;
+      value?: string;
+    };
+    v1RegistryRepoTag: {
+      annotations?: components["schemas"]["v1RegistryRepoAnnotation"][];
+      created_at?: string;
+      digest?: string;
+      name?: string;
+      size?: string;
+    };
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
       name?: string;
+      org?: string;
       url?: string;
     };
     v1RespondToInviteResponse: { [key: string]: unknown };
@@ -896,8 +904,8 @@ export interface operations {
       };
     };
   };
-  /** Create an empty policy repository for a given registry connection instance. */
-  "registry.create_policy_repo": {
+  /** Create an empty registry repository for a given registry connection instance. */
+  "registry.create_registry_repo": {
     parameters: {
       path: {
         connection_id: string;
@@ -907,7 +915,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1CreatePolicyRepoResponse"];
+          "application/json": components["schemas"]["v1CreateRegistryRepoResponse"];
         };
       };
       /** An unexpected error response. */
@@ -920,13 +928,13 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          repo?: components["schemas"]["v1PolicyRepo"];
+          repo?: components["schemas"]["v1RegistryRepo"];
         };
       };
     };
   };
-  /** Returns a list of PolicyRepo for a given registry connection and organization name. */
-  "registry.list_policy_repos": {
+  /** Returns a list of RegistryRepo for a given registry connection and organization name. */
+  "registry.list_registry_repos": {
     parameters: {
       path: {
         connection_id: string;
@@ -941,7 +949,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ListPolicyReposResponse"];
+          "application/json": components["schemas"]["v1ListRegistryReposResponse"];
         };
       };
       /** An unexpected error response. */
@@ -953,7 +961,7 @@ export interface operations {
     };
   };
   /** Deletes a repository, including all its tags and images. */
-  "registry.delete_policy_repo": {
+  "registry.delete_registry_repo": {
     parameters: {
       path: {
         connection_id: string;
@@ -968,7 +976,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1DeletePolicyRepoResponse"];
+          "application/json": components["schemas"]["v1DeleteRegistryRepoResponse"];
         };
       };
       /** An unexpected error response. */
@@ -979,7 +987,7 @@ export interface operations {
       };
     };
   };
-  /** Returns an array of tags for a policy repository. */
+  /** Returns an array of tags for a registry repository. */
   "registry.list_tags": {
     parameters: {
       path: {
@@ -997,7 +1005,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ListTagsResponse"];
+          "application/json": components["schemas"]["v1ListRegistryRepoTagsResponse"];
         };
       };
       /** An unexpected error response. */
@@ -1022,7 +1030,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1GetTagResponse"];
+          "application/json": components["schemas"]["v1GetRegistryRepoTagResponse"];
         };
       };
       /** An unexpected error response. */
@@ -1324,6 +1332,12 @@ export interface operations {
   };
   /** List policy builders */
   "policy.list_policy_builders": {
+    parameters: {
+      query: {
+        registry_repo?: string;
+        registry_org?: string;
+      };
+    };
     responses: {
       /** A successful response. */
       200: {
@@ -1544,7 +1558,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
       };
     };
     responses: {
@@ -1567,7 +1581,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
       };
     };
     responses: {
@@ -1587,8 +1601,32 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          repo?: string;
+          name?: string;
           template?: string;
+        };
+      };
+    };
+  };
+  /** Gets details for a source code repository. */
+  "scc.get_repo": {
+    parameters: {
+      path: {
+        connection_id: string;
+        org: string;
+        name: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1GetRepoResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
         };
       };
     };
@@ -1598,7 +1636,7 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
-        owner: string;
+        org: string;
         repo: string;
       };
     };
