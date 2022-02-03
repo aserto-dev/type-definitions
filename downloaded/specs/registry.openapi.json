@@ -106,6 +106,20 @@
         },
         "type": "object"
       },
+      "v1ListTagsWithDetailsResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "tag": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepoTag"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
       "v1PaginationRequest": {
         "properties": {
           "size": {
@@ -153,6 +167,42 @@
         },
         "type": "object"
       },
+      "v1RegistryRepoAnnotation": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RegistryRepoTag": {
+        "properties": {
+          "annotations": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepoAnnotation"
+            },
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "format": "int64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1RemoveImageResponse": {
         "properties": {
           "result": {}
@@ -193,7 +243,7 @@
     },
     "termsOfService": "https://www.openpolicyregistry.io/",
     "title": "Registry",
-    "version": "v0.1.62"
+    "version": "v0.8.1"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -595,6 +645,76 @@
           }
         ],
         "summary": "List organizations that have public repos",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/repos/{organization}/{repo}/tags": {
+      "get": {
+        "description": "Lists all tags for a repo, including digests, dates and annotations.",
+        "operationId": "registry.list_tags_with_details",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListTagsWithDetailsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "APIKey": []
+          }
+        ],
+        "summary": "List tags with details.",
         "tags": [
           "registry"
         ]
