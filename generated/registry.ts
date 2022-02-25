@@ -32,6 +32,10 @@ export interface paths {
     /** Lists all organizations that have public repos. */
     get: operations["registry.list_public_organizations"];
   };
+  "/api/v1/registry/repos/{organization}/{repo}/digests": {
+    /** Lists digests for a repo, with as many details the provider offers. */
+    get: operations["registry.list_digests"];
+  };
   "/api/v1/registry/repos/{organization}/{repo}/tags": {
     /** Lists all tags for a repo, including digests, dates and annotations. */
     get: operations["registry.list_tags_with_details"];
@@ -65,6 +69,10 @@ export interface components {
     };
     v1GetWriteAccessTokenResponse: {
       token?: string;
+    };
+    v1ListDigestsResponse: {
+      digests?: components["schemas"]["v1RegistryRepoDigest"][];
+      page?: components["schemas"]["v1PaginationResponse"];
     };
     v1ListImagesResponse: {
       images?: components["schemas"]["v1PolicyImage"][];
@@ -104,6 +112,11 @@ export interface components {
     v1RegistryRepoAnnotation: {
       key?: string;
       value?: string;
+    };
+    v1RegistryRepoDigest: {
+      created_at?: string;
+      digest?: string;
+      tags?: string[];
     };
     v1RegistryRepoTag: {
       annotations?: components["schemas"]["v1RegistryRepoAnnotation"][];
@@ -286,6 +299,33 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1ListPublicOrgsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Lists digests for a repo, with as many details the provider offers. */
+  "registry.list_digests": {
+    parameters: {
+      path: {
+        organization: string;
+        repo: string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListDigestsResponse"];
         };
       };
       /** An unexpected error response. */

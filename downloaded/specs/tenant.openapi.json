@@ -521,6 +521,20 @@
         },
         "type": "object"
       },
+      "v1ListRegistryRepoDigestsResponse": {
+        "properties": {
+          "digests": {
+            "items": {
+              "$ref": "#/components/schemas/v1RegistryRepoDigest"
+            },
+            "type": "array"
+          },
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          }
+        },
+        "type": "object"
+      },
       "v1ListRegistryRepoTagsResponse": {
         "properties": {
           "page": {
@@ -771,6 +785,24 @@
         },
         "type": "object"
       },
+      "v1RegistryRepoDigest": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
       "v1RegistryRepoTag": {
         "properties": {
           "annotations": {
@@ -987,7 +1019,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.1"
+    "version": "v0.8.4"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1549,10 +1581,7 @@
         ],
         "summary": "List all organizations",
         "tags": [
-          "registry",
-          "organization",
-          "org",
-          "list"
+          "registry"
         ]
       },
       "post": {
@@ -1614,10 +1643,7 @@
         ],
         "summary": "Create a registry repo.",
         "tags": [
-          "registry",
-          "repo",
-          "repository",
-          "create"
+          "registry"
         ]
       }
     },
@@ -1688,10 +1714,7 @@
         ],
         "summary": "List repos for an org.",
         "tags": [
-          "registry",
-          "repo",
-          "repository",
-          "list"
+          "registry"
         ]
       }
     },
@@ -1762,10 +1785,93 @@
         ],
         "summary": "Delete a repository.",
         "tags": [
-          "registry",
-          "repo",
-          "repository",
-          "delete"
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/digests": {
+      "get": {
+        "description": "Returns an array of digests for a registry repository.",
+        "operationId": "registry.list_digests",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "deep",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ListRegistryRepoDigestsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List repository digests.",
+        "tags": [
+          "registry"
         ]
       }
     },
@@ -1851,9 +1957,7 @@
         ],
         "summary": "List repository tags.",
         "tags": [
-          "registry",
-          "tag",
-          "list"
+          "registry"
         ]
       }
     },
@@ -1925,9 +2029,7 @@
         ],
         "summary": "Get repository tag details.",
         "tags": [
-          "registry",
-          "tag",
-          "details"
+          "registry"
         ]
       }
     },

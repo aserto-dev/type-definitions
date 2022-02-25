@@ -60,6 +60,10 @@ export interface paths {
     /** Deletes a repository, including all its tags and images. */
     delete: operations["registry.delete_registry_repo"];
   };
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/digests": {
+    /** Returns an array of digests for a registry repository. */
+    get: operations["registry.list_digests"];
+  };
   "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags": {
     /** Returns an array of tags for a registry repository. */
     get: operations["registry.list_tags"];
@@ -485,6 +489,10 @@ export interface components {
     v1ListProvidersResponse: {
       results?: components["schemas"]["v1Provider"][];
     };
+    v1ListRegistryRepoDigestsResponse: {
+      digests?: components["schemas"]["v1RegistryRepoDigest"][];
+      page?: components["schemas"]["v1PaginationResponse"];
+    };
     v1ListRegistryRepoTagsResponse: {
       page?: components["schemas"]["v1PaginationResponse"];
       tags?: components["schemas"]["v1RegistryRepoTag"][];
@@ -567,6 +575,11 @@ export interface components {
     v1RegistryRepoAnnotation: {
       key?: string;
       value?: string;
+    };
+    v1RegistryRepoDigest: {
+      created_at?: string;
+      digest?: string;
+      tags?: string[];
     };
     v1RegistryRepoTag: {
       annotations?: components["schemas"]["v1RegistryRepoAnnotation"][];
@@ -977,6 +990,35 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1DeleteRegistryRepoResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Returns an array of digests for a registry repository. */
+  "registry.list_digests": {
+    parameters: {
+      path: {
+        connection_id: string;
+        "repo.org": string;
+        "repo.name": string;
+      };
+      query: {
+        "page.size"?: number;
+        "page.token"?: string;
+        deep?: boolean;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ListRegistryRepoDigestsResponse"];
         };
       };
       /** An unexpected error response. */
