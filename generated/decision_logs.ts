@@ -12,6 +12,10 @@ export interface paths {
     /** Returns the location of a single decison log instance. */
     get: operations["decision_logs.get_decision_log"];
   };
+  "/api/v1/decision_logs/decisions/policy/{policy_id}": {
+    /** Returns a stream of decisions */
+    get: operations["decision_logs.decisions"];
+  };
   "/api/v1/decision_logs/query": {
     /** Returns a collection of raw decision logs strings matching the query specification. */
     post: operations["decision_logs.query"];
@@ -32,16 +36,46 @@ export interface components {
       type_url?: string;
       value?: string;
     };
+    /**
+     * `NullValue` is a singleton enumeration to represent the null value for the
+     * `Value` type union.
+     *
+     *  The JSON representation for `NullValue` is JSON `null`.
+     *
+     *  - NULL_VALUE: Null value.
+     */
+    protobufNullValue: "NULL_VALUE";
     rpcStatus: {
       code?: number;
       details?: components["schemas"]["protobufAny"][];
       message?: string;
+    };
+    v1Decision: {
+      id?: string;
+      outcomes?: { [key: string]: boolean };
+      path?: string;
+      policy?: components["schemas"]["v1DecisionPolicy"];
+      resource?: { [key: string]: unknown };
+      timestamp?: string;
+      user?: components["schemas"]["v1DecisionUser"];
     };
     v1DecisionLog: {
       url?: string;
     };
     v1DecisionLogItem: {
       name?: string;
+    };
+    v1DecisionPolicy: {
+      context?: components["schemas"]["v1PolicyContext"];
+      registry_digest?: string;
+      registry_image?: string;
+      registry_service?: string;
+      registry_tag?: string;
+    };
+    v1DecisionUser: {
+      context?: components["schemas"]["v1IdentityContext"];
+      email?: string;
+      id?: string;
     };
     v1ExecuteQueryRequest: {
       page?: components["schemas"]["v1PaginationRequest"];
@@ -55,9 +89,29 @@ export interface components {
     v1GetDecisionLogResponse: {
       log?: components["schemas"]["v1DecisionLog"];
     };
+    v1GetDecisionsResponse: {
+      decision?: components["schemas"]["v1Decision"];
+    };
     v1GetUserResponse: {
       user?: components["schemas"]["v1User"];
     };
+    v1IdentityContext: {
+      identity?: string;
+      type?: components["schemas"]["v1IdentityType"];
+    };
+    /**
+     * Identity types, describes the payload type of the identity field inside the IdentityContext message.
+     *
+     *  - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
+     *  - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
+     *  - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
+     *  - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
+     */
+    v1IdentityType:
+      | "IDENTITY_TYPE_UNKNOWN"
+      | "IDENTITY_TYPE_NONE"
+      | "IDENTITY_TYPE_SUB"
+      | "IDENTITY_TYPE_JWT";
     v1ListDecisionLogsResponse: {
       page?: components["schemas"]["v1PaginationResponse"];
       results?: components["schemas"]["v1DecisionLogItem"][];
@@ -75,7 +129,13 @@ export interface components {
       result_size?: number;
       total_size?: number;
     };
+    v1PolicyContext: {
+      decisions?: string[];
+      id?: string;
+      path?: string;
+    };
     v1Result: {
+      event?: components["schemas"]["v1Decision"];
       log?: string;
     };
     v1User: {
@@ -125,6 +185,34 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1GetDecisionLogResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Returns a stream of decisions */
+  "decision_logs.decisions": {
+    parameters: {
+      path: {
+        policy_id: string;
+      };
+      query: {
+        since?: string;
+      };
+    };
+    responses: {
+      /** A successful response.(streaming responses) */
+      200: {
+        content: {
+          "application/json": {
+            error?: components["schemas"]["rpcStatus"];
+            result?: components["schemas"]["v1GetDecisionsResponse"];
+          };
         };
       };
       /** An unexpected error response. */
