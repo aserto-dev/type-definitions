@@ -198,6 +198,17 @@
         },
         "type": "object"
       },
+      "v1ConnectionAvailableResponse": {
+        "properties": {
+          "availability": {
+            "$ref": "#/components/schemas/v1NameAvailability"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1ConnectionType": {
         "default": "CONNECTION_TYPE_UNKNOWN",
         "enum": [
@@ -607,6 +618,18 @@
           }
         },
         "type": "object"
+      },
+      "v1NameAvailability": {
+        "default": "NAME_AVAILABILITY_UNKNOWN",
+        "enum": [
+          "NAME_AVAILABILITY_UNKNOWN",
+          "NAME_AVAILABILITY_AVAILABLE",
+          "NAME_AVAILABILITY_UNAVAILABLE",
+          "NAME_AVAILABILITY_INVALID",
+          "NAME_AVAILABILITY_PROFANE",
+          "NAME_AVAILABILITY_RESERVED"
+        ],
+        "type": "string"
       },
       "v1OPAConfig": {
         "properties": {
@@ -1019,7 +1042,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.4"
+    "version": "v0.8.7"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -2133,6 +2156,54 @@
           }
         ],
         "summary": "Create connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/available/{name}": {
+      "get": {
+        "description": "Verifies if given connection name is available.",
+        "operationId": "connection.connection_available",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ConnectionAvailableResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Connection availability check",
         "tags": [
           "connection"
         ]
