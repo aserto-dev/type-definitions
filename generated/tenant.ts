@@ -52,6 +52,10 @@ export interface paths {
     /** Create an empty registry repository for a given registry connection instance. */
     post: operations["registry.create_registry_repo"];
   };
+  "/api/v1/registry/{connection_id}/available/{repo.org}/{repo.name}": {
+    /** Verifies if given RegistryRepo is available. */
+    get: operations["registry.registry_repo_available"];
+  };
   "/api/v1/registry/{connection_id}/{org}": {
     /** Returns a list of RegistryRepo for a given registry connection and organization name. */
     get: operations["registry.list_registry_repos"];
@@ -77,6 +81,10 @@ export interface paths {
     get: operations["connection.list_connections"];
     /** Creates a new connection instance of a given connection kind. */
     post: operations["connection.create_connection"];
+  };
+  "/api/v1/tenant/connections/available/{name}": {
+    /** Verifies if given connection name is available. */
+    get: operations["connection.connection_available"];
   };
   "/api/v1/tenant/connections/{connection.id}": {
     /** Update existing connection definition for the given connection id. */
@@ -377,6 +385,10 @@ export interface components {
       system?: boolean;
       verified?: boolean;
     };
+    v1ConnectionAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
+    };
     v1ConnectionType:
       | "CONNECTION_TYPE_UNKNOWN"
       | "CONNECTION_TYPE_SIMPLE"
@@ -514,6 +526,13 @@ export interface components {
       hash?: string;
       updated_at?: string;
     };
+    v1NameAvailability:
+      | "NAME_AVAILABILITY_UNKNOWN"
+      | "NAME_AVAILABILITY_AVAILABLE"
+      | "NAME_AVAILABILITY_UNAVAILABLE"
+      | "NAME_AVAILABILITY_INVALID"
+      | "NAME_AVAILABILITY_PROFANE"
+      | "NAME_AVAILABILITY_RESERVED";
     v1OPAConfig: {
       discovery?: { [key: string]: unknown };
     };
@@ -575,6 +594,10 @@ export interface components {
     v1RegistryRepoAnnotation: {
       key?: string;
       value?: string;
+    };
+    v1RegistryRepoAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
     };
     v1RegistryRepoDigest: {
       created_at?: string;
@@ -946,6 +969,30 @@ export interface operations {
       };
     };
   };
+  /** Verifies if given RegistryRepo is available. */
+  "registry.registry_repo_available": {
+    parameters: {
+      path: {
+        connection_id: string;
+        "repo.org": string;
+        "repo.name": string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1RegistryRepoAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
   /** Returns a list of RegistryRepo for a given registry connection and organization name. */
   "registry.list_registry_repos": {
     parameters: {
@@ -1132,6 +1179,28 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v1Connection"];
+      };
+    };
+  };
+  /** Verifies if given connection name is available. */
+  "connection.connection_available": {
+    parameters: {
+      path: {
+        name: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ConnectionAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
