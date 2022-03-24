@@ -13,6 +13,14 @@
         },
         "type": "object"
       },
+      "protobufNullValue": {
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "type": "string"
+      },
       "rpcStatus": {
         "properties": {
           "code": {
@@ -31,6 +39,37 @@
         },
         "type": "object"
       },
+      "v1Decision": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "outcomes": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "type": "object"
+          },
+          "path": {
+            "type": "string"
+          },
+          "policy": {
+            "$ref": "#/components/schemas/v1DecisionPolicy"
+          },
+          "resource": {
+            "type": "object"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/v1DecisionUser"
+          }
+        },
+        "title": "represents a decision that an authorizer performed in the past",
+        "type": "object"
+      },
       "v1DecisionLog": {
         "properties": {
           "url": {
@@ -45,6 +84,42 @@
             "type": "string"
           }
         },
+        "type": "object"
+      },
+      "v1DecisionPolicy": {
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/v1PolicyContext"
+          },
+          "registry_digest": {
+            "type": "string"
+          },
+          "registry_image": {
+            "type": "string"
+          },
+          "registry_service": {
+            "type": "string"
+          },
+          "registry_tag": {
+            "type": "string"
+          }
+        },
+        "title": "information about a policy used in a decision",
+        "type": "object"
+      },
+      "v1DecisionUser": {
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/v1IdentityContext"
+          },
+          "email": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "title": "information about a user on behalf of whom a decision was made",
         "type": "object"
       },
       "v1ExecuteQueryRequest": {
@@ -84,6 +159,14 @@
         },
         "type": "object"
       },
+      "v1GetDecisionsResponse": {
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/v1Decision"
+          }
+        },
+        "type": "object"
+      },
       "v1GetUserResponse": {
         "properties": {
           "user": {
@@ -91,6 +174,28 @@
           }
         },
         "type": "object"
+      },
+      "v1IdentityContext": {
+        "properties": {
+          "identity": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/v1IdentityType"
+          }
+        },
+        "type": "object"
+      },
+      "v1IdentityType": {
+        "default": "IDENTITY_TYPE_UNKNOWN",
+        "description": "Identity types, describes the payload type of the identity field inside the IdentityContext message.\n\n - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.\n - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.\n - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.\n - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.",
+        "enum": [
+          "IDENTITY_TYPE_UNKNOWN",
+          "IDENTITY_TYPE_NONE",
+          "IDENTITY_TYPE_SUB",
+          "IDENTITY_TYPE_JWT"
+        ],
+        "type": "string"
       },
       "v1ListDecisionLogsResponse": {
         "properties": {
@@ -148,8 +253,28 @@
         },
         "type": "object"
       },
+      "v1PolicyContext": {
+        "properties": {
+          "decisions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1Result": {
         "properties": {
+          "event": {
+            "$ref": "#/components/schemas/v1Decision"
+          },
           "log": {
             "type": "string"
           }
@@ -208,7 +333,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Decision Logs",
-    "version": "v0.8.4"
+    "version": "v0.8.9"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -320,6 +445,71 @@
           }
         ],
         "summary": "Get a decision log",
+        "tags": [
+          "decision_logs"
+        ]
+      }
+    },
+    "/api/v1/decision_logs/decisions/policy/{policy_id}": {
+      "get": {
+        "description": "Returns a stream of decisions",
+        "operationId": "decision_logs.decisions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/rpcStatus"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/v1GetDecisionsResponse"
+                    }
+                  },
+                  "title": "Stream result of v1GetDecisionsResponse",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "A successful response.(streaming responses)"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "DecisionLogsAPIKey": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "decision event stream",
         "tags": [
           "decision_logs"
         ]

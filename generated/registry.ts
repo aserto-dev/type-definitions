@@ -32,6 +32,10 @@ export interface paths {
     /** Lists all organizations that have public repos. */
     get: operations["registry.list_public_organizations"];
   };
+  "/api/v1/registry/repos/{organization}/available/{repo}": {
+    /** Verifies that the given repository name is available. */
+    get: operations["registry.repo_available"];
+  };
   "/api/v1/registry/repos/{organization}/{repo}/digests": {
     /** Lists digests for a repo, with as many details the provider offers. */
     get: operations["registry.list_digests"];
@@ -93,6 +97,13 @@ export interface components {
       page?: components["schemas"]["v1PaginationResponse"];
       tag?: components["schemas"]["v1RegistryRepoTag"][];
     };
+    v1NameAvailability:
+      | "NAME_AVAILABILITY_UNKNOWN"
+      | "NAME_AVAILABILITY_AVAILABLE"
+      | "NAME_AVAILABILITY_UNAVAILABLE"
+      | "NAME_AVAILABILITY_INVALID"
+      | "NAME_AVAILABILITY_PROFANE"
+      | "NAME_AVAILABILITY_RESERVED";
     v1PaginationRequest: {
       size?: number;
       token?: string;
@@ -127,6 +138,10 @@ export interface components {
     };
     v1RemoveImageResponse: {
       result?: unknown;
+    };
+    v1RepoAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
     };
     v1SetImageVisibilityResponse: {
       public?: boolean;
@@ -299,6 +314,29 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1ListPublicOrgsResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Verifies that the given repository name is available. */
+  "registry.repo_available": {
+    parameters: {
+      path: {
+        organization: string;
+        repo: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1RepoAvailableResponse"];
         };
       };
       /** An unexpected error response. */
