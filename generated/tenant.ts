@@ -52,6 +52,10 @@ export interface paths {
     /** Create an empty registry repository for a given registry connection instance. */
     post: operations["registry.create_registry_repo"];
   };
+  "/api/v1/registry/{connection_id}/available/{repo.org}/{repo.name}": {
+    /** Verifies if given RegistryRepo is available. */
+    get: operations["registry.registry_repo_available"];
+  };
   "/api/v1/registry/{connection_id}/{org}": {
     /** Returns a list of RegistryRepo for a given registry connection and organization name. */
     get: operations["registry.list_registry_repos"];
@@ -72,11 +76,19 @@ export interface paths {
     /** Returns a tag object with information about the tag. */
     get: operations["registry.get_tag"];
   };
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid": {
+    /** Verifies if given tag is a valid policy. */
+    get: operations["registry.registry_is_valid_tag"];
+  };
   "/api/v1/tenant/connections": {
     /** Returns the collection of connections for given tenant. */
     get: operations["connection.list_connections"];
     /** Creates a new connection instance of a given connection kind. */
     post: operations["connection.create_connection"];
+  };
+  "/api/v1/tenant/connections/available/{name}": {
+    /** Verifies if given connection name is available. */
+    get: operations["connection.connection_available"];
   };
   "/api/v1/tenant/connections/{connection.id}": {
     /** Update existing connection definition for the given connection id. */
@@ -377,6 +389,10 @@ export interface components {
       system?: boolean;
       verified?: boolean;
     };
+    v1ConnectionAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
+    };
     v1ConnectionType:
       | "CONNECTION_TYPE_UNKNOWN"
       | "CONNECTION_TYPE_SIMPLE"
@@ -471,6 +487,7 @@ export interface components {
       results?: components["schemas"]["v1TenantInvite"][];
     };
     v1ListOrgResponse: {
+      organizations?: components["schemas"]["v1SccOrg"][];
       orgs?: string[];
     };
     v1ListOrgsResponse: {
@@ -514,6 +531,13 @@ export interface components {
       hash?: string;
       updated_at?: string;
     };
+    v1NameAvailability:
+      | "NAME_AVAILABILITY_UNKNOWN"
+      | "NAME_AVAILABILITY_AVAILABLE"
+      | "NAME_AVAILABILITY_UNAVAILABLE"
+      | "NAME_AVAILABILITY_INVALID"
+      | "NAME_AVAILABILITY_PROFANE"
+      | "NAME_AVAILABILITY_RESERVED";
     v1OPAConfig: {
       discovery?: { [key: string]: unknown };
     };
@@ -576,6 +600,10 @@ export interface components {
       key?: string;
       value?: string;
     };
+    v1RegistryRepoAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
+    };
     v1RegistryRepoDigest: {
       created_at?: string;
       digest?: string;
@@ -597,6 +625,10 @@ export interface components {
     v1RespondToInviteResponse: { [key: string]: unknown };
     v1RotateSecretResponse: {
       result?: components["schemas"]["v1Connection"];
+    };
+    v1SccOrg: {
+      id?: string;
+      name?: string;
     };
     v1SignupAccountRequest: {
       email?: string;
@@ -638,6 +670,9 @@ export interface components {
     };
     v1UpdatePolicyRefResponse: {
       results?: unknown;
+    };
+    v1ValidRegistryRepoTagResponse: {
+      is_valid?: boolean;
     };
     v1VerifyConnectionResponse: {
       status?: components["schemas"]["rpcStatus"];
@@ -946,6 +981,30 @@ export interface operations {
       };
     };
   };
+  /** Verifies if given RegistryRepo is available. */
+  "registry.registry_repo_available": {
+    parameters: {
+      path: {
+        connection_id: string;
+        "repo.org": string;
+        "repo.name": string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1RegistryRepoAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
   /** Returns a list of RegistryRepo for a given registry connection and organization name. */
   "registry.list_registry_repos": {
     parameters: {
@@ -1083,6 +1142,31 @@ export interface operations {
       };
     };
   };
+  /** Verifies if given tag is a valid policy. */
+  "registry.registry_is_valid_tag": {
+    parameters: {
+      path: {
+        connection_id: string;
+        "repo.org": string;
+        "repo.name": string;
+        tag: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ValidRegistryRepoTagResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
   /** Returns the collection of connections for given tenant. */
   "connection.list_connections": {
     parameters: {
@@ -1132,6 +1216,28 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v1Connection"];
+      };
+    };
+  };
+  /** Verifies if given connection name is available. */
+  "connection.connection_available": {
+    parameters: {
+      path: {
+        name: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1ConnectionAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
@@ -1702,6 +1808,9 @@ export interface operations {
     parameters: {
       path: {
         connection_id: string;
+      };
+      query: {
+        tag?: string;
       };
     };
     responses: {

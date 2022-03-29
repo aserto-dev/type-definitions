@@ -198,6 +198,17 @@
         },
         "type": "object"
       },
+      "v1ConnectionAvailableResponse": {
+        "properties": {
+          "availability": {
+            "$ref": "#/components/schemas/v1NameAvailability"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1ConnectionType": {
         "default": "CONNECTION_TYPE_UNKNOWN",
         "enum": [
@@ -454,6 +465,12 @@
       },
       "v1ListOrgResponse": {
         "properties": {
+          "organizations": {
+            "items": {
+              "$ref": "#/components/schemas/v1SccOrg"
+            },
+            "type": "array"
+          },
           "orgs": {
             "items": {
               "type": "string"
@@ -607,6 +624,18 @@
           }
         },
         "type": "object"
+      },
+      "v1NameAvailability": {
+        "default": "NAME_AVAILABILITY_UNKNOWN",
+        "enum": [
+          "NAME_AVAILABILITY_UNKNOWN",
+          "NAME_AVAILABILITY_AVAILABLE",
+          "NAME_AVAILABILITY_UNAVAILABLE",
+          "NAME_AVAILABILITY_INVALID",
+          "NAME_AVAILABILITY_PROFANE",
+          "NAME_AVAILABILITY_RESERVED"
+        ],
+        "type": "string"
       },
       "v1OPAConfig": {
         "properties": {
@@ -785,6 +814,17 @@
         },
         "type": "object"
       },
+      "v1RegistryRepoAvailableResponse": {
+        "properties": {
+          "availability": {
+            "$ref": "#/components/schemas/v1NameAvailability"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "v1RegistryRepoDigest": {
         "properties": {
           "created_at": {
@@ -852,6 +892,17 @@
         "properties": {
           "result": {
             "$ref": "#/components/schemas/v1Connection"
+          }
+        },
+        "type": "object"
+      },
+      "v1SccOrg": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -966,6 +1017,14 @@
         },
         "type": "object"
       },
+      "v1ValidRegistryRepoTagResponse": {
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "v1VerifyConnectionResponse": {
         "properties": {
           "status": {
@@ -1019,7 +1078,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.4"
+    "version": "v0.8.10"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1647,6 +1706,70 @@
         ]
       }
     },
+    "/api/v1/registry/{connection_id}/available/{repo.org}/{repo.name}": {
+      "get": {
+        "description": "Verifies if given RegistryRepo is available.",
+        "operationId": "registry.registry_repo_available",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RegistryRepoAvailableResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "RegistryRepo availability check",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
     "/api/v1/registry/{connection_id}/{org}": {
       "get": {
         "description": "Returns a list of RegistryRepo for a given registry connection and organization name.",
@@ -2033,6 +2156,78 @@
         ]
       }
     },
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid": {
+      "get": {
+        "description": "Verifies if given tag is a valid policy.",
+        "operationId": "registry.registry_is_valid_tag",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.org",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "repo.name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ValidRegistryRepoTagResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Tag validity check",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
     "/api/v1/tenant/connections": {
       "get": {
         "description": "Returns the collection of connections for given tenant.",
@@ -2133,6 +2328,54 @@
           }
         ],
         "summary": "Create connection",
+        "tags": [
+          "connection"
+        ]
+      }
+    },
+    "/api/v1/tenant/connections/available/{name}": {
+      "get": {
+        "description": "Verifies if given connection name is available.",
+        "operationId": "connection.connection_available",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1ConnectionAvailableResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Connection availability check",
         "tags": [
           "connection"
         ]
@@ -3413,6 +3656,13 @@
             "in": "path",
             "name": "connection_id",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tag",
             "schema": {
               "type": "string"
             }
