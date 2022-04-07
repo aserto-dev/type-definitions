@@ -1017,12 +1017,7 @@
         },
         "type": "object"
       },
-      "v1ValidRegistryRepoTagResponse": {
-        "properties": {
-          "is_valid": {
-            "type": "boolean"
-          }
-        },
+      "v1ValidPolicyRegistryRepoTagResponse": {
         "type": "object"
       },
       "v1VerifyConnectionResponse": {
@@ -1078,7 +1073,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.10"
+    "version": "v0.8.11"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -2156,7 +2151,7 @@
         ]
       }
     },
-    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid": {
+    "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid_policy": {
       "get": {
         "description": "Verifies if given tag is a valid policy.",
         "operationId": "registry.registry_is_valid_tag",
@@ -2199,7 +2194,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v1ValidRegistryRepoTagResponse"
+                  "$ref": "#/components/schemas/v1ValidPolicyRegistryRepoTagResponse"
                 }
               }
             },

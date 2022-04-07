@@ -76,7 +76,7 @@ export interface paths {
     /** Returns a tag object with information about the tag. */
     get: operations["registry.get_tag"];
   };
-  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid": {
+  "/api/v1/registry/{connection_id}/{repo.org}/{repo.name}/tags/{tag}/valid_policy": {
     /** Verifies if given tag is a valid policy. */
     get: operations["registry.registry_is_valid_tag"];
   };
@@ -671,9 +671,7 @@ export interface components {
     v1UpdatePolicyRefResponse: {
       results?: unknown;
     };
-    v1ValidRegistryRepoTagResponse: {
-      is_valid?: boolean;
-    };
+    v1ValidPolicyRegistryRepoTagResponse: { [key: string]: unknown };
     v1VerifyConnectionResponse: {
       status?: components["schemas"]["rpcStatus"];
     };
@@ -1156,7 +1154,7 @@ export interface operations {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ValidRegistryRepoTagResponse"];
+          "application/json": components["schemas"]["v1ValidPolicyRegistryRepoTagResponse"];
         };
       };
       /** An unexpected error response. */
