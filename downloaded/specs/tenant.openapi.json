@@ -873,6 +873,9 @@
       },
       "v1Repo": {
         "properties": {
+          "ci_url": {
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -1073,7 +1076,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.11"
+    "version": "v0.8.12"
   },
   "openapi": "3.0.3",
   "paths": {

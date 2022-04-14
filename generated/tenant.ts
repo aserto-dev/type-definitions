@@ -618,6 +618,7 @@ export interface components {
     };
     v1RemoveMemberResponse: { [key: string]: unknown };
     v1Repo: {
+      ci_url?: string;
       name?: string;
       org?: string;
       url?: string;

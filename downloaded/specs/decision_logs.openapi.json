@@ -333,7 +333,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Decision Logs",
-    "version": "v0.8.11"
+    "version": "v0.8.12"
   },
   "openapi": "3.0.3",
   "paths": {
