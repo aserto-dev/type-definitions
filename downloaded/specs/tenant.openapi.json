@@ -121,6 +121,9 @@
             "format": "int32",
             "type": "integer"
           },
+          "json_schema": {
+            "type": "string"
+          },
           "kind": {
             "$ref": "#/components/schemas/v1ConfigElementKind"
           },
@@ -158,7 +161,8 @@
           "CONFIG_ELEMENT_TYPE_UNKNOWN",
           "CONFIG_ELEMENT_TYPE_STRING",
           "CONFIG_ELEMENT_TYPE_INTEGER",
-          "CONFIG_ELEMENT_TYPE_BOOLEAN"
+          "CONFIG_ELEMENT_TYPE_BOOLEAN",
+          "CONFIG_ELEMENT_TYPE_JSON"
         ],
         "type": "string"
       },
@@ -788,7 +792,8 @@
           "PROVIDER_KIND_AUTHORIZER",
           "PROVIDER_KIND_DECISION_LOGS",
           "PROVIDER_KIND_DIRECTORY",
-          "PROVIDER_KIND_DISCOVERY"
+          "PROVIDER_KIND_DISCOVERY",
+          "PROVIDER_KIND_SATELLITE"
         ],
         "type": "string"
       },
@@ -1076,7 +1081,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.12"
+    "version": "v0.8.13"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1438,7 +1443,8 @@
                 "PROVIDER_KIND_AUTHORIZER",
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
-                "PROVIDER_KIND_DISCOVERY"
+                "PROVIDER_KIND_DISCOVERY",
+                "PROVIDER_KIND_SATELLITE"
               ],
               "type": "string"
             }
@@ -1540,7 +1546,8 @@
                 "PROVIDER_KIND_AUTHORIZER",
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
-                "PROVIDER_KIND_DISCOVERY"
+                "PROVIDER_KIND_DISCOVERY",
+                "PROVIDER_KIND_SATELLITE"
               ],
               "type": "string"
             }
@@ -2244,7 +2251,8 @@
                 "PROVIDER_KIND_AUTHORIZER",
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
-                "PROVIDER_KIND_DISCOVERY"
+                "PROVIDER_KIND_DISCOVERY",
+                "PROVIDER_KIND_SATELLITE"
               ],
               "type": "string"
             }
