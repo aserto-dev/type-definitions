@@ -360,6 +360,7 @@ export interface components {
       description?: string;
       generated?: boolean;
       id?: number;
+      json_schema?: string;
       kind?: components["schemas"]["v1ConfigElementKind"];
       mode?: components["schemas"]["v1DisplayMode"];
       name?: string;
@@ -376,7 +377,8 @@ export interface components {
       | "CONFIG_ELEMENT_TYPE_UNKNOWN"
       | "CONFIG_ELEMENT_TYPE_STRING"
       | "CONFIG_ELEMENT_TYPE_INTEGER"
-      | "CONFIG_ELEMENT_TYPE_BOOLEAN";
+      | "CONFIG_ELEMENT_TYPE_BOOLEAN"
+      | "CONFIG_ELEMENT_TYPE_JSON";
     v1Connection: {
       config?: { [key: string]: unknown };
       description?: string;
@@ -591,7 +593,8 @@ export interface components {
       | "PROVIDER_KIND_AUTHORIZER"
       | "PROVIDER_KIND_DECISION_LOGS"
       | "PROVIDER_KIND_DIRECTORY"
-      | "PROVIDER_KIND_DISCOVERY";
+      | "PROVIDER_KIND_DISCOVERY"
+      | "PROVIDER_KIND_SATELLITE";
     v1RegistryRepo: {
       name?: string;
       org?: string;
@@ -857,7 +860,8 @@ export interface operations {
           | "PROVIDER_KIND_AUTHORIZER"
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
-          | "PROVIDER_KIND_DISCOVERY";
+          | "PROVIDER_KIND_DISCOVERY"
+          | "PROVIDER_KIND_SATELLITE";
       };
     };
     responses: {
@@ -907,7 +911,8 @@ export interface operations {
           | "PROVIDER_KIND_AUTHORIZER"
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
-          | "PROVIDER_KIND_DISCOVERY";
+          | "PROVIDER_KIND_DISCOVERY"
+          | "PROVIDER_KIND_SATELLITE";
       };
     };
     responses: {
@@ -1178,7 +1183,8 @@ export interface operations {
           | "PROVIDER_KIND_AUTHORIZER"
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
-          | "PROVIDER_KIND_DISCOVERY";
+          | "PROVIDER_KIND_DISCOVERY"
+          | "PROVIDER_KIND_SATELLITE";
       };
     };
     responses: {
