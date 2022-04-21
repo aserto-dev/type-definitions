@@ -1081,7 +1081,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.13"
+    "version": "v0.8.15"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -2683,7 +2683,7 @@
             "TenantID": []
           }
         ],
-        "summary": "List policy references",
+        "summary": "List policy references (DEPRECATED).",
         "tags": [
           "policy"
         ]
@@ -2739,7 +2739,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Create policy reference",
+        "summary": "Create policy reference (DEPRECATED).",
         "tags": [
           "policy"
         ]
@@ -2787,7 +2787,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Remove policy reference",
+        "summary": "Remove policy reference (DEPRECATED).",
         "tags": [
           "policy"
         ]
@@ -2835,7 +2835,7 @@
             "TenantID": []
           }
         ],
-        "summary": "OPA discovery configuration for the policy.",
+        "summary": "OPA discovery configuration for the policy (DEPRECATED).",
         "tags": [
           "policy"
         ]
@@ -2901,7 +2901,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Update a policy reference",
+        "summary": "Update a policy reference (DEPRECATED).",
         "tags": [
           "policy"
         ]
@@ -2955,7 +2955,7 @@
             "TenantID": []
           }
         ],
-        "summary": "List policy builders",
+        "summary": "List policy builders (DEPRECATED).",
         "tags": [
           "policy builder"
         ]
@@ -3011,7 +3011,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Create policy builder",
+        "summary": "Create policy builder (DEPRECATED).",
         "tags": [
           "policy builder"
         ]
@@ -3059,7 +3059,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Remove policy builder",
+        "summary": "Remove policy builder (DEPRECATED).",
         "tags": [
           "policy builder"
         ]
