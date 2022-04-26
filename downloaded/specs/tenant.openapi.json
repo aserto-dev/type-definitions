@@ -92,6 +92,9 @@
       },
       "v1ClaimTenantRequest": {
         "properties": {
+          "default_artifacts": {
+            "type": "boolean"
+          },
           "name": {
             "type": "string"
           },
@@ -1081,7 +1084,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.15"
+    "version": "v0.8.16"
   },
   "openapi": "3.0.3",
   "paths": {

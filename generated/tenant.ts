@@ -350,6 +350,7 @@ export interface components {
       version?: string;
     };
     v1ClaimTenantRequest: {
+      default_artifacts?: boolean;
       name?: string;
       personal?: boolean;
     };
