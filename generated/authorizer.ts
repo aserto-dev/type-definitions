@@ -259,8 +259,11 @@ export interface components {
       | "IDENTITY_KIND_EMAIL"
       | "IDENTITY_KIND_USERNAME"
       | "IDENTITY_KIND_DN"
-      | "IDENTITY_KIND_PHONE";
+      | "IDENTITY_KIND_PHONE"
+      | "IDENTITY_KIND_EMPID";
     v1IdentitySource: {
+      case_insensitive?: boolean;
+      connection_id?: string;
       kind?: components["schemas"]["v1IdentityKind"];
       provider?: string;
       verified?: boolean;
