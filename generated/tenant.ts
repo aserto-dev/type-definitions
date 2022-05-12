@@ -56,6 +56,10 @@ export interface paths {
     /** Verifies if given RegistryRepo is available. */
     get: operations["registry.registry_repo_available"];
   };
+  "/api/v1/registry/{connection_id}/clone": {
+    /** Clones a repository from one registry to another. */
+    post: operations["registry.clone_repo"];
+  };
   "/api/v1/registry/{connection_id}/{org}": {
     /** Returns a list of RegistryRepo for a given registry connection and organization name. */
     get: operations["registry.list_registry_repos"];
@@ -357,6 +361,7 @@ export interface components {
     v1ClaimTenantResponse: {
       id?: string;
     };
+    v1CloneRepoResponse: { [key: string]: unknown };
     v1ConfigElement: {
       description?: string;
       generated?: boolean;
@@ -647,6 +652,7 @@ export interface components {
     v1Tenant: {
       connections?: components["schemas"]["v1Connection"][];
       id?: string;
+      max_hosted_instances?: number;
       members?: components["schemas"]["v1TenantMember"][];
       name?: string;
       personal?: boolean;
@@ -1000,6 +1006,28 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1RegistryRepoAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Clones a repository from one registry to another. */
+  "registry.clone_repo": {
+    parameters: {
+      path: {
+        connection_id: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1CloneRepoResponse"];
         };
       };
       /** An unexpected error response. */

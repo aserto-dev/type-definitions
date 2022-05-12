@@ -370,12 +370,19 @@
           "IDENTITY_KIND_EMAIL",
           "IDENTITY_KIND_USERNAME",
           "IDENTITY_KIND_DN",
-          "IDENTITY_KIND_PHONE"
+          "IDENTITY_KIND_PHONE",
+          "IDENTITY_KIND_EMPID"
         ],
         "type": "string"
       },
       "v1IdentitySource": {
         "properties": {
+          "case_insensitive": {
+            "type": "boolean"
+          },
+          "connection_id": {
+            "type": "string"
+          },
           "kind": {
             "$ref": "#/components/schemas/v1IdentityKind"
           },
@@ -958,7 +965,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.8.16"
+    "version": "v0.8.24"
   },
   "openapi": "3.0.3",
   "paths": {

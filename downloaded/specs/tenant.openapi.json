@@ -112,6 +112,9 @@
         },
         "type": "object"
       },
+      "v1CloneRepoResponse": {
+        "type": "object"
+      },
       "v1ConfigElement": {
         "properties": {
           "description": {
@@ -954,6 +957,10 @@
           "id": {
             "type": "string"
           },
+          "max_hosted_instances": {
+            "format": "int32",
+            "type": "integer"
+          },
           "members": {
             "items": {
               "$ref": "#/components/schemas/v1TenantMember"
@@ -1084,7 +1091,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.16"
+    "version": "v0.8.24"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1773,6 +1780,54 @@
           }
         ],
         "summary": "RegistryRepo availability check",
+        "tags": [
+          "registry"
+        ]
+      }
+    },
+    "/api/v1/registry/{connection_id}/clone": {
+      "post": {
+        "description": "Clones a repository from one registry to another.",
+        "operationId": "registry.clone_repo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1CloneRepoResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Clones a repository",
         "tags": [
           "registry"
         ]
