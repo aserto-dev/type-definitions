@@ -1037,6 +1037,19 @@ export interface operations {
         };
       };
     };
+    requestBody: {
+      content: {
+        "application/json": {
+          destination_connection_id?: string;
+          destination_org?: string;
+          destination_repo?: string;
+          destination_tag?: string;
+          source_org?: string;
+          source_repo?: string;
+          source_tag?: string;
+        };
+      };
+    };
   };
   /** Returns a list of RegistryRepo for a given registry connection and organization name. */
   "registry.list_registry_repos": {

@@ -1091,7 +1091,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.25"
+    "version": "v0.8.26"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1799,6 +1799,40 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "destination_connection_id": {
+                    "type": "string"
+                  },
+                  "destination_org": {
+                    "type": "string"
+                  },
+                  "destination_repo": {
+                    "type": "string"
+                  },
+                  "destination_tag": {
+                    "type": "string"
+                  },
+                  "source_org": {
+                    "type": "string"
+                  },
+                  "source_repo": {
+                    "type": "string"
+                  },
+                  "source_tag": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
         "responses": {
           "200": {
             "content": {
