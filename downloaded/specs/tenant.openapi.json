@@ -1057,6 +1057,262 @@
           }
         },
         "type": "object"
+      },
+      "v2CreateInstanceResponse": {
+        "properties": {
+          "instance": {
+            "$ref": "#/components/schemas/v2Instance"
+          }
+        },
+        "type": "object"
+      },
+      "v2CreatePolicyResponse": {
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/v2Policy"
+          }
+        },
+        "type": "object"
+      },
+      "v2CreateRepositoryResponse": {
+        "properties": {
+          "repository": {
+            "$ref": "#/components/schemas/v2Repository"
+          }
+        },
+        "type": "object"
+      },
+      "v2CreateSourceResponse": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/v2Source"
+          }
+        },
+        "type": "object"
+      },
+      "v2DeleteInstanceResponse": {
+        "type": "object"
+      },
+      "v2DeletePolicyResponse": {
+        "type": "object"
+      },
+      "v2DeleteRepositoryResponse": {
+        "type": "object"
+      },
+      "v2DeleteSourceResponse": {
+        "type": "object"
+      },
+      "v2GetRepositoryResponse": {
+        "properties": {
+          "repository": {
+            "$ref": "#/components/schemas/v2Repository"
+          }
+        },
+        "type": "object"
+      },
+      "v2GetSourceResponse": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/v2Source"
+          }
+        },
+        "type": "object"
+      },
+      "v2Instance": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "decision_logging": {
+            "type": "boolean"
+          },
+          "instance_type": {
+            "$ref": "#/components/schemas/v2InstanceType"
+          },
+          "label": {
+            "type": "string"
+          },
+          "policy_id": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "connection_id",
+          "org",
+          "repo"
+        ],
+        "type": "object"
+      },
+      "v2InstanceType": {
+        "default": "INSTANCE_TYPE_UNKNOWN",
+        "enum": [
+          "INSTANCE_TYPE_UNKNOWN",
+          "INSTANCE_TYPE_HOSTED",
+          "INSTANCE_TYPE_SATELLITE"
+        ],
+        "type": "string"
+      },
+      "v2ListInstanceResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "result": {
+            "items": {
+              "$ref": "#/components/schemas/v2Instance"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2ListPolicyFilter": {
+        "properties": {
+          "name_starts_with": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2ListPolicyResponse": {
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/v2Policy"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2Policy": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "tenant_id"
+        ],
+        "type": "object"
+      },
+      "v2Repository": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "org": {
+            "type": "string"
+          },
+          "policy_id": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "connection_id",
+          "org",
+          "repo"
+        ],
+        "type": "object"
+      },
+      "v2Source": {
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "org": {
+            "type": "string"
+          },
+          "policy_id": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "connection_id",
+          "org",
+          "repo"
+        ],
+        "type": "object"
+      },
+      "v2UpdateInstanceResponse": {
+        "properties": {
+          "instance": {
+            "$ref": "#/components/schemas/v2Instance"
+          }
+        },
+        "type": "object"
+      },
+      "v2UpdatePolicyResponse": {
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/v2Policy"
+          }
+        },
+        "type": "object"
+      },
+      "v2UpdateRepositoryResponse": {
+        "properties": {
+          "repository": {
+            "$ref": "#/components/schemas/v2Repository"
+          }
+        },
+        "type": "object"
+      },
+      "v2UpdateSourceResponse": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/v2Source"
+          }
+        },
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -1091,7 +1347,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.26"
+    "version": "v0.8.30"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -3062,6 +3318,13 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "in": "query",
+            "name": "workflow_file_name",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -3797,6 +4060,900 @@
         "summary": "List templates",
         "tags": [
           "scc"
+        ]
+      }
+    },
+    "/api/v2/instances": {
+      "post": {
+        "description": "Create a instance.",
+        "operationId": "instance.create_instance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Instance"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2CreateInstanceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create a instance.",
+        "tags": [
+          "instance"
+        ]
+      }
+    },
+    "/api/v2/instances/{instance.policy_id}": {
+      "patch": {
+        "description": "Update a instance.",
+        "operationId": "instance.update_instance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "instance.policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields.mask",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Instance"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2UpdateInstanceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update a instance.",
+        "tags": [
+          "instance"
+        ]
+      }
+    },
+    "/api/v2/instances/{policy_id}": {
+      "delete": {
+        "description": "Remove instance.",
+        "operationId": "instance.delete_instance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "label",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeleteInstanceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove instance.",
+        "tags": [
+          "instance"
+        ]
+      },
+      "get": {
+        "description": "List instance definitions by policy id.",
+        "operationId": "instance.list_instance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "instance_type",
+            "schema": {
+              "default": "INSTANCE_TYPE_UNKNOWN",
+              "enum": [
+                "INSTANCE_TYPE_UNKNOWN",
+                "INSTANCE_TYPE_HOSTED",
+                "INSTANCE_TYPE_SATELLITE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2ListInstanceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List instances.",
+        "tags": [
+          "instance"
+        ]
+      }
+    },
+    "/api/v2/policies": {
+      "get": {
+        "description": "List policies.",
+        "operationId": "policy.list_policy",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page.size",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page.token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter.name_starts_with",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2ListPolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "List polices",
+        "tags": [
+          "policy"
+        ]
+      },
+      "post": {
+        "description": "Create a policy.",
+        "operationId": "policy.create_policy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Policy"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2CreatePolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create a policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v2/policies/{id}": {
+      "delete": {
+        "description": "Remove policy.",
+        "operationId": "policy.delete_policy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeletePolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v2/policies/{policy.id}": {
+      "patch": {
+        "description": "Update a policy.",
+        "operationId": "policy.update_policy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy.id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields.mask",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Policy"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2UpdatePolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update a policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v2/repositories": {
+      "post": {
+        "description": "Create a repository.",
+        "operationId": "repository.create_repository",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Repository"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2CreateRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create a repository.",
+        "tags": [
+          "repository"
+        ]
+      }
+    },
+    "/api/v2/repositories/{policy_id}": {
+      "delete": {
+        "description": "Remove repository.",
+        "operationId": "repository.delete_repository",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeleteRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove repository.",
+        "tags": [
+          "repository"
+        ]
+      },
+      "get": {
+        "description": "Get repository details by policy id.",
+        "operationId": "repository.get_repository",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2GetRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get repository.",
+        "tags": [
+          "repository"
+        ]
+      }
+    },
+    "/api/v2/repositories/{repository.policy_id}": {
+      "patch": {
+        "description": "Update a repository.",
+        "operationId": "repository.update_repository",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "repository.policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields.mask",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Repository"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2UpdateRepositoryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update a repository.",
+        "tags": [
+          "repository"
+        ]
+      }
+    },
+    "/api/v2/sources": {
+      "post": {
+        "description": "Create a source.",
+        "operationId": "source.create_source",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "workflow_file_name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Source"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2CreateSourceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create a source.",
+        "tags": [
+          "source"
+        ]
+      }
+    },
+    "/api/v2/sources/{policy_id}": {
+      "delete": {
+        "description": "Remove source.",
+        "operationId": "source.delete_source",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeleteSourceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Remove source.",
+        "tags": [
+          "source"
+        ]
+      },
+      "get": {
+        "description": "Get source code settings for a policy.",
+        "operationId": "source.get_source",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2GetSourceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get source.",
+        "tags": [
+          "source"
+        ]
+      }
+    },
+    "/api/v2/sources/{source.policy_id}": {
+      "patch": {
+        "description": "Update a source.",
+        "operationId": "source.update_source",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "source.policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fields.mask",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2Source"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2UpdateSourceResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Update a source.",
+        "tags": [
+          "source"
         ]
       }
     }
