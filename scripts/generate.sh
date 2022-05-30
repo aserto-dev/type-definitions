@@ -6,11 +6,10 @@ if [[ -n "${FAIL}" ]]; then
 fi
 
 if [[ $1 == "--fetch-specs" ]]; then
-    for REQUIRED_ENV in "USERNAME" "READ_WRITE_TOKEN" "COMMIT_HASH"
-    do
+    for REQUIRED_ENV in "USERNAME" "READ_WRITE_TOKEN" "COMMIT_HASH"; do
         if [[ -z "${!REQUIRED_ENV}" ]]; then
-        echo "$REQUIRED_ENV must be set"
-        FAIL=1
+            echo "$REQUIRED_ENV must be set"
+            FAIL=1
         fi
     done
 
@@ -18,8 +17,7 @@ if [[ $1 == "--fetch-specs" ]]; then
     rm ./downloaded/specs/*
 fi
 
-for SERVICE in "tenant" "authorizer" "registry" "decision_logs"
-do
+for SERVICE in "tenant" "authorizer" "registry" "decision_logs" "management"; do
     OUTPUT_PATH=./downloaded/specs/${SERVICE}.openapi.json
 
     if [[ $1 == "--fetch-specs" ]]; then
@@ -30,6 +28,6 @@ do
             -H "Accept: application/vnd.github.v3.raw" \
             "${TARGET}"
     fi
-    
+
     yarn openapi-typescript ${OUTPUT_PATH} --output ./generated/${SERVICE}.ts
 done
