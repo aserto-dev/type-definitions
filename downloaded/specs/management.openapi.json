@@ -1,0 +1,259 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2Command": {
+        "description": "Command represents a command that may be sent to and then processed by an instance.",
+        "properties": {
+          "discovery": {
+            "$ref": "#/components/schemas/v2DiscoveryCommand"
+          },
+          "sync_edge_directory": {
+            "$ref": "#/components/schemas/v2SyncEdgeDirectoryCommand"
+          }
+        },
+        "type": "object"
+      },
+      "v2CommandStreamResponse": {
+        "properties": {
+          "command": {
+            "$ref": "#/components/schemas/v2Command"
+          }
+        },
+        "type": "object"
+      },
+      "v2DiscoveryCommand": {
+        "title": "Run OPA discovery immediatley",
+        "type": "object"
+      },
+      "v2ExecCommandRequest": {
+        "properties": {
+          "command": {
+            "$ref": "#/components/schemas/v2Command"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2ExecCommandResponse": {
+        "properties": {
+          "result": {}
+        },
+        "type": "object"
+      },
+      "v2InstanceInfo": {
+        "description": "InstanceInfo has data about a running aserto instance that is registered with the control\nplane.",
+        "properties": {
+          "policy_id": {
+            "type": "string"
+          },
+          "policy_label": {
+            "type": "string"
+          },
+          "remote_host": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2InstanceRegistration": {
+        "description": "InstanceRegistration has data about an instance's registration with the control plane.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "info": {
+            "$ref": "#/components/schemas/v2InstanceInfo"
+          }
+        },
+        "type": "object"
+      },
+      "v2ListInstanceRegistrationsResponse": {
+        "properties": {
+          "result": {
+            "items": {
+              "$ref": "#/components/schemas/v2InstanceRegistration"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2SyncEdgeDirectoryCommand": {
+        "title": "Sync the edge directory",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "bearerFormat": "JWT",
+        "description": "Aserto JWT token",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Relay service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Relay",
+    "version": "v0.8.32"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v2/management/control_plane/exec": {
+      "post": {
+        "description": "Runs a command on the specified instances",
+        "operationId": "management.control_plane.exec_command",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2ExecCommandRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2ExecCommandResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "runs a command on the specified instances",
+        "tags": [
+          "control_plane"
+        ]
+      }
+    },
+    "/api/v2/management/control_plane/instance_registrations": {
+      "get": {
+        "description": "Returns a collection of instance registrations.",
+        "operationId": "management.control_plane.list_instance_registrations",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2ListInstanceRegistrationsResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "list instance registrations",
+        "tags": [
+          "control_plane"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": [],
+      "TenantID": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Relay service",
+      "url": "https://aserto-relay.prod.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ControlPlane"
+    }
+  ]
+}
