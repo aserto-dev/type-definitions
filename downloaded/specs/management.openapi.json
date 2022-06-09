@@ -147,7 +147,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Relay",
-    "version": "v0.8.32"
+    "version": "v0.8.35"
   },
   "openapi": "3.0.3",
   "paths": {
