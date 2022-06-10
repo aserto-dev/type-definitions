@@ -18,6 +18,10 @@ export interface paths {
     /** Sign up for an Aserto account with the given email address. */
     post: operations["account.signup"];
   };
+  "/api/v1/discovery/{policy_name}/{instance_label}/opa": {
+    /** Calculates a json configuration file to be used by OPA's discovery plugin. */
+    get: operations["policy.opa_instance_discovery"];
+  };
   "/api/v1/info": {
     /** Return endpoint versio information. */
     get: operations["info.info"];
@@ -608,6 +612,9 @@ export interface components {
     v1OPADiscoveryResponse: {
       opa?: components["schemas"]["v1OPAConfig"];
     };
+    v1OPAInstanceDiscoveryResponse: {
+      opa?: components["schemas"]["v1OPAConfig"];
+    };
     v1PaginationRequest: {
       size?: number;
       token?: string;
@@ -912,6 +919,29 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v1SignupAccountRequest"];
+      };
+    };
+  };
+  /** Calculates a json configuration file to be used by OPA's discovery plugin. */
+  "policy.opa_instance_discovery": {
+    parameters: {
+      path: {
+        policy_name: string;
+        instance_label: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1OPAInstanceDiscoveryResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
