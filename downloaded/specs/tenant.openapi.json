@@ -663,6 +663,14 @@
         },
         "type": "object"
       },
+      "v1OPAInstanceDiscoveryResponse": {
+        "properties": {
+          "opa": {
+            "$ref": "#/components/schemas/v1OPAConfig"
+          }
+        },
+        "type": "object"
+      },
       "v1PaginationRequest": {
         "properties": {
           "size": {
@@ -1350,7 +1358,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.32"
+    "version": "v0.8.38"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1515,6 +1523,62 @@
         "summary": "Signup account request",
         "tags": [
           "signup"
+        ]
+      }
+    },
+    "/api/v1/discovery/{policy_name}/{instance_label}/opa": {
+      "get": {
+        "description": "Calculates a json configuration file to be used by OPA's discovery plugin.",
+        "operationId": "policy.opa_instance_discovery",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "instance_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1OPAInstanceDiscoveryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "OPA discovery configuration for the instance.",
+        "tags": [
+          "policy"
         ]
       }
     },
