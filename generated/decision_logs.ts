@@ -132,6 +132,8 @@ export interface components {
     v1PolicyContext: {
       decisions?: string[];
       id?: string;
+      instance_label?: string;
+      name?: string;
       path?: string;
     };
     v1Result: {

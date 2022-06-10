@@ -346,6 +346,8 @@ export interface components {
     v1PolicyContext: {
       decisions?: string[];
       id?: string;
+      instance_label?: string;
+      name?: string;
       path?: string;
     };
     v1PolicyItem: {
@@ -1116,6 +1118,8 @@ export interface operations {
       };
       query: {
         policy_id?: string;
+        policy_name?: string;
+        instance_label?: string;
       };
     };
     responses: {
@@ -1155,6 +1159,10 @@ export interface operations {
     parameters: {
       path: {
         id: string;
+      };
+      query: {
+        name?: string;
+        instance_label?: string;
       };
     };
     responses: {
