@@ -46,6 +46,7 @@ export interface components {
      * plane.
      */
     v2InstanceInfo: {
+      connection_id?: string;
       policy_id?: string;
       policy_label?: string;
       remote_host?: string;
