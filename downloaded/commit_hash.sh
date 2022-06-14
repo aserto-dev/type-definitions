@@ -1,2 +1,2 @@
-COMMIT_HASH=4ddf05d
+COMMIT_HASH=9c6f8de
 
