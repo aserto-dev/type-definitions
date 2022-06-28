@@ -1652,6 +1652,9 @@ export interface operations {
       path: {
         policy_id: string;
       };
+      query: {
+        use_tags?: string;
+      };
     };
     responses: {
       /** A successful response. */

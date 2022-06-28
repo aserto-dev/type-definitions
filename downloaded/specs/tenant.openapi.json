@@ -1358,7 +1358,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.39"
+    "version": "v0.8.43"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -3217,6 +3217,13 @@
             "in": "path",
             "name": "policy_id",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "use_tags",
             "schema": {
               "type": "string"
             }
