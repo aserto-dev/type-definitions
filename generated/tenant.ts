@@ -663,7 +663,7 @@ export interface components {
       | "PROVIDER_KIND_DECISION_LOGS"
       | "PROVIDER_KIND_DIRECTORY"
       | "PROVIDER_KIND_DISCOVERY"
-      | "PROVIDER_KIND_SATELLITE";
+      | "PROVIDER_KIND_EDGE_AUTHORIZER";
     v1RegistryRepo: {
       name?: string;
       org?: string;
@@ -791,7 +791,7 @@ export interface components {
     v2InstanceType:
       | "INSTANCE_TYPE_UNKNOWN"
       | "INSTANCE_TYPE_HOSTED"
-      | "INSTANCE_TYPE_SATELLITE";
+      | "INSTANCE_TYPE_EDGE_AUTHORIZER";
     v2ListInstanceResponse: {
       page?: components["schemas"]["v1PaginationResponse"];
       result?: components["schemas"]["v2Instance"][];
@@ -1041,7 +1041,7 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_SATELLITE";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER";
       };
     };
     responses: {
@@ -1092,7 +1092,7 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_SATELLITE";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER";
       };
     };
     responses: {
@@ -1399,7 +1399,7 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_SATELLITE";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER";
       };
     };
     responses: {
@@ -1651,6 +1651,9 @@ export interface operations {
     parameters: {
       path: {
         policy_id: string;
+      };
+      query: {
+        use_tags?: string;
       };
     };
     responses: {
@@ -2111,7 +2114,7 @@ export interface operations {
         instance_type?:
           | "INSTANCE_TYPE_UNKNOWN"
           | "INSTANCE_TYPE_HOSTED"
-          | "INSTANCE_TYPE_SATELLITE";
+          | "INSTANCE_TYPE_EDGE_AUTHORIZER";
         "page.size"?: number;
         "page.token"?: string;
       };
