@@ -75,6 +75,9 @@
       "v2InstanceInfo": {
         "description": "InstanceInfo has data about a running aserto instance that is registered with the control\nplane.",
         "properties": {
+          "certificate_id": {
+            "type": "string"
+          },
           "connection_id": {
             "type": "string"
           },
@@ -150,7 +153,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Relay",
-    "version": "v0.8.45"
+    "version": "v0.8.46"
   },
   "openapi": "3.0.3",
   "paths": {
