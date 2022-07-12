@@ -1,0 +1,234 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "protobufNullValue": {
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "type": "string"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1StartWorkflowRequest": {
+        "properties": {
+          "args": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1StartWorkflowResponse": {
+        "properties": {
+          "run_id": {
+            "type": "string"
+          },
+          "workflow_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1StopWorkflowRequest": {
+        "properties": {
+          "run_id": {
+            "type": "string"
+          },
+          "workflow_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1StopWorkflowResponse": {
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "bearerFormat": "JWT",
+        "description": "Aserto JWT token",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Funnel service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Funnel",
+    "version": "v0.8.48"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/funnel/start": {
+      "post": {
+        "description": "Asynchronously starts a workflow.",
+        "operationId": "funnel.start_workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1StartWorkflowRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1StartWorkflowResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Start a workflow.",
+        "tags": [
+          "funnel"
+        ]
+      }
+    },
+    "/api/v1/funnel/stop": {
+      "post": {
+        "description": "Asynchronously stops a workflow.",
+        "operationId": "funnel.stop_workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1StopWorkflowRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1StopWorkflowResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Stop a workflow.",
+        "tags": [
+          "funnel"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": [],
+      "TenantID": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Funnel service",
+      "url": "https://funnel.prod.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Funnel"
+    }
+  ]
+}
