@@ -17,7 +17,7 @@ if [[ $1 == "--fetch-specs" ]]; then
     rm ./downloaded/specs/*
 fi
 
-for SERVICE in "tenant" "authorizer" "registry" "decision_logs" "management"; do
+for SERVICE in "tenant" "authorizer" "registry" "decision_logs" "management" "funnel" "discovery"; do
     OUTPUT_PATH=./downloaded/specs/${SERVICE}.openapi.json
 
     if [[ $1 == "--fetch-specs" ]]; then

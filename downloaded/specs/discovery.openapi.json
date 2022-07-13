@@ -1,0 +1,240 @@
+{
+  "components": {
+    "schemas": {
+      "protobufAny": {
+        "properties": {
+          "type_url": {
+            "type": "string"
+          },
+          "value": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "protobufNullValue": {
+        "default": "NULL_VALUE",
+        "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+        "enum": [
+          "NULL_VALUE"
+        ],
+        "type": "string"
+      },
+      "rpcStatus": {
+        "properties": {
+          "code": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/protobufAny"
+            },
+            "type": "array"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1OPAConfig": {
+        "properties": {
+          "discovery": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v1OPADiscoveryResponse": {
+        "properties": {
+          "opa": {
+            "$ref": "#/components/schemas/v1OPAConfig"
+          }
+        },
+        "type": "object"
+      },
+      "v2OPAConfig": {
+        "properties": {
+          "discovery": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "v2OPAInstanceDiscoveryResponse": {
+        "properties": {
+          "opa": {
+            "$ref": "#/components/schemas/v2OPAConfig"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "bearerFormat": "JWT",
+        "description": "Aserto JWT token",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "TenantID": {
+        "description": "Aserto Tenant ID",
+        "in": "header",
+        "name": "aserto-tenant-id",
+        "type": "apiKey"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "API documentation",
+    "url": "https://docs.aserto.com"
+  },
+  "info": {
+    "contact": {
+      "email": "support@aserto.com",
+      "name": "API Support",
+      "url": "https://aserto.com/support"
+    },
+    "description": "Disco service",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "https://aserto.com/terms/",
+    "title": "Discovery",
+    "version": "v0.8.48"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/v1/discovery/policies/{policy_id}/opa/discovery": {
+      "get": {
+        "description": "Calculates a json configuration file to be used by OPA's discovery plugin.",
+        "operationId": "policy.opa_discovery",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "use_tags",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1OPADiscoveryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "OPA discovery configuration for the policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    "/api/v2/discovery/{policy_name}/{instance_label}/opa": {
+      "get": {
+        "description": "Calculates a json configuration file to be used by OPA's discovery plugin.",
+        "operationId": "policy.opa_instance_discovery",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "instance_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2OPAInstanceDiscoveryResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "OPA discovery configuration for the policy.",
+        "tags": [
+          "policy"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": [],
+      "TenantID": []
+    }
+  ],
+  "servers": [
+    {
+      "description": "Discovery service",
+      "url": "https://aserto-discovery.prod.aserto.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Discovery"
+    }
+  ]
+}
