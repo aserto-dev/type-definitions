@@ -1110,6 +1110,9 @@
       "v2DeleteSourceResponse": {
         "type": "object"
       },
+      "v2DeleteTenantResponse": {
+        "type": "object"
+      },
       "v2GetRepositoryResponse": {
         "properties": {
           "repository": {
@@ -1358,7 +1361,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.48"
+    "version": "v0.8.51"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -5035,6 +5038,44 @@
         "summary": "Update a source.",
         "tags": [
           "source"
+        ]
+      }
+    },
+    "/api/v2/tenants": {
+      "delete": {
+        "description": "Delete tenant.",
+        "operationId": "tenant.delete_tenant",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeleteTenantResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Delete tenant.",
+        "tags": [
+          "tenant"
         ]
       }
     }

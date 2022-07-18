@@ -4,6 +4,10 @@
  */
 
 export interface paths {
+  "/api/v1/funnel/run": {
+    /** Starts a workflow and waits for it to finish. */
+    post: operations["funnel.run_workflow"];
+  };
   "/api/v1/funnel/start": {
     /** Asynchronously starts a workflow. */
     post: operations["funnel.start_workflow"];
@@ -34,6 +38,13 @@ export interface components {
       details?: components["schemas"]["protobufAny"][];
       message?: string;
     };
+    v1RunWorkflowRequest: {
+      args?: { [key: string]: unknown }[];
+      name?: string;
+    };
+    v1RunWorkflowResponse: {
+      response?: components["schemas"]["v2WorkflowResponse"];
+    };
     v1StartWorkflowRequest: {
       args?: { [key: string]: unknown }[];
       name?: string;
@@ -47,10 +58,56 @@ export interface components {
       workflow_id?: string;
     };
     v1StopWorkflowResponse: { [key: string]: unknown };
+    v2ActivityResponse: {
+      activity?: string;
+      response?: string;
+      state?: components["schemas"]["v2ActivityResponseState"];
+    };
+    v2ActivityResponseState:
+      | "ACTIVITY_RESPONSE_STATE_UNKNOWN"
+      | "ACTIVITY_RESPONSE_STATE_CREATED"
+      | "ACTIVITY_RESPONSE_STATE_DELETED"
+      | "ACTIVITY_RESPONSE_STATE_UPDATED"
+      | "ACTIVITY_RESPONSE_STATE_UNCHANGED";
+    v2WorkflowOptions: {
+      run_type?: components["schemas"]["v2WorkflowRunType"];
+    };
+    v2WorkflowResponse: {
+      activity_result?: components["schemas"]["v2ActivityResponse"][];
+      options?: components["schemas"]["v2WorkflowOptions"];
+      workflow?: string;
+      workflow_responses?: components["schemas"]["v2WorkflowResponse"][];
+    };
+    v2WorkflowRunType:
+      | "WORKFLOW_RUN_TYPE_UNKNOWN"
+      | "WORKFLOW_RUN_TYPE_NOOP"
+      | "WORKFLOW_RUN_TYPE_EXECUTE";
   };
 }
 
 export interface operations {
+  /** Starts a workflow and waits for it to finish. */
+  "funnel.run_workflow": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v1RunWorkflowResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["v1RunWorkflowRequest"];
+      };
+    };
+  };
   /** Asynchronously starts a workflow. */
   "funnel.start_workflow": {
     responses: {

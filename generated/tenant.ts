@@ -244,6 +244,10 @@ export interface paths {
     /** Update a source. */
     patch: operations["source.update_source"];
   };
+  "/api/v2/tenants": {
+    /** Delete tenant. */
+    delete: operations["tenant.delete_tenant"];
+  };
 }
 
 export interface components {
@@ -769,6 +773,7 @@ export interface components {
     v2DeletePolicyResponse: { [key: string]: unknown };
     v2DeleteRepositoryResponse: { [key: string]: unknown };
     v2DeleteSourceResponse: { [key: string]: unknown };
+    v2DeleteTenantResponse: { [key: string]: unknown };
     v2GetRepositoryResponse: {
       repository?: components["schemas"]["v2Repository"];
     };
@@ -2452,6 +2457,23 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v2Source"];
+      };
+    };
+  };
+  /** Delete tenant. */
+  "tenant.delete_tenant": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v2DeleteTenantResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };

@@ -39,6 +39,28 @@
         },
         "type": "object"
       },
+      "v1RunWorkflowRequest": {
+        "properties": {
+          "args": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v1RunWorkflowResponse": {
+        "properties": {
+          "response": {
+            "$ref": "#/components/schemas/v2WorkflowResponse"
+          }
+        },
+        "type": "object"
+      },
       "v1StartWorkflowRequest": {
         "properties": {
           "args": {
@@ -77,6 +99,71 @@
       },
       "v1StopWorkflowResponse": {
         "type": "object"
+      },
+      "v2ActivityResponse": {
+        "properties": {
+          "activity": {
+            "type": "string"
+          },
+          "response": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/v2ActivityResponseState"
+          }
+        },
+        "type": "object"
+      },
+      "v2ActivityResponseState": {
+        "default": "ACTIVITY_RESPONSE_STATE_UNKNOWN",
+        "enum": [
+          "ACTIVITY_RESPONSE_STATE_UNKNOWN",
+          "ACTIVITY_RESPONSE_STATE_CREATED",
+          "ACTIVITY_RESPONSE_STATE_DELETED",
+          "ACTIVITY_RESPONSE_STATE_UPDATED",
+          "ACTIVITY_RESPONSE_STATE_UNCHANGED"
+        ],
+        "type": "string"
+      },
+      "v2WorkflowOptions": {
+        "properties": {
+          "run_type": {
+            "$ref": "#/components/schemas/v2WorkflowRunType"
+          }
+        },
+        "type": "object"
+      },
+      "v2WorkflowResponse": {
+        "properties": {
+          "activity_result": {
+            "items": {
+              "$ref": "#/components/schemas/v2ActivityResponse"
+            },
+            "type": "array"
+          },
+          "options": {
+            "$ref": "#/components/schemas/v2WorkflowOptions"
+          },
+          "workflow": {
+            "type": "string"
+          },
+          "workflow_responses": {
+            "items": {
+              "$ref": "#/components/schemas/v2WorkflowResponse"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "v2WorkflowRunType": {
+        "default": "WORKFLOW_RUN_TYPE_UNKNOWN",
+        "enum": [
+          "WORKFLOW_RUN_TYPE_UNKNOWN",
+          "WORKFLOW_RUN_TYPE_NOOP",
+          "WORKFLOW_RUN_TYPE_EXECUTE"
+        ],
+        "type": "string"
       }
     },
     "securitySchemes": {
@@ -111,10 +198,59 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Funnel",
-    "version": "v0.8.48"
+    "version": "v0.8.51"
   },
   "openapi": "3.0.3",
   "paths": {
+    "/api/v1/funnel/run": {
+      "post": {
+        "description": "Starts a workflow and waits for it to finish.",
+        "operationId": "funnel.run_workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v1RunWorkflowRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v1RunWorkflowResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Runs a workflow.",
+        "tags": [
+          "funnel"
+        ]
+      }
+    },
     "/api/v1/funnel/start": {
       "post": {
         "description": "Asynchronously starts a workflow.",
