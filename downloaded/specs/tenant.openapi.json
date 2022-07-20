@@ -992,7 +992,8 @@
           "TENANT_AVAILABILITY_UNAVAILABLE",
           "TENANT_AVAILABILITY_INVALID",
           "TENANT_AVAILABILITY_PROFANE",
-          "TENANT_AVAILABILITY_RESERVED"
+          "TENANT_AVAILABILITY_RESERVED",
+          "TENANT_AVAILABILITY_MARKED_DELETED"
         ],
         "type": "string"
       },
@@ -1361,7 +1362,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.51"
+    "version": "v0.8.53"
   },
   "openapi": "3.0.3",
   "paths": {
