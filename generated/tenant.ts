@@ -730,7 +730,8 @@ export interface components {
       | "TENANT_AVAILABILITY_UNAVAILABLE"
       | "TENANT_AVAILABILITY_INVALID"
       | "TENANT_AVAILABILITY_PROFANE"
-      | "TENANT_AVAILABILITY_RESERVED";
+      | "TENANT_AVAILABILITY_RESERVED"
+      | "TENANT_AVAILABILITY_MARKED_DELETED";
     v1TenantAvailableResponse: {
       availability?: components["schemas"]["v1TenantAvailability"];
       reason?: string;
