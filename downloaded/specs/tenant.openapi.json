@@ -1114,6 +1114,14 @@
       "v2DeleteTenantResponse": {
         "type": "object"
       },
+      "v2GetPolicyResponse": {
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/v2Policy"
+          }
+        },
+        "type": "object"
+      },
       "v2GetRepositoryResponse": {
         "properties": {
           "repository": {
@@ -1362,7 +1370,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.53"
+    "version": "v0.8.56"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -4544,6 +4552,52 @@
           }
         ],
         "summary": "Remove policy.",
+        "tags": [
+          "policy"
+        ]
+      },
+      "get": {
+        "description": "Get policy by its ID.",
+        "operationId": "policy.get_policy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2GetPolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get policy by ID",
         "tags": [
           "policy"
         ]
