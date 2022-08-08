@@ -209,6 +209,8 @@ export interface paths {
     post: operations["policy.create_policy"];
   };
   "/api/v2/policies/{id}": {
+    /** Get policy by its ID. */
+    get: operations["policy.get_policy"];
     /** Remove policy. */
     delete: operations["policy.delete_policy"];
   };
@@ -775,6 +777,9 @@ export interface components {
     v2DeleteRepositoryResponse: { [key: string]: unknown };
     v2DeleteSourceResponse: { [key: string]: unknown };
     v2DeleteTenantResponse: { [key: string]: unknown };
+    v2GetPolicyResponse: {
+      policy?: components["schemas"]["v2Policy"];
+    };
     v2GetRepositoryResponse: {
       repository?: components["schemas"]["v2Repository"];
     };
@@ -789,6 +794,7 @@ export interface components {
       policy_id: string;
       tag?: string;
       updated_at?: string;
+      version_hash?: string;
     } & {
       connection_id: unknown;
       org: unknown;
@@ -815,6 +821,7 @@ export interface components {
       id?: string;
       name: string;
       updated_at?: string;
+      version_hash?: string;
     } & {
       tenant_id: unknown;
     };
@@ -825,6 +832,7 @@ export interface components {
       policy_id: string;
       repo: string;
       updated_at?: string;
+      version_hash?: string;
     };
     v2Source: {
       connection_id: string;
@@ -833,6 +841,7 @@ export interface components {
       policy_id: string;
       repo: string;
       updated_at?: string;
+      version_hash?: string;
     };
     v2UpdateInstanceResponse: {
       instance?: components["schemas"]["v2Instance"];
@@ -2209,6 +2218,28 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v2Policy"];
+      };
+    };
+  };
+  /** Get policy by its ID. */
+  "policy.get_policy": {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v2GetPolicyResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
