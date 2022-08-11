@@ -1114,6 +1114,22 @@
       "v2DeleteTenantResponse": {
         "type": "object"
       },
+      "v2GetPolicyResponse": {
+        "properties": {
+          "policy": {
+            "$ref": "#/components/schemas/v2Policy"
+          }
+        },
+        "type": "object"
+      },
+      "v2GetPolicyStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/v2PolicyState"
+          }
+        },
+        "type": "object"
+      },
       "v2GetRepositoryResponse": {
         "properties": {
           "repository": {
@@ -1153,6 +1169,9 @@
           },
           "updated_at": {
             "format": "date-time",
+            "type": "string"
+          },
+          "version_hash": {
             "type": "string"
           }
         },
@@ -1227,12 +1246,35 @@
           "updated_at": {
             "format": "date-time",
             "type": "string"
+          },
+          "version_hash": {
+            "type": "string"
           }
         },
         "required": [
           "name",
           "tenant_id"
         ],
+        "type": "object"
+      },
+      "v2PolicyState": {
+        "properties": {
+          "instance": {
+            "items": {
+              "$ref": "#/components/schemas/v2Instance"
+            },
+            "type": "array"
+          },
+          "policy": {
+            "$ref": "#/components/schemas/v2Policy"
+          },
+          "repository": {
+            "$ref": "#/components/schemas/v2Repository"
+          },
+          "source": {
+            "$ref": "#/components/schemas/v2Source"
+          }
+        },
         "type": "object"
       },
       "v2Repository": {
@@ -1256,6 +1298,9 @@
           "updated_at": {
             "format": "date-time",
             "type": "string"
+          },
+          "version_hash": {
+            "type": "string"
           }
         },
         "required": [
@@ -1264,6 +1309,9 @@
           "org",
           "repo"
         ],
+        "type": "object"
+      },
+      "v2SetPolicyStateResponse": {
         "type": "object"
       },
       "v2Source": {
@@ -1286,6 +1334,9 @@
           },
           "updated_at": {
             "format": "date-time",
+            "type": "string"
+          },
+          "version_hash": {
             "type": "string"
           }
         },
@@ -1362,7 +1413,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.53"
+    "version": "v0.8.58"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -4547,6 +4598,52 @@
         "tags": [
           "policy"
         ]
+      },
+      "get": {
+        "description": "Get policy by its ID.",
+        "operationId": "policy.get_policy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2GetPolicyResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get policy by ID",
+        "tags": [
+          "policy"
+        ]
       }
     },
     "/api/v2/policies/{policy.id}": {
@@ -4612,6 +4709,113 @@
         "summary": "Update a policy.",
         "tags": [
           "policy"
+        ]
+      }
+    },
+    "/api/v2/policystate/{policy_id}": {
+      "get": {
+        "description": "Get policy state by its ID.",
+        "operationId": "policystate.get_policy_state",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2GetPolicyStateResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Get policy state by ID",
+        "tags": [
+          "policystate"
+        ]
+      }
+    },
+    "/api/v2/policystate/{state.policy.id}": {
+      "put": {
+        "description": "Set policy state by its ID.",
+        "operationId": "policystate.set_policy_state",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "state.policy.id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2PolicyState"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2SetPolicyStateResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Set policy state by ID",
+        "tags": [
+          "policystate"
         ]
       }
     },
