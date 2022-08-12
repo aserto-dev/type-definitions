@@ -1083,6 +1083,14 @@
         },
         "type": "object"
       },
+      "v2CreatePolicyStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/v2PolicyState"
+          }
+        },
+        "type": "object"
+      },
       "v2CreateRepositoryResponse": {
         "properties": {
           "repository": {
@@ -1312,6 +1320,11 @@
         "type": "object"
       },
       "v2SetPolicyStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/v2PolicyState"
+          }
+        },
         "type": "object"
       },
       "v2Source": {
@@ -1413,7 +1426,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.58"
+    "version": "v0.8.59"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -4709,6 +4722,55 @@
         "summary": "Update a policy.",
         "tags": [
           "policy"
+        ]
+      }
+    },
+    "/api/v2/policystate": {
+      "post": {
+        "description": "Create policy state.",
+        "operationId": "policystate.create_policy_state",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/v2PolicyState"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "body"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2CreatePolicyStateResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": [],
+            "TenantID": []
+          }
+        ],
+        "summary": "Create policy state",
+        "tags": [
+          "policystate"
         ]
       }
     },

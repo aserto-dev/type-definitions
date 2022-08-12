@@ -218,6 +218,10 @@ export interface paths {
     /** Update a policy. */
     patch: operations["policy.update_policy"];
   };
+  "/api/v2/policystate": {
+    /** Create policy state. */
+    post: operations["policystate.create_policy_state"];
+  };
   "/api/v2/policystate/{policy_id}": {
     /** Get policy state by its ID. */
     get: operations["policystate.get_policy_state"];
@@ -774,6 +778,9 @@ export interface components {
     v2CreatePolicyResponse: {
       policy?: components["schemas"]["v2Policy"];
     };
+    v2CreatePolicyStateResponse: {
+      state?: components["schemas"]["v2PolicyState"];
+    };
     v2CreateRepositoryResponse: {
       repository?: components["schemas"]["v2Repository"];
     };
@@ -851,7 +858,9 @@ export interface components {
       updated_at?: string;
       version_hash?: string;
     };
-    v2SetPolicyStateResponse: { [key: string]: unknown };
+    v2SetPolicyStateResponse: {
+      state?: components["schemas"]["v2PolicyState"];
+    };
     v2Source: {
       connection_id: string;
       created_at?: string;
@@ -2310,6 +2319,28 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v2Policy"];
+      };
+    };
+  };
+  /** Create policy state. */
+  "policystate.create_policy_state": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v2CreatePolicyStateResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["v2PolicyState"];
       };
     };
   };
