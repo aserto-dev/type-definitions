@@ -1083,14 +1083,6 @@
         },
         "type": "object"
       },
-      "v2CreatePolicyStateResponse": {
-        "properties": {
-          "state": {
-            "$ref": "#/components/schemas/v2PolicyState"
-          }
-        },
-        "type": "object"
-      },
       "v2CreateRepositoryResponse": {
         "properties": {
           "repository": {
@@ -1184,7 +1176,6 @@
           }
         },
         "required": [
-          "policy_id",
           "connection_id",
           "org",
           "repo"
@@ -1260,8 +1251,7 @@
           }
         },
         "required": [
-          "name",
-          "tenant_id"
+          "name"
         ],
         "type": "object"
       },
@@ -1312,7 +1302,6 @@
           }
         },
         "required": [
-          "policy_id",
           "connection_id",
           "org",
           "repo"
@@ -1354,7 +1343,6 @@
           }
         },
         "required": [
-          "policy_id",
           "connection_id",
           "org",
           "repo"
@@ -1426,7 +1414,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.59"
+    "version": "v0.8.61"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -4726,9 +4714,9 @@
       }
     },
     "/api/v2/policystate": {
-      "post": {
-        "description": "Create policy state.",
-        "operationId": "policystate.create_policy_state",
+      "put": {
+        "description": "Set policy state by its ID.",
+        "operationId": "policystate.set_policy_state",
         "requestBody": {
           "content": {
             "application/json": {
@@ -4745,7 +4733,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v2CreatePolicyStateResponse"
+                  "$ref": "#/components/schemas/v2SetPolicyStateResponse"
                 }
               }
             },
@@ -4768,7 +4756,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Create policy state",
+        "summary": "Set policy state by ID",
         "tags": [
           "policystate"
         ]
@@ -4817,65 +4805,6 @@
           }
         ],
         "summary": "Get policy state by ID",
-        "tags": [
-          "policystate"
-        ]
-      }
-    },
-    "/api/v2/policystate/{state.policy.id}": {
-      "put": {
-        "description": "Set policy state by its ID.",
-        "operationId": "policystate.set_policy_state",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "state.policy.id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/v2PolicyState"
-              }
-            }
-          },
-          "required": true,
-          "x-originalParamName": "body"
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/v2SetPolicyStateResponse"
-                }
-              }
-            },
-            "description": "A successful response."
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/rpcStatus"
-                }
-              }
-            },
-            "description": "An unexpected error response."
-          }
-        },
-        "security": [
-          {
-            "JWT": [],
-            "TenantID": []
-          }
-        ],
-        "summary": "Set policy state by ID",
         "tags": [
           "policystate"
         ]

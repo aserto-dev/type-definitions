@@ -219,16 +219,12 @@ export interface paths {
     patch: operations["policy.update_policy"];
   };
   "/api/v2/policystate": {
-    /** Create policy state. */
-    post: operations["policystate.create_policy_state"];
+    /** Set policy state by its ID. */
+    put: operations["policystate.set_policy_state"];
   };
   "/api/v2/policystate/{policy_id}": {
     /** Get policy state by its ID. */
     get: operations["policystate.get_policy_state"];
-  };
-  "/api/v2/policystate/{state.policy.id}": {
-    /** Set policy state by its ID. */
-    put: operations["policystate.set_policy_state"];
   };
   "/api/v2/repositories": {
     /** Create a repository. */
@@ -778,9 +774,6 @@ export interface components {
     v2CreatePolicyResponse: {
       policy?: components["schemas"]["v2Policy"];
     };
-    v2CreatePolicyStateResponse: {
-      state?: components["schemas"]["v2PolicyState"];
-    };
     v2CreateRepositoryResponse: {
       repository?: components["schemas"]["v2Repository"];
     };
@@ -809,7 +802,7 @@ export interface components {
       decision_logging?: boolean;
       instance_type?: components["schemas"]["v2InstanceType"];
       label?: string;
-      policy_id: string;
+      policy_id?: string;
       tag?: string;
       updated_at?: string;
       version_hash?: string;
@@ -840,8 +833,6 @@ export interface components {
       name: string;
       updated_at?: string;
       version_hash?: string;
-    } & {
-      tenant_id: unknown;
     };
     v2PolicyState: {
       instance?: components["schemas"]["v2Instance"][];
@@ -853,7 +844,7 @@ export interface components {
       connection_id: string;
       created_at?: string;
       org: string;
-      policy_id: string;
+      policy_id?: string;
       repo: string;
       updated_at?: string;
       version_hash?: string;
@@ -865,7 +856,7 @@ export interface components {
       connection_id: string;
       created_at?: string;
       org: string;
-      policy_id: string;
+      policy_id?: string;
       repo: string;
       updated_at?: string;
       version_hash?: string;
@@ -2322,13 +2313,13 @@ export interface operations {
       };
     };
   };
-  /** Create policy state. */
-  "policystate.create_policy_state": {
+  /** Set policy state by its ID. */
+  "policystate.set_policy_state": {
     responses: {
       /** A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v2CreatePolicyStateResponse"];
+          "application/json": components["schemas"]["v2SetPolicyStateResponse"];
         };
       };
       /** An unexpected error response. */
@@ -2363,33 +2354,6 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["rpcStatus"];
         };
-      };
-    };
-  };
-  /** Set policy state by its ID. */
-  "policystate.set_policy_state": {
-    parameters: {
-      path: {
-        "state.policy.id": string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2SetPolicyStateResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2PolicyState"];
       };
     };
   };
