@@ -1099,6 +1099,9 @@
         },
         "type": "object"
       },
+      "v2DeleteAccountResponse": {
+        "type": "object"
+      },
       "v2DeleteInstanceResponse": {
         "type": "object"
       },
@@ -4190,6 +4193,43 @@
         "summary": "List templates",
         "tags": [
           "scc"
+        ]
+      }
+    },
+    "/api/v2/accounts": {
+      "delete": {
+        "description": "Delete account.",
+        "operationId": "tenant.delete_account",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v2DeleteAccountResponse"
+                }
+              }
+            },
+            "description": "A successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rpcStatus"
+                }
+              }
+            },
+            "description": "An unexpected error response."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Delete account.",
+        "tags": [
+          "account"
         ]
       }
     },

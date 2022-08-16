@@ -188,6 +188,10 @@ export interface paths {
     /** Returns the collection template repostories for a given SCC connection instance. */
     get: operations["scc.list_templates"];
   };
+  "/api/v2/accounts": {
+    /** Delete account. */
+    delete: operations["tenant.delete_account"];
+  };
   "/api/v2/instances": {
     /** Create a instance. */
     post: operations["instance.create_instance"];
@@ -780,6 +784,7 @@ export interface components {
     v2CreateSourceResponse: {
       source?: components["schemas"]["v2Source"];
     };
+    v2DeleteAccountResponse: { [key: string]: unknown };
     v2DeleteInstanceResponse: { [key: string]: unknown };
     v2DeletePolicyResponse: { [key: string]: unknown };
     v2DeleteRepositoryResponse: { [key: string]: unknown };
@@ -2071,6 +2076,23 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["v1ListTemplatesResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
+      };
+    };
+  };
+  /** Delete account. */
+  "tenant.delete_account": {
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v2DeleteAccountResponse"];
         };
       };
       /** An unexpected error response. */
