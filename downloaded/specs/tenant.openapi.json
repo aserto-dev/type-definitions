@@ -1176,9 +1176,9 @@
           }
         },
         "required": [
-          "connection_id",
-          "org",
-          "repo"
+          "label",
+          "tag",
+          "instance_type"
         ],
         "type": "object"
       },
@@ -1414,7 +1414,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.61"
+    "version": "v0.8.62"
   },
   "openapi": "3.0.3",
   "paths": {
