@@ -800,16 +800,12 @@ export interface components {
     v2Instance: {
       created_at?: string;
       decision_logging?: boolean;
-      instance_type?: components["schemas"]["v2InstanceType"];
-      label?: string;
+      instance_type: components["schemas"]["v2InstanceType"];
+      label: string;
       policy_id?: string;
-      tag?: string;
+      tag: string;
       updated_at?: string;
       version_hash?: string;
-    } & {
-      connection_id: unknown;
-      org: unknown;
-      repo: unknown;
     };
     v2InstanceType:
       | "INSTANCE_TYPE_UNKNOWN"
