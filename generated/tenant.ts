@@ -192,25 +192,15 @@ export interface paths {
     /** Delete account. */
     delete: operations["tenant.delete_account"];
   };
-  "/api/v2/instances": {
-    /** Create a instance. */
-    post: operations["instance.create_instance"];
-  };
-  "/api/v2/instances/{instance.policy_id}": {
-    /** Update a instance. */
-    patch: operations["instance.update_instance"];
-  };
-  "/api/v2/instances/{policy_id}": {
-    /** List instance definitions by policy id. */
-    get: operations["instance.list_instance"];
-    /** Remove instance. */
-    delete: operations["instance.delete_instance"];
-  };
   "/api/v2/policies": {
     /** List policies. */
     get: operations["policy.list_policy"];
     /** Create a policy. */
     post: operations["policy.create_policy"];
+  };
+  "/api/v2/policies/available/{name}": {
+    /** Verifies if given policy name is available. */
+    get: operations["policy.policy_available"];
   };
   "/api/v2/policies/{id}": {
     /** Get policy by its ID. */
@@ -229,34 +219,6 @@ export interface paths {
   "/api/v2/policystate/{policy_id}": {
     /** Get policy state by its ID. */
     get: operations["policystate.get_policy_state"];
-  };
-  "/api/v2/repositories": {
-    /** Create a repository. */
-    post: operations["repository.create_repository"];
-  };
-  "/api/v2/repositories/{policy_id}": {
-    /** Get repository details by policy id. */
-    get: operations["repository.get_repository"];
-    /** Remove repository. */
-    delete: operations["repository.delete_repository"];
-  };
-  "/api/v2/repositories/{repository.policy_id}": {
-    /** Update a repository. */
-    patch: operations["repository.update_repository"];
-  };
-  "/api/v2/sources": {
-    /** Create a source. */
-    post: operations["source.create_source"];
-  };
-  "/api/v2/sources/{policy_id}": {
-    /** Get source code settings for a policy. */
-    get: operations["source.get_source"];
-    /** Remove source. */
-    delete: operations["source.delete_source"];
-  };
-  "/api/v2/sources/{source.policy_id}": {
-    /** Update a source. */
-    patch: operations["source.update_source"];
   };
   "/api/v2/tenants": {
     /** Delete tenant. */
@@ -834,6 +796,10 @@ export interface components {
       name: string;
       updated_at?: string;
       version_hash?: string;
+    };
+    v2PolicyNameAvailableResponse: {
+      availability?: components["schemas"]["v1NameAvailability"];
+      reason?: string;
     };
     v2PolicyState: {
       instance?: components["schemas"]["v2Instance"][];
@@ -2103,113 +2069,6 @@ export interface operations {
       };
     };
   };
-  /** Create a instance. */
-  "instance.create_instance": {
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2CreateInstanceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Instance"];
-      };
-    };
-  };
-  /** Update a instance. */
-  "instance.update_instance": {
-    parameters: {
-      path: {
-        "instance.policy_id": string;
-      };
-      query: {
-        "fields.mask"?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2UpdateInstanceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Instance"];
-      };
-    };
-  };
-  /** List instance definitions by policy id. */
-  "instance.list_instance": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-      query: {
-        instance_type?:
-          | "INSTANCE_TYPE_UNKNOWN"
-          | "INSTANCE_TYPE_HOSTED"
-          | "INSTANCE_TYPE_EDGE_AUTHORIZER";
-        "page.size"?: number;
-        "page.token"?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2ListInstanceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
-  /** Remove instance. */
-  "instance.delete_instance": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-      query: {
-        label?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2DeleteInstanceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
   /** List policies. */
   "policy.list_policy": {
     parameters: {
@@ -2254,6 +2113,28 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["v2Policy"];
+      };
+    };
+  };
+  /** Verifies if given policy name is available. */
+  "policy.policy_available": {
+    parameters: {
+      path: {
+        name: string;
+      };
+    };
+    responses: {
+      /** A successful response. */
+      200: {
+        content: {
+          "application/json": components["schemas"]["v2PolicyNameAvailableResponse"];
+        };
+      };
+      /** An unexpected error response. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["rpcStatus"];
+        };
       };
     };
   };
@@ -2372,203 +2253,6 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["rpcStatus"];
         };
-      };
-    };
-  };
-  /** Create a repository. */
-  "repository.create_repository": {
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2CreateRepositoryResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Repository"];
-      };
-    };
-  };
-  /** Get repository details by policy id. */
-  "repository.get_repository": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2GetRepositoryResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
-  /** Remove repository. */
-  "repository.delete_repository": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2DeleteRepositoryResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
-  /** Update a repository. */
-  "repository.update_repository": {
-    parameters: {
-      path: {
-        "repository.policy_id": string;
-      };
-      query: {
-        "fields.mask"?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2UpdateRepositoryResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Repository"];
-      };
-    };
-  };
-  /** Create a source. */
-  "source.create_source": {
-    parameters: {
-      query: {
-        workflow_file_name?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2CreateSourceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Source"];
-      };
-    };
-  };
-  /** Get source code settings for a policy. */
-  "source.get_source": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2GetSourceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
-  /** Remove source. */
-  "source.delete_source": {
-    parameters: {
-      path: {
-        policy_id: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2DeleteSourceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-  };
-  /** Update a source. */
-  "source.update_source": {
-    parameters: {
-      path: {
-        "source.policy_id": string;
-      };
-      query: {
-        "fields.mask"?: string;
-      };
-    };
-    responses: {
-      /** A successful response. */
-      200: {
-        content: {
-          "application/json": components["schemas"]["v2UpdateSourceResponse"];
-        };
-      };
-      /** An unexpected error response. */
-      default: {
-        content: {
-          "application/json": components["schemas"]["rpcStatus"];
-        };
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["v2Source"];
       };
     };
   };
