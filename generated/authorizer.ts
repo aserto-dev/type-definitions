@@ -298,6 +298,7 @@ export interface components {
       results?: components["schemas"]["v1PolicyItem"][];
     };
     v1ListResourcesResponse: {
+      page?: components["schemas"]["v1PaginationResponse"];
       results?: string[];
     };
     v1ListTenantsResponse: {
