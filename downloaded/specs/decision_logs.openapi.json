@@ -59,6 +59,9 @@
           "resource": {
             "type": "object"
           },
+          "tenant_id": {
+            "type": "string"
+          },
           "timestamp": {
             "format": "date-time",
             "type": "string"
@@ -339,7 +342,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Decision Logs",
-    "version": "v0.8.63"
+    "version": "v0.8.68"
   },
   "openapi": "3.0.3",
   "paths": {
