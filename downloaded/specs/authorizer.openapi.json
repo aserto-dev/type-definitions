@@ -458,6 +458,9 @@
       },
       "v1ListResourcesResponse": {
         "properties": {
+          "page": {
+            "$ref": "#/components/schemas/v1PaginationResponse"
+          },
           "results": {
             "items": {
               "type": "string"
@@ -971,7 +974,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.8.63"
+    "version": "v0.8.74"
   },
   "openapi": "3.0.3",
   "paths": {
