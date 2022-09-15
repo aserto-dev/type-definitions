@@ -60,7 +60,7 @@ export interface components {
     v1StopWorkflowResponse: { [key: string]: unknown };
     v2ActivityResponse: {
       activity?: string;
-      response?: string;
+      response?: { [key: string]: unknown };
       state?: components["schemas"]["v2ActivityResponseState"];
     };
     v2ActivityResponseState:
