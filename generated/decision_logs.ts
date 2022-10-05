@@ -56,6 +56,7 @@ export interface components {
       path?: string;
       policy?: components["schemas"]["v1DecisionPolicy"];
       resource?: { [key: string]: unknown };
+      tenant_id?: string;
       timestamp?: string;
       user?: components["schemas"]["v1DecisionUser"];
     };
