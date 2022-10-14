@@ -50,6 +50,7 @@ export interface components {
       connection_id?: string;
       policy_id?: string;
       policy_label?: string;
+      policy_name?: string;
       remote_host?: string;
     };
     /** InstanceRegistration has data about an instance's registration with the control plane. */

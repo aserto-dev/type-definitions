@@ -106,7 +106,7 @@
             "type": "string"
           },
           "response": {
-            "type": "string"
+            "type": "object"
           },
           "state": {
             "$ref": "#/components/schemas/v2ActivityResponseState"
@@ -198,7 +198,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Funnel",
-    "version": "v0.8.63"
+    "version": "v0.8.78"
   },
   "openapi": "3.0.3",
   "paths": {
