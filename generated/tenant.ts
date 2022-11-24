@@ -516,7 +516,8 @@ export interface components {
       | "INVITE_STATUS_ACCEPTED"
       | "INVITE_STATUS_DECLINED"
       | "INVITE_STATUS_EXPIRED"
-      | "INVITE_STATUS_CANCELED";
+      | "INVITE_STATUS_CANCELED"
+      | "INVITE_STATUS_ACTIVE";
     v1InviteUserRequest: {
       account_id?: string;
       email?: string;
