@@ -417,7 +417,8 @@
           "INVITE_STATUS_ACCEPTED",
           "INVITE_STATUS_DECLINED",
           "INVITE_STATUS_EXPIRED",
-          "INVITE_STATUS_CANCELED"
+          "INVITE_STATUS_CANCELED",
+          "INVITE_STATUS_ACTIVE"
         ],
         "type": "string"
       },
@@ -1428,7 +1429,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.78"
+    "version": "v0.8.80"
   },
   "openapi": "3.0.3",
   "paths": {
