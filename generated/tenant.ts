@@ -365,7 +365,10 @@ export interface components {
      * [API Design Guide](https://cloud.google.com/apis/design/errors).
      */
     rpcStatus: {
-      /** The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]. */
+      /**
+       * The status code, which should be an enum value of
+       * [google.rpc.Code][google.rpc.Code].
+       */
       code?: number;
       /**
        * A list of messages that carry the error details.  There is a common set of
@@ -375,7 +378,8 @@ export interface components {
       /**
        * A developer-facing error message, which should be in English. Any
        * user-facing error message should be localized and sent in the
-       * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+       * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+       * by the client.
        */
       message?: string;
     };

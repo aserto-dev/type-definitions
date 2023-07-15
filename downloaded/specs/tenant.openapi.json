@@ -28,7 +28,7 @@
         "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). Each `Status` message contains\nthree pieces of data: error code, error message, and error details.\n\nYou can find out more about this error model and how to work with it in the\n[API Design Guide](https://cloud.google.com/apis/design/errors).",
         "properties": {
           "code": {
-            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].",
+            "description": "The status code, which should be an enum value of\n[google.rpc.Code][google.rpc.Code].",
             "format": "int32",
             "type": "integer"
           },
@@ -40,7 +40,7 @@
             "type": "array"
           },
           "message": {
-            "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\n[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.",
+            "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\n[google.rpc.Status.details][google.rpc.Status.details] field, or localized\nby the client.",
             "type": "string"
           }
         },
@@ -1429,7 +1429,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.80"
+    "version": "v0.8.83"
   },
   "openapi": "3.0.3",
   "paths": {
