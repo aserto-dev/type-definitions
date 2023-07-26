@@ -2,13 +2,13 @@
 Automated generation of Aserto console-type-definitions.
 
 ## Consuming the definitions
-These definitions can be consumed by `yarn` directly from `git` using the following reference:
+These definitions can be consumed by `yarn` from `npm registry` or directly from `git` using the following reference:
 ```
 "devDependencies": {
-    "@aserto/console-type-definitions": "git+https://github.com/aserto-dev/console-type-definitions.git#v1.2.0",
+    "@aserto/console-type-definitions": "^0.8.83",
 ```
 
-Replace `v1.2.0` with the tag you would like to use.
+Replace `0.8.83` with the version you would like to use.
 
 ## Generation Process
 ### Environment Variables
@@ -26,6 +26,6 @@ To run the script locally, set the USERNAME and READ_WRITE_TOKEN as described ab
 ## GitHub Workflow
 The GitHub Workflow is triggered as a workflow_dispatch. It expects to be provided with two required parameters:
 - grpc_openapi_commit_hash: The `aserto-dev/grpc-openapi` commit hash for which type definitions should be created. This value is used to download the appropriate version of the `openapi.json` files from that repo.
-- proto_version: The version tag of `aserto-dev/proto` that is represented by the `grps_openapi_commit_hash`. This is used to tag the `console-type-definitions` commit with the same proto version.
+- proto_version: The version tag of `aserto-dev/proto` that is represented by the `grpc_openapi_commit_hash`. This is used to tag the `console-type-definitions` commit with the same proto version.
 
-Using these variables the GitHub Workflow runs the same `./generate.sh` script, commits, and tags its results for downstream consumption. Run results are deterministic as explicit commit hash and version numbers are taken as explicit imput parameters.
+Using these variables the GitHub Workflow runs the same `./generate.sh` script, commits, and tags its results for downstream consumption. Run results are deterministic as explicit commit hash and version numbers are taken as explicit input parameters.
