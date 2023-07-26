@@ -1,8 +1,13 @@
 {
   "name": "@aserto/console-type-definitions",
-  "version": "1.6.0",
+  "version": "0.8.83",
   "description": "",
   "types": "index.d.ts",
+
+  "scripts": {
+    "bump": "./scripts/bump_version.sh"
+  },
+
   "sideEffects": false,
   "files": [
     "index.d.ts",
