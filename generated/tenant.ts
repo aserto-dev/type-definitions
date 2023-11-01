@@ -648,7 +648,8 @@ export interface components {
       | "PROVIDER_KIND_DECISION_LOGS"
       | "PROVIDER_KIND_DIRECTORY"
       | "PROVIDER_KIND_DISCOVERY"
-      | "PROVIDER_KIND_EDGE_AUTHORIZER";
+      | "PROVIDER_KIND_EDGE_AUTHORIZER"
+      | "PROVIDER_KIND_DATA";
     v1RegistryRepo: {
       name?: string;
       org?: string;
@@ -1046,7 +1047,8 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_EDGE_AUTHORIZER";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER"
+          | "PROVIDER_KIND_DATA";
       };
     };
     responses: {
@@ -1097,7 +1099,8 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_EDGE_AUTHORIZER";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER"
+          | "PROVIDER_KIND_DATA";
       };
     };
     responses: {
@@ -1404,7 +1407,8 @@ export interface operations {
           | "PROVIDER_KIND_DECISION_LOGS"
           | "PROVIDER_KIND_DIRECTORY"
           | "PROVIDER_KIND_DISCOVERY"
-          | "PROVIDER_KIND_EDGE_AUTHORIZER";
+          | "PROVIDER_KIND_EDGE_AUTHORIZER"
+          | "PROVIDER_KIND_DATA";
       };
     };
     responses: {

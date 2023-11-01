@@ -808,7 +808,8 @@
           "PROVIDER_KIND_DECISION_LOGS",
           "PROVIDER_KIND_DIRECTORY",
           "PROVIDER_KIND_DISCOVERY",
-          "PROVIDER_KIND_EDGE_AUTHORIZER"
+          "PROVIDER_KIND_EDGE_AUTHORIZER",
+          "PROVIDER_KIND_DATA"
         ],
         "type": "string"
       },
@@ -1429,7 +1430,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Tenant",
-    "version": "v0.8.83"
+    "version": "v0.8.84"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -1848,7 +1849,8 @@
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
                 "PROVIDER_KIND_DISCOVERY",
-                "PROVIDER_KIND_EDGE_AUTHORIZER"
+                "PROVIDER_KIND_EDGE_AUTHORIZER",
+                "PROVIDER_KIND_DATA"
               ],
               "type": "string"
             }
@@ -1951,7 +1953,8 @@
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
                 "PROVIDER_KIND_DISCOVERY",
-                "PROVIDER_KIND_EDGE_AUTHORIZER"
+                "PROVIDER_KIND_EDGE_AUTHORIZER",
+                "PROVIDER_KIND_DATA"
               ],
               "type": "string"
             }
@@ -2738,7 +2741,8 @@
                 "PROVIDER_KIND_DECISION_LOGS",
                 "PROVIDER_KIND_DIRECTORY",
                 "PROVIDER_KIND_DISCOVERY",
-                "PROVIDER_KIND_EDGE_AUTHORIZER"
+                "PROVIDER_KIND_EDGE_AUTHORIZER",
+                "PROVIDER_KIND_DATA"
               ],
               "type": "string"
             }
