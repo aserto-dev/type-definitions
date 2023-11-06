@@ -198,7 +198,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Funnel",
-    "version": "v0.8.84"
+    "version": "v0.8.85"
   },
   "openapi": "3.0.3",
   "paths": {
