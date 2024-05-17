@@ -61,7 +61,22 @@ export interface components {
     v2ListInstanceRegistrationsResponse: {
       result?: components["schemas"]["v2InstanceRegistration"][];
     };
-    v2SyncEdgeDirectoryCommand: { [key: string]: unknown };
+    v2SyncEdgeDirectoryCommand: {
+      mode?: components["schemas"]["v2SyncMode"];
+    };
+    /**
+     * - SYNC_MODE_UNKNOWN: nothing selected (default initialization value).
+     *  - SYNC_MODE_FULL: full sync, requests full export of source, contains new and updated elements only.
+     *  - SYNC_MODE_DIFF: full sync with differential, removing items deleted in source from target.
+     *  - SYNC_MODE_WATERMARK: watermark sync, pulls all new and updated data since last watermark.
+     *  - SYNC_MODE_MANIFEST: manifest sync, pulls manifest from source and applies to target when etags are different.
+     */
+    v2SyncMode:
+      | "SYNC_MODE_UNKNOWN"
+      | "SYNC_MODE_FULL"
+      | "SYNC_MODE_DIFF"
+      | "SYNC_MODE_WATERMARK"
+      | "SYNC_MODE_MANIFEST";
   };
 }
 
