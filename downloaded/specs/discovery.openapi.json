@@ -104,7 +104,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Discovery",
-    "version": "v0.8.90"
+    "version": "v0.8.92"
   },
   "openapi": "3.0.3",
   "paths": {
