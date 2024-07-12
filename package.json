@@ -1,6 +1,6 @@
 {
   "name": "@aserto/console-type-definitions",
-  "version": "0.8.90",
+  "version": "0.8.92",
   "description": "",
   "types": "index.d.ts",
   "scripts": {
